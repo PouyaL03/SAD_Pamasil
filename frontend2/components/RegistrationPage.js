@@ -70,8 +70,19 @@ const RegistrationLoginPage = () => {
         password: "",
       });
     } catch (error) {
+    if (error.response && error.response.data) {
+      // Display validation errors from the backend
+      let backendErrors = Object.values(error.response.data).flat().join(" ");
+      
+      backendErrors = backendErrors.replaceAll("user with this", "کاربری با این");
+      backendErrors = backendErrors.replaceAll("already exists.", "وجود دارد. </br>"); 
+      
+      
+      setErrorMessage(backendErrors);
+    } else {
       setErrorMessage("خطا در ثبت‌نام، لطفاً دوباره تلاش کنید.");
-      setSuccessMessage("");
+    }
+    setSuccessMessage("");
     }
   };
 
@@ -129,8 +140,11 @@ const RegistrationLoginPage = () => {
                 </Nav.Item>
               </Nav>
               {successMessage && <Alert variant="success">{successMessage}</Alert>}
-              {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-
+              {errorMessage && (
+                <Alert variant="danger">
+                  <div dangerouslySetInnerHTML={{ __html: errorMessage }}></div>
+                </Alert>
+              )}
               {activeTab === "register" ? (
                 <Form onSubmit={handleRegister}>
                   <Form.Group className="mb-3">
