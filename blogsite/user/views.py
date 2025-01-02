@@ -148,3 +148,36 @@ class UserListView(APIView):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import UserProfileSerializer
+from rest_framework.authtoken.models import Token
+
+class UserProfileEditView(APIView):
+    permission_classes = [IsAuthenticated]  # Ensure the user is authenticated
+
+    def get(self, request):
+        # Return the user's current profile data
+        serializer = UserProfileSerializer(request.user)  # Use the logged-in user
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request):
+        # Update the user's profile
+        serializer = UserProfileSerializer(request.user, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()  # Save the updated profile
+            return Response({"message": "پروفایل با موفقیت به‌روزرسانی شد."}, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]  # Ensure the user is authenticated
+
+    def post(self, request):
+        # Delete the user's token to log them out
+        request.user.auth_token.delete()
+        return Response({"message": "خروج با موفقیت انجام شد."}, status=status.HTTP_200_OK)

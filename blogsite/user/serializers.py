@@ -68,3 +68,26 @@ class UserSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         return user
+
+from rest_framework import serializers
+from django.contrib.auth import get_user_model
+
+# Get the custom user model
+User = get_user_model()
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'mobile_number', 'national_id', 'date_of_birth']  # Fields to be updated
+
+    def update(self, instance, validated_data):
+        # Update the fields with new data
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.email = validated_data.get('email', instance.email)
+        instance.mobile_number = validated_data.get('mobile_number', instance.mobile_number)
+        instance.national_id = validated_data.get('national_id', instance.national_id)
+        instance.date_of_birth = validated_data.get('date_of_birth', instance.date_of_birth)
+
+        instance.save()  # Save the updated user profile
+        return instance

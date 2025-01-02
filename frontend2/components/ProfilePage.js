@@ -1,131 +1,224 @@
-// import React, { useEffect, useState } from "react";
-// import { Container, Alert, Button } from "react-bootstrap";
-// import axios from "axios";
-
-// const ProfilePage = () => {
-//   const [userData, setUserData] = useState(null);
-//   const [errorMessage, setErrorMessage] = useState("");
-
-//   useEffect(() => {
-//     const fetchProfile = async () => {
-//       try {
-//         const user = JSON.parse(localStorage.getItem("user"));
-//         const response = await axios.get("http://localhost:8000/api/user/profile/", {
-//           headers: {
-//             Authorization: `Token ${user.token}`,
-//           },
-//         });
-//         setUserData(response.data);
-//       } catch (error) {
-//         setErrorMessage("خطا در دریافت اطلاعات پروفایل.");
-//       }
-//     };
-
-//     fetchProfile();
-//   }, []);
-
-//   const handleLogout = () => {
-//     localStorage.removeItem("user");
-//     window.location.href = "/";
-//   };
-
-//   return (
-//     <Container className="mt-5">
-//       <h2 className="text-center mb-4">پروفایل</h2>
-//       {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-//       {userData && (
-//         <div>
-//           <p><strong>نام کاربری:</strong> {userData.username}</p>
-//           <p><strong>ایمیل:</strong> {userData.email}</p>
-//           <Button variant="danger" onClick={handleLogout}>
-//             خروج
-//           </Button>
-//         </div>
-//       )}
-//     </Container>
-//   );
-// };
-
-// export default ProfilePage;
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Container, Row, Col, Card, Alert, Button } from "react-bootstrap";
+import React, { useState, useEffect } from 'react';
+import { Form, Button, Container, Alert, Tab, Nav } from 'react-bootstrap';
+import axios from 'axios';
 
 const ProfilePage = () => {
-  const [userData, setUserData] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [profileData, setProfileData] = useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+    mobile_number: '',
+    national_id: '',
+    date_of_birth: ''
+  });
 
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState("viewProfile"); // Manage active tab (view or edit)
+
+  // Fetch user profile data when component loads
   useEffect(() => {
-    const fetchProfile = async () => {
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (!user || !user.token) {
-        setErrorMessage("شما باید وارد شوید.");
-        return;
-      }
+    const token = JSON.parse(localStorage.getItem('user'))?.token;
+    if (!token) {
+      setErrorMessage('لطفا وارد شوید');
+      return;
+    }
 
+    const fetchProfile = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/user/profile/", {
+        const response = await axios.get('http://localhost:8000/api/user/profile/', {
           headers: {
-            Authorization: `Token ${user.token}`,  // Send token in the Authorization header
-          },
+            Authorization: `Token ${token}`
+          }
         });
-        setUserData(response.data);
-        setErrorMessage("");
+        setProfileData(response.data);
       } catch (error) {
-        setErrorMessage("خطا در دریافت اطلاعات پروفایل.");
-        console.error("Error fetching profile:", error);
+        setErrorMessage('خطا در بارگذاری پروفایل.');
       }
     };
 
     fetchProfile();
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    window.location.href = "/";  // Redirect to homepage after logout
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProfileData({
+      ...profileData,
+      [name]: value
+    });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const token = JSON.parse(localStorage.getItem('user'))?.token;
+    if (!token) {
+      setErrorMessage('لطفا وارد شوید');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      await axios.put('http://localhost:8000/api/user/profile/', profileData, {
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      });
+      setSuccessMessage('پروفایل با موفقیت به‌روزرسانی شد.');
+      setErrorMessage('');
+      setActiveTab('viewProfile'); // Switch to view profile after update
+    } catch (error) {
+      setErrorMessage('خطا در به‌روزرسانی پروفایل.');
+    }
+
+    setLoading(false);
+  };
+
+  const handleLogout = async () => {
+    const token = JSON.parse(localStorage.getItem('user'))?.token;
+    if (!token) {
+      setErrorMessage('لطفا وارد شوید');
+      return;
+    }
+  
+    try {
+      await axios.post('http://localhost:8000/api/user/logout/', null, {
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      });
+      localStorage.removeItem('user'); // Remove user data from localStorage
+      setSuccessMessage('خروج با موفقیت انجام شد.');
+      setErrorMessage('');
+      window.location.reload(); // Refresh the page after logout
+    } catch (error) {
+      setErrorMessage('خطا در خروج.');
+    }
+  };
+  
+  
 
   return (
     <Container className="mt-5">
       <h2 className="text-center mb-4">پروفایل</h2>
       {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-      {userData && (
-        <Row>
-          <Col md={6} className="mb-4">
-            <Card>
-              <Card.Body>
-                <Card.Title>اطلاعات کاربری</Card.Title>
-                <Card.Text>
-                  <strong>نام کاربری:</strong> {userData.username}
-                </Card.Text>
-                <Card.Text>
-                  <strong>نام:</strong> {userData.first_name}
-                </Card.Text>
-                <Card.Text>
-                  <strong>نام خانوادگی:</strong> {userData.last_name}
-                </Card.Text>
-                <Card.Text>
-                  <strong>ایمیل:</strong> {userData.email}
-                </Card.Text>
-                <Card.Text>
-                  <strong>تاریخ تولد:</strong> {userData.date_of_birth}
-                </Card.Text>
-                <Card.Text>
-                  <strong>شماره موبایل:</strong> {userData.mobile_number}
-                </Card.Text>
-                <Card.Text>
-                  <strong>کد ملی:</strong> {userData.national_id}
-                </Card.Text>
-                <Button variant="danger" onClick={handleLogout}>
-                  خروج
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      )}
       {successMessage && <Alert variant="success">{successMessage}</Alert>}
+
+      {/* Tabs for switching between profile view and edit */}
+      <Tab.Container activeKey={activeTab} onSelect={(k) => setActiveTab(k)}>
+        <Nav variant="pills">
+          <Nav.Item>
+            <Nav.Link eventKey="viewProfile">مشاهده پروفایل</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="editProfile">ویرایش پروفایل</Nav.Link>
+          </Nav.Item>
+        </Nav>
+
+        <Tab.Content>
+          {/* View Profile Tab */}
+          <Tab.Pane eventKey="viewProfile">
+            {profileData.first_name && (
+              <>
+                <h4>نام: {profileData.first_name}</h4>
+                <h4>نام خانوادگی: {profileData.last_name}</h4>
+                <h4>ایمیل: {profileData.email}</h4>
+                <h4>شماره موبایل: {profileData.mobile_number}</h4>
+                <h4>کد ملی: {profileData.national_id}</h4>
+                <h4>تاریخ تولد: {profileData.date_of_birth}</h4>
+                <Button variant="warning" onClick={() => setActiveTab('editProfile')}>
+                  ویرایش پروفایل
+                </Button>
+              </>
+            )}
+            {!profileData.first_name && (
+              <Alert variant="info">لطفا وارد شوید تا پروفایل خود را مشاهده کنید.</Alert>
+            )}
+          </Tab.Pane>
+
+          {/* Edit Profile Tab */}
+          <Tab.Pane eventKey="editProfile">
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3">
+                <Form.Label>نام</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="first_name"
+                  value={profileData.first_name}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>نام خانوادگی</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="last_name"
+                  value={profileData.last_name}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>ایمیل</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={profileData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>شماره موبایل</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="mobile_number"
+                  value={profileData.mobile_number}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>کد ملی</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="national_id"
+                  value={profileData.national_id}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>تاریخ تولد</Form.Label>
+                <Form.Control
+                  type="date"
+                  name="date_of_birth"
+                  value={profileData.date_of_birth}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+
+              <Button variant="primary" type="submit" disabled={loading}>
+                {loading ? 'در حال به‌روزرسانی...' : 'به‌روزرسانی پروفایل'}
+              </Button>
+            </Form>
+          </Tab.Pane>
+        </Tab.Content>
+      </Tab.Container>
+
+      {/* Logout button */}
+      <Button variant="danger" onClick={handleLogout} className="mt-3">
+        خروج
+      </Button>
     </Container>
   );
 };
