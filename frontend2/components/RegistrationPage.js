@@ -1,9 +1,8 @@
 import React, { useState } from "react";
+import { Form, Button, Container, Alert } from "react-bootstrap";
 import axios from "axios";
-import { Form, Button, Container, Alert, Row, Col, Card, Nav } from "react-bootstrap";
 
-const RegistrationLoginPage = () => {
-  const [activeTab, setActiveTab] = useState("register"); // To toggle between Register and Login
+const RegistrationPage = () => {
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -14,43 +13,38 @@ const RegistrationLoginPage = () => {
     username: "",
     password: "",
   });
-
-  const [loginData, setLoginData] = useState({
-    username: "",
-    password: "",
-  });
-
-  const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
+  // Function to convert Persian/Arabic numbers to English
   const convertToEnglishNumbers = (input) => {
     const persianNumbers = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+    const arabicNumbers = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
     const englishNumbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
-    return input.replace(/[۰-۹]/g, (char) => {
-      return englishNumbers[persianNumbers.indexOf(char)];
-    });
+    return input
+      .split("")
+      .map((char) => {
+        if (persianNumbers.includes(char)) {
+          return englishNumbers[persianNumbers.indexOf(char)];
+        } else if (arabicNumbers.includes(char)) {
+          return englishNumbers[arabicNumbers.indexOf(char)];
+        }
+        return char;
+      })
+      .join("");
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    let processedValue = value;
 
-    if (activeTab === "register") {
-      const convertedValue =
-        name === "mobile_number" || name === "national_id"
-          ? convertToEnglishNumbers(value)
-          : value;
-
-      setFormData({
-        ...formData,
-        [name]: convertedValue,
-      });
-    } else {
-      setLoginData({
-        ...loginData,
-        [name]: value,
-      });
+    // Convert to English numbers for specific fields
+    if (name === "mobile_number" || name === "national_id") {
+      processedValue = convertToEnglishNumbers(value);
     }
+
+    setFormData({ ...formData, [name]: processedValue });
   };
 
   const handleRegister = async (e) => {
@@ -70,217 +64,124 @@ const RegistrationLoginPage = () => {
         password: "",
       });
     } catch (error) {
-    if (error.response && error.response.data) {
-      // Display validation errors from the backend
-      let backendErrors = Object.values(error.response.data).flat().join(" ");
-      
-      backendErrors = backendErrors.replaceAll("user with this", "کاربری با این");
-      backendErrors = backendErrors.replaceAll("already exists.", "وجود دارد. </br>"); 
-      
-      
-      setErrorMessage(backendErrors);
-    } else {
-      setErrorMessage("خطا در ثبت‌نام، لطفاً دوباره تلاش کنید.");
-    }
-    setSuccessMessage("");
-    }
-  };
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:8000/api/user/login/", loginData);
-
-      // Store user details in localStorage
-      const { token } = response.data;
-      localStorage.setItem("user", JSON.stringify({ username: loginData.username, token }));
-
-      setSuccessMessage("ورود با موفقیت انجام شد.");
-      setErrorMessage("");
-      setLoginData({
-        username: "",
-        password: "",
-      });
-    } catch (error) {
-      setErrorMessage("نام کاربری یا رمز عبور اشتباه است.");
+      if (error.response && error.response.data) {
+        let backendErrors = Object.values(error.response.data)
+          .flat()
+          .join(" ");
+        backendErrors = backendErrors
+          .replaceAll("user with this", "کاربری با این")
+          .replaceAll("already exists.", "وجود دارد. </br>");
+        setErrorMessage(backendErrors);
+      } else {
+        setErrorMessage("خطا در ثبت‌نام، لطفاً دوباره تلاش کنید.");
+      }
       setSuccessMessage("");
     }
   };
 
-  const logout = () => {
-    // Remove user details from localStorage
-    localStorage.removeItem("user");
-    setSuccessMessage("شما با موفقیت خارج شدید.");
-  };
-
   return (
-    <Container className="mt-5" style={{ direction: "rtl" }}>
-      <Row className="justify-content-center">
-        <Col md={8} lg={6}>
-          <Card className="shadow-lg border-0">
-            <Card.Body>
-              <Nav variant="tabs" defaultActiveKey="register" className="mb-4">
-                <Nav.Item>
-                  <Nav.Link
-                    eventKey="register"
-                    onClick={() => setActiveTab("register")}
-                    active={activeTab === "register"}
-                  >
-                    ثبت‌نام
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link
-                    eventKey="login"
-                    onClick={() => setActiveTab("login")}
-                    active={activeTab === "login"}
-                  >
-                    ورود
-                  </Nav.Link>
-                </Nav.Item>
-              </Nav>
-              {successMessage && <Alert variant="success">{successMessage}</Alert>}
-              {errorMessage && (
-                <Alert variant="danger">
-                  <div dangerouslySetInnerHTML={{ __html: errorMessage }}></div>
-                </Alert>
-              )}
-              {activeTab === "register" ? (
-                <Form onSubmit={handleRegister}>
-                  <Form.Group className="mb-3">
-                    <Form.Label>نام</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="first_name"
-                      placeholder="نام"
-                      value={formData.first_name}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Label>نام‌خانوادگی</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="last_name"
-                      placeholder="نام‌خانوادگی"
-                      value={formData.last_name}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Label>تاریخ تولد</Form.Label>
-                    <Form.Control
-                      type="date"
-                      name="date_of_birth"
-                      value={formData.date_of_birth}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Label>شماره موبایل</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="mobile_number"
-                      placeholder="شماره موبایل"
-                      value={formData.mobile_number}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Label>کد ملی</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="national_id"
-                      placeholder="کد ملی"
-                      value={formData.national_id}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Label>ایمیل</Form.Label>
-                    <Form.Control
-                      type="email"
-                      name="email"
-                      placeholder="ایمیل"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Label>نام کاربری</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="username"
-                      placeholder="نام کاربری"
-                      value={formData.username}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Label>رمز عبور</Form.Label>
-                    <Form.Control
-                      type="password"
-                      name="password"
-                      placeholder="رمز عبور"
-                      value={formData.password}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
-                  <Button variant="primary" type="submit" className="w-100">
-                    ثبت‌نام
-                  </Button>
-                </Form>
-              ) : (
-                <Form onSubmit={handleLogin}>
-                  <Form.Group className="mb-3">
-                    <Form.Label>نام کاربری</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="username"
-                      placeholder="نام کاربری"
-                      value={loginData.username}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Label>رمز عبور</Form.Label>
-                    <Form.Control
-                      type="password"
-                      name="password"
-                      placeholder="رمز عبور"
-                      value={loginData.password}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
-                  <Button variant="primary" type="submit" className="w-100">
-                    ورود
-                  </Button>
-                </Form>
-              )}
-
-              {localStorage.getItem("user") && (
-                <div className="mt-4 text-center">
-                  <Button variant="danger" onClick={logout}>
-                    خروج
-                  </Button>
-                </div>
-              )}
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+    <Container className="mt-5">
+      <h2 className="text-center mb-4">ثبت‌نام</h2>
+      {errorMessage && (
+        <Alert variant="danger">
+          <div dangerouslySetInnerHTML={{ __html: errorMessage }}></div>
+        </Alert>
+      )}
+      {successMessage && <Alert variant="success">{successMessage}</Alert>}
+      <Form onSubmit={handleRegister}>
+        <Form.Group className="mb-3">
+          <Form.Label>نام</Form.Label>
+          <Form.Control
+            type="text"
+            name="first_name"
+            placeholder="نام"
+            value={formData.first_name}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>نام خانوادگی</Form.Label>
+          <Form.Control
+            type="text"
+            name="last_name"
+            placeholder="نام خانوادگی"
+            value={formData.last_name}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>تاریخ تولد</Form.Label>
+          <Form.Control
+            type="date"
+            name="date_of_birth"
+            value={formData.date_of_birth}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>شماره موبایل</Form.Label>
+          <Form.Control
+            type="text"
+            name="mobile_number"
+            placeholder="شماره موبایل"
+            value={formData.mobile_number}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>کد ملی</Form.Label>
+          <Form.Control
+            type="text"
+            name="national_id"
+            placeholder="کد ملی"
+            value={formData.national_id}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>ایمیل</Form.Label>
+          <Form.Control
+            type="email"
+            name="email"
+            placeholder="ایمیل"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>نام کاربری</Form.Label>
+          <Form.Control
+            type="text"
+            name="username"
+            placeholder="نام کاربری"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>رمز عبور</Form.Label>
+          <Form.Control
+            type="password"
+            name="password"
+            placeholder="رمز عبور"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          ثبت‌نام
+        </Button>
+      </Form>
     </Container>
   );
 };
 
-export default RegistrationLoginPage;
+export default RegistrationPage;
