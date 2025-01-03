@@ -38,6 +38,18 @@ class UserRegistrationView(APIView):
             return Response({'message': 'ثبت‌نام با موفقیت انجام شد.'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# class UserRegistrationView(APIView):
+#     permission_classes = [AllowAny]
+
+#     def post(self, request):
+#         role = request.data.get("role", "customer")  # Default to customer if not provided
+#         serializer = UserSerializer(data=request.data)
+#         if serializer.is_valid():
+#             user = serializer.save()
+#             user.role = role  # Set the role during registration
+#             user.save()  # Save the user with the selected role
+#             return Response({'message': 'ثبت‌نام با موفقیت انجام شد.'}, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # User Login View
 # class UserLoginView(APIView):
@@ -116,29 +128,29 @@ def validate_token(username, token):
 
 
 
-class UserProfileView(APIView):
-    permission_classes = [IsAuthenticated]
+# class UserProfileView(APIView):
+#     permission_classes = [IsAuthenticated]
 
-    def get(self, request):
-        try:
-            # Get the authenticated user
-            user = request.user
+#     def get(self, request):
+#         try:
+#             # Get the authenticated user
+#             user = request.user
 
-            # Serialize the user data excluding the password
-            user_data = {
-                "username": user.username,
-                "first_name": user.first_name,
-                "last_name": user.last_name,
-                "email": user.email,
-                "date_of_birth": user.date_of_birth,
-                "mobile_number": user.mobile_number,  # Assuming you have a mobile_number field
-                "national_id": user.national_id,  # Assuming you have a national_id field
-            }
+#             # Serialize the user data excluding the password
+#             user_data = {
+#                 "username": user.username,
+#                 "first_name": user.first_name,
+#                 "last_name": user.last_name,
+#                 "email": user.email,
+#                 "date_of_birth": user.date_of_birth,
+#                 "mobile_number": user.mobile_number,  # Assuming you have a mobile_number field
+#                 "national_id": user.national_id,  # Assuming you have a national_id field
+#             }
 
-            return Response(user_data, status=200)
+#             return Response(user_data, status=200)
 
-        except User.DoesNotExist:
-            return Response({"error": "کاربر یافت نشد."}, status=404)
+#         except User.DoesNotExist:
+#             return Response({"error": "کاربر یافت نشد."}, status=404)
 
 
 # User List View
@@ -173,6 +185,11 @@ class UserProfileEditView(APIView):
             return Response({"message": "پروفایل با موفقیت به‌روزرسانی شد."}, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request):
+        # Delete the user's account
+        request.user.delete()
+        return Response({"message": "حساب شما با موفقیت حذف شد."}, status=status.HTTP_200_OK)
 
     
 

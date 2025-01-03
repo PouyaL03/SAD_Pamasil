@@ -9,7 +9,8 @@ const ProfilePage = () => {
     email: '',
     mobile_number: '',
     national_id: '',
-    date_of_birth: ''
+    date_of_birth: '',
+    role: ''
   });
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -82,7 +83,7 @@ const ProfilePage = () => {
       setErrorMessage('لطفا وارد شوید');
       return;
     }
-  
+
     try {
       await axios.post('http://localhost:8000/api/user/logout/', null, {
         headers: {
@@ -97,8 +98,28 @@ const ProfilePage = () => {
       setErrorMessage('خطا در خروج.');
     }
   };
-  
-  
+
+  const handleDeleteAccount = async () => {
+    const token = JSON.parse(localStorage.getItem('user'))?.token;
+    if (!token) {
+      setErrorMessage('لطفا وارد شوید');
+      return;
+    }
+
+    try {
+      await axios.delete('http://localhost:8000/api/user/profile/', {
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      });
+      localStorage.removeItem('user'); // Remove user data from localStorage
+      setSuccessMessage('حساب شما با موفقیت حذف شد.');
+      setErrorMessage('');
+      window.location.reload(); // Refresh the page after account deletion
+    } catch (error) {
+      setErrorMessage('خطا در حذف حساب.');
+    }
+  };
 
   return (
     <Container className="mt-5">
@@ -128,8 +149,12 @@ const ProfilePage = () => {
                 <h4>شماره موبایل: {profileData.mobile_number}</h4>
                 <h4>کد ملی: {profileData.national_id}</h4>
                 <h4>تاریخ تولد: {profileData.date_of_birth}</h4>
+                <h4>نقش: {profileData.role}</h4> {/* Display the role */}
                 <Button variant="warning" onClick={() => setActiveTab('editProfile')}>
                   ویرایش پروفایل
+                </Button>
+                <Button variant="danger" onClick={handleDeleteAccount} className="mt-3">
+                  حذف حساب کاربری
                 </Button>
               </>
             )}

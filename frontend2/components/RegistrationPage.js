@@ -12,6 +12,7 @@ const RegistrationPage = () => {
     email: "",
     username: "",
     password: "",
+    role: "customer",  // Default role is "customer"
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -62,6 +63,7 @@ const RegistrationPage = () => {
         email: "",
         username: "",
         password: "",
+        role: "customer",  // Reset to default role after registration
       });
     } catch (error) {
       if (error.response && error.response.data) {
@@ -175,6 +177,20 @@ const RegistrationPage = () => {
             onChange={handleChange}
             required
           />
+        </Form.Group>
+        {/* Role Selector */}
+        <Form.Group className="mb-3">
+          <Form.Label>نقش</Form.Label>
+          <Form.Control
+            as="select"
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            required
+          >
+            <option value="customer">مشتری</option>
+            <option value="supplier">تامین کننده</option>
+          </Form.Control>
         </Form.Group>
         <Button variant="primary" type="submit">
           ثبت‌نام
