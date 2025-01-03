@@ -174,6 +174,8 @@ class UserProfileEditView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    
+
 class LogoutView(APIView):
     permission_classes = [IsAuthenticated]  # Ensure the user is authenticated
 
@@ -181,3 +183,45 @@ class LogoutView(APIView):
         # Delete the user's token to log them out
         request.user.auth_token.delete()
         return Response({"message": "خروج با موفقیت انجام شد."}, status=status.HTTP_200_OK)
+
+from django.contrib.auth import get_user_model
+from django.contrib.auth.password_validation import validate_password
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import AllowAny
+from django.core.exceptions import ObjectDoesNotExist
+
+# Use get_user_model() to access the custom user model
+User = get_user_model()
+
+class ForgotPasswordView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        national_id = request.data.get("national_id")
+        new_password = request.data.get("new_password")
+
+        if not national_id or not new_password:
+            return Response({"error": "کد ملی یا رمز عبور جدید وارد نشده است."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # Fetch the user based on national_id
+            user = User.objects.get(national_id=national_id)
+
+            # Validate the new password (to ensure it's strong)
+            try:
+                validate_password(new_password, user)
+            except Exception as e:
+                return Response({"error": f"رمز عبور جدید معتبر نیست: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Set the new password
+            user.set_password(new_password)
+            user.save()
+
+            # Optionally, send a confirmation email (if needed)
+
+            return Response({"message": "رمز عبور شما با موفقیت تغییر یافت."}, status=status.HTTP_200_OK)
+
+        except ObjectDoesNotExist:
+            return Response({"error": "کاربری با این کد ملی یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
