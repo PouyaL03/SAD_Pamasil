@@ -7,8 +7,6 @@ const LoginPage = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-    national_id: "",
-    new_password: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -29,7 +27,12 @@ const LoginPage = () => {
       setErrorMessage("");
       router.push("/");
     } catch (error) {
-      setErrorMessage("نام کاربری یا رمز عبور اشتباه است.");
+      // Handle email not verified error
+      if (error.response && error.response.data.error === "لطفا ایمیل خود را تایید کنید.") {
+        setErrorMessage("لطفا ایمیل خود را تایید کنید.");
+      } else {
+        setErrorMessage("نام کاربری یا رمز عبور اشتباه است.");
+      }
       setSuccessMessage("");
     }
   };

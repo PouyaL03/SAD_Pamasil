@@ -52,7 +52,7 @@ const RegistrationPage = () => {
     e.preventDefault();
     try {
       await axios.post("http://localhost:8000/api/user/register/", formData);
-      setSuccessMessage("ثبت‌نام با موفقیت انجام شد.");
+      setSuccessMessage("ثبت‌نام با موفقیت انجام شد. لطفا ایمیل خود را برای تایید حساب بررسی کنید.");
       setErrorMessage("");
       setFormData({
         first_name: "",

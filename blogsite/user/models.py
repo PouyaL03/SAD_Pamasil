@@ -22,6 +22,7 @@ class User(AbstractUser):
         default=CUSTOMER,
         verbose_name='نقش'
     )
+    is_active = models.BooleanField(default=False)  # Set to False by default
 
     def __str__(self):
         return self.username

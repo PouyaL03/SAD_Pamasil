@@ -21,6 +21,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
+from django.conf import settings
 
 # Simulated Token Store
 TOKEN_STORE = {}
@@ -28,15 +29,61 @@ TOKEN_STORE = {}
 # User Registration View
 
 
+# class UserRegistrationView(APIView):
+#     permission_classes = [AllowAny]  # Allow anyone to register
+
+#     def post(self, request):
+#         serializer = UserSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response({'message': 'ثبت‌نام با موفقیت انجام شد.'}, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+from django.core.mail import send_mail
+from django.urls import reverse
+from django.contrib.sites.shortcuts import get_current_site
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import UserSerializer
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth import get_user_model
+
 class UserRegistrationView(APIView):
-    permission_classes = [AllowAny]  # Allow anyone to register
+    permission_classes = [AllowAny]
 
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response({'message': 'ثبت‌نام با موفقیت انجام شد.'}, status=status.HTTP_201_CREATED)
+            user = serializer.save()
+            user.is_active = False  # Ensure the user is not active until email is verified
+            user.save()
+
+            # Send activation email
+            self.send_verification_email(user)
+            return Response({'message': 'ثبت‌نام با موفقیت انجام شد. لطفا ایمیل خود را برای تایید حساب بررسی کنید.'}, status=status.HTTP_201_CREATED)
+        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def send_verification_email(self, user):
+        # Generate a token for the user
+        token = default_token_generator.make_token(user)
+        uid = urlsafe_base64_encode(str(user.id).encode('utf-8'))
+        #uid = urlsafe_base64_encode(str(user.pk).encode()).decode()
+
+        # Build verification URL
+        domain = settings.SITE_DOMAIN
+        verification_url = f"http://{domain}/api/user/verify-email/{uid}/{token}/"
+
+        # Send email
+        send_mail(
+            "تایید حساب کاربری",
+            f"لطفا روی لینک زیر کلیک کنید تا حساب کاربری خود را تایید کنید:\n\n{verification_url}",
+            "no-reply@myapp.com",  # Replace with your email
+            [user.email],
+            fail_silently=False,
+        )
+
 
 # class UserRegistrationView(APIView):
 #     permission_classes = [AllowAny]
@@ -76,6 +123,36 @@ class UserRegistrationView(APIView):
 #         )
 
 
+# class UserLoginView(APIView):
+#     permission_classes = [AllowAny]
+
+#     def post(self, request):
+#         username = request.data.get("username")
+#         password = request.data.get("password")
+
+#         user = authenticate(username=username, password=password)
+#         if user:
+#             token, _ = Token.objects.get_or_create(user=user)
+#             return Response(
+#                 {"message": "ورود با موفقیت انجام شد.", "token": token.key},
+#                 status=status.HTTP_200_OK
+#             )
+
+#         return Response(
+#             {"error": "نام کاربری یا رمز عبور اشتباه است."},
+#             status=status.HTTP_401_UNAUTHORIZED
+#         )
+
+from django.contrib.auth import get_user_model
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import AllowAny
+from rest_framework.views import APIView
+from rest_framework.authtoken.models import Token
+
+# Get the custom User model
+User = get_user_model()
+
 class UserLoginView(APIView):
     permission_classes = [AllowAny]
 
@@ -83,18 +160,38 @@ class UserLoginView(APIView):
         username = request.data.get("username")
         password = request.data.get("password")
 
-        user = authenticate(username=username, password=password)
-        if user:
-            token, _ = Token.objects.get_or_create(user=user)
+        try:
+            # Find the user by username
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
             return Response(
-                {"message": "ورود با موفقیت انجام شد.", "token": token.key},
-                status=status.HTTP_200_OK
+                {"error": "نام کاربری یا رمز عبور اشتباه است."},  # Invalid username or password
+                status=status.HTTP_401_UNAUTHORIZED
             )
 
+        # Check if the password matches
+        if not user.check_password(password):
+            return Response(
+                {"error": "نام کاربری یا رمز عبور اشتباه است."},  # Invalid username or password
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
+        # Check if the user is active (email verified)
+        if not user.is_active:
+            return Response(
+                {"error": "لطفا ایمیل خود را تایید کنید."},  # Email not verified
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # If the user is active and the password matches, generate a token
+        token, _ = Token.objects.get_or_create(user=user)
+
         return Response(
-            {"error": "نام کاربری یا رمز عبور اشتباه است."},
-            status=status.HTTP_401_UNAUTHORIZED
+            {"message": "ورود با موفقیت انجام شد.", "token": token.key},
+            status=status.HTTP_200_OK
         )
+
+
 
 
 
@@ -242,3 +339,33 @@ class ForgotPasswordView(APIView):
 
         except ObjectDoesNotExist:
             return Response({"error": "کاربری با این کد ملی یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
+
+
+
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth import get_user_model
+from django.http import HttpResponse
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
+User = get_user_model()
+
+class EmailVerificationView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, uidb64, token):
+        try:
+            # Decode user ID and get user
+            uid = urlsafe_base64_decode(uidb64).decode()
+            user = User.objects.get(pk=uid)
+
+            # Validate token
+            if default_token_generator.check_token(user, token):
+                user.is_active = True  # Activate the user
+                user.save()
+                return HttpResponse("<h1>حساب شما با موفقیت تایید شد!</h1>")
+            else:
+                return HttpResponse("<h1>لینک تایید معتبر نیست.</h1>")
+        except Exception as e:
+            return HttpResponse("<h1>خطا در تایید حساب.</h1>", status=400)
