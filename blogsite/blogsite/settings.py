@@ -29,7 +29,10 @@ SECRET_KEY = 'django-insecure-%#gv#q_8s(q&dwq77sbmxwcd9yfd$twzk4z1!u$)z(%yj^26lt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']  # Add your domain here for production
+
+SITE_DOMAIN = 'localhost:8000'
 
 
 # Application definition
@@ -43,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'corsheaders',
+    'rest_framework',
+    'rest_framework.authtoken',
     'products',
     'user',
 ]
@@ -111,11 +116,16 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.TokenAuthentication",
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
     ],
 }
+
 
 
 # Internationalization
@@ -139,3 +149,27 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ALLOW_ALL_ORIGINS = True 
+
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'DELETE',
+    'OPTIONS',
+]
+
+# Email backend configuration
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Use this for development (prints emails to the console)
+# For production, you would configure SMTP settings like so:
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'  # Example: Gmail SMTP server
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'your-email@example.com'
+# EMAIL_HOST_PASSWORD = 'your-email-password'
+
+DEFAULT_FROM_EMAIL = 'no-reply@yourdomain.com'  # Use your domain's email
+
+

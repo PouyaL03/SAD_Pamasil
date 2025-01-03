@@ -1,2 +1,7 @@
 frontend2/node_modules/
 .DS_Store
+venv
+blogsite/*/__pycache__/
+frontend2/.next/
+blogsite/db.sqlite3
+blogsite/*/.DS_Store

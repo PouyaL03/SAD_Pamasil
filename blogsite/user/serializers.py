@@ -5,12 +5,13 @@ from rest_framework import serializers
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
+    role = serializers.ChoiceField(choices=[('customer', 'مشتری'), ('supplier', 'تامین کننده')], required=False)
 
     class Meta:
         model = User
         fields = [
             'username', 'first_name', 'last_name', 'date_of_birth',
-            'mobile_number', 'national_id', 'email', 'password'
+            'mobile_number', 'national_id', 'email', 'password', 'role'
         ]
 
     def validate_mobile_number(self, value):
@@ -57,6 +58,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
     def create(self, validated_data):
+        role = validated_data.get('role', 'customer')
         user = User.objects.create_user(
             username=validated_data['username'],
             first_name=validated_data['first_name'],
@@ -65,6 +67,30 @@ class UserSerializer(serializers.ModelSerializer):
             mobile_number=validated_data['mobile_number'],
             national_id=validated_data['national_id'],
             email=validated_data['email'],
-            password=validated_data['password']
+            password=validated_data['password'],
+            role=role
         )
         return user
+
+from rest_framework import serializers
+from django.contrib.auth import get_user_model
+
+# Get the custom user model
+User = get_user_model()
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'mobile_number', 'national_id', 'date_of_birth', 'role']  # Fields to be updated
+
+    def update(self, instance, validated_data):
+        # Update the fields with new data
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.email = validated_data.get('email', instance.email)
+        instance.mobile_number = validated_data.get('mobile_number', instance.mobile_number)
+        instance.national_id = validated_data.get('national_id', instance.national_id)
+        instance.date_of_birth = validated_data.get('date_of_birth', instance.date_of_birth)
+
+        instance.save()  # Save the updated user profile
+        return instance
