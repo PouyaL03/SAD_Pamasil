@@ -13,6 +13,7 @@ const ProfilePage = () => {
     role: "",
   });
 
+  const [editProfileData, setEditProfileData] = useState(null); // Temporary edit state
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -33,6 +34,7 @@ const ProfilePage = () => {
           },
         });
         setProfileData(response.data);
+        setEditProfileData(response.data); // Initialize temporary state
       } catch (error) {
         setErrorMessage("خطا در بارگذاری پروفایل.");
       }
@@ -41,14 +43,29 @@ const ProfilePage = () => {
     fetchProfile();
   }, []);
 
-  const handleChange = (e) => {
+  const handleEditChange = (e) => {
     const { name, value } = e.target;
-    setProfileData({ ...profileData, [name]: value });
+    setEditProfileData({ ...editProfileData, [name]: value }); // Update only temporary state
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    // Validate fields
+    const { first_name, last_name, date_of_birth } = editProfileData;
+    if (!first_name.trim() || !last_name.trim() || !date_of_birth.trim()) {
+      setErrorMessage("لطفاً تمام فیلدهای ضروری را پر کنید.");
+      setLoading(false);
+      return;
+    }
+
+    // Check if changes were made
+    if (JSON.stringify(editProfileData) === JSON.stringify(profileData)) {
+      setErrorMessage("تغییری برای ذخیره وجود ندارد.");
+      setLoading(false);
+      return;
+    }
 
     const token = JSON.parse(localStorage.getItem("user"))?.token;
     if (!token) {
@@ -58,13 +75,14 @@ const ProfilePage = () => {
     }
 
     try {
-      await axios.put("http://localhost:8000/api/user/profile/", profileData, {
+      await axios.put("http://localhost:8000/api/user/profile/", editProfileData, {
         headers: {
           Authorization: `Token ${token}`,
         },
       });
       setSuccessMessage("پروفایل با موفقیت به‌روزرسانی شد.");
       setErrorMessage("");
+      setProfileData(editProfileData); // Save edits to the main state
       setActiveTab("viewProfile");
     } catch (error) {
       setErrorMessage("خطا در به‌روزرسانی پروفایل.");
@@ -173,25 +191,81 @@ const ProfilePage = () => {
 
           <Tab.Pane eventKey="editProfile">
             <Form onSubmit={handleSubmit}>
-              {["first_name", "last_name", "email", "mobile_number", "national_id", "date_of_birth"].map(
-                (field, index) => (
-                  <Form.Group className="mb-3" key={index}>
-                    <Form.Label>{field}</Form.Label>
-                    <Form.Control
-                      type={field === "date_of_birth" ? "date" : "text"}
-                      name={field}
-                      value={profileData[field]}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
-                )
-              )}
+              <Form.Group className="mb-3">
+                <Form.Label>نام</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="first_name"
+                  value={editProfileData?.first_name || ""}
+                  onChange={handleEditChange}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>نام خانوادگی</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="last_name"
+                  value={editProfileData?.last_name || ""}
+                  onChange={handleEditChange}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>ایمیل</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={editProfileData?.email || ""}
+                  readOnly
+                  style={{ backgroundColor: "#e9ecef", cursor: "not-allowed" }}
+                />
+                <Form.Text className="text-muted">ایمیل شما قابل تغییر نیست.</Form.Text>
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>شماره موبایل</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="mobile_number"
+                  value={editProfileData?.mobile_number || ""}
+                  readOnly
+                  style={{ backgroundColor: "#e9ecef", cursor: "not-allowed" }}
+                />
+                <Form.Text className="text-muted">شماره موبایل شما قابل تغییر نیست.</Form.Text>
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>کد ملی</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="national_id"
+                  value={editProfileData?.national_id || ""}
+                  readOnly
+                  style={{ backgroundColor: "#e9ecef", cursor: "not-allowed" }}
+                />
+                <Form.Text className="text-muted">کد ملی شما قابل تغییر نیست.</Form.Text>
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>تاریخ تولد</Form.Label>
+                <Form.Control
+                  type="date"
+                  name="date_of_birth"
+                  value={editProfileData?.date_of_birth || ""}
+                  onChange={handleEditChange}
+                  required
+                />
+              </Form.Group>
+
               <Button variant="primary" type="submit" disabled={loading} className="w-100">
                 {loading ? "در حال به‌روزرسانی..." : "به‌روزرسانی پروفایل"}
               </Button>
             </Form>
           </Tab.Pane>
+
         </Tab.Content>
       </Tab.Container>
 
