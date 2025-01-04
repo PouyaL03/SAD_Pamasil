@@ -72,10 +72,11 @@ const RegistrationPage = () => {
           .join(" ");
         backendErrors = backendErrors
           .replaceAll("user with this", "کاربری با این")
-          .replaceAll("already exists.", "وجود دارد.");
+          .replaceAll("A user with that username", "کاربری با این نام کاربری")
+          .replaceAll("already exists.", "وجود دارد. </br>");
         setErrorMessage(backendErrors);
       } else {
-        setErrorMessage("خطا در ثبت‌نام، لطفاً دوباره تلاش کنید.");
+        setErrorMessage("خطا در ثبت‌نام، لطفاً دوباره تلاش کنید. </br>");
       }
       setSuccessMessage("");
     }
@@ -95,7 +96,7 @@ const RegistrationPage = () => {
           <div dangerouslySetInnerHTML={{ __html: successMessage }} />
         </Alert>
       )}
-      
+
       <Form onSubmit={handleRegister}>
         <Form.Group className="mb-3">
           <Form.Label>نام</Form.Label>

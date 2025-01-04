@@ -5,3 +5,4 @@ blogsite/*/__pycache__/
 frontend2/.next/
 blogsite/db.sqlite3
 blogsite/*/.DS_Store
+blogsite/*/*/__pycache__/

@@ -62,7 +62,7 @@ class UserSerializer(serializers.ModelSerializer):
         """
         # Check if the email is valid using Python's built-in parseaddr
         if "@" not in parseaddr(value)[1]:
-            raise serializers.ValidationError("ایمیل نامعتبر است.")
+            raise serializers.ValidationError("ایمیل نامعتبر است. </br>")
 
         return value
 
