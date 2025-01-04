@@ -4,6 +4,8 @@ import RegistrationPage from "../../components/RegistrationPage";
 import LoginPage from "../../components/LoginPage";
 import ProfilePage from "../../components/ProfilePage";
 
+
+
 const Home = () => {
   const [activeTab, setActiveTab] = useState("products");
 
@@ -15,66 +17,53 @@ const Home = () => {
   };
 
   return (
-    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", padding: "20px" }}>
-      <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
-        <button
-          onClick={() => setActiveTab("products")}
-          style={{
-            marginRight: "10px",
-            padding: "10px 20px",
-            backgroundColor: activeTab === "products" ? "#007bff" : "#ccc",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          محصولات
-        </button>
-        <button
-          onClick={() => setActiveTab("register")}
-          style={{
-            marginRight: "10px",
-            padding: "10px 20px",
-            backgroundColor: activeTab === "register" ? "#007bff" : "#ccc",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          ثبت‌نام
-        </button>
-        <button
-          onClick={() => setActiveTab("login")}
-          style={{
-            marginRight: "10px",
-            padding: "10px 20px",
-            backgroundColor: activeTab === "login" ? "#007bff" : "#ccc",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          ورود
-        </button>
-        <button
-          onClick={() => setActiveTab("profile")}
-          style={{
-            padding: "10px 20px",
-            backgroundColor: activeTab === "profile" ? "#007bff" : "#ccc",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          پروفایل
-        </button>
+    <div
+      style={{
+        backgroundImage: "url('/images/watercolor-birthday-background-with-empty-space_52683-42227.jpg.webp')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+        padding: "20px",
+        direction: "rtl",
+      }}
+    >
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px", gap: "10px" }}>
+        {["products", "register", "login", "profile"].map((tab, idx) => (
+          <button
+            key={idx}
+            onClick={() => setActiveTab(tab)}
+            style={{
+              padding: "10px 20px",
+              backgroundColor: activeTab === tab ? "#007bff" : "#fff",
+              color: activeTab === tab ? "#fff" : "#007bff",
+              border: "2px solid #007bff",
+              borderRadius: "5px",
+              cursor: "pointer",
+              fontWeight: "bold",
+              boxShadow: activeTab === tab ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
+            }}
+          >
+            {tab === "products"
+              ? "محصولات"
+              : tab === "register"
+              ? "ثبت‌نام"
+              : tab === "login"
+              ? "ورود"
+              : "پروفایل"}
+          </button>
+        ))}
       </div>
-
-      {renderContent()}
+      <div
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          background: "rgba(255, 255, 255, 0.8)",
+          borderRadius: "10px",
+          padding: "20px",
+        }}
+      >
+        {renderContent()}
+      </div>
     </div>
   );
 };

@@ -1,41 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Button, Container, Alert, Tab, Nav } from 'react-bootstrap';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { Form, Button, Container, Alert, Tab, Nav } from "react-bootstrap";
+import axios from "axios";
 
 const ProfilePage = () => {
   const [profileData, setProfileData] = useState({
-    first_name: '',
-    last_name: '',
-    email: '',
-    mobile_number: '',
-    national_id: '',
-    date_of_birth: '',
-    role: ''
+    first_name: "",
+    last_name: "",
+    email: "",
+    mobile_number: "",
+    national_id: "",
+    date_of_birth: "",
+    role: "",
   });
 
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState("viewProfile"); // Manage active tab (view or edit)
+  const [activeTab, setActiveTab] = useState("viewProfile");
 
-  // Fetch user profile data when component loads
   useEffect(() => {
-    const token = JSON.parse(localStorage.getItem('user'))?.token;
+    const token = JSON.parse(localStorage.getItem("user"))?.token;
     if (!token) {
-      setErrorMessage('لطفا وارد شوید');
+      setErrorMessage("لطفا وارد شوید");
       return;
     }
 
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/user/profile/', {
+        const response = await axios.get("http://localhost:8000/api/user/profile/", {
           headers: {
-            Authorization: `Token ${token}`
-          }
+            Authorization: `Token ${token}`,
+          },
         });
         setProfileData(response.data);
       } catch (error) {
-        setErrorMessage('خطا در بارگذاری پروفایل.');
+        setErrorMessage("خطا در بارگذاری پروفایل.");
       }
     };
 
@@ -44,204 +43,159 @@ const ProfilePage = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProfileData({
-      ...profileData,
-      [name]: value
-    });
+    setProfileData({ ...profileData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    const token = JSON.parse(localStorage.getItem('user'))?.token;
+    const token = JSON.parse(localStorage.getItem("user"))?.token;
     if (!token) {
-      setErrorMessage('لطفا وارد شوید');
+      setErrorMessage("لطفا وارد شوید");
       setLoading(false);
       return;
     }
 
     try {
-      await axios.put('http://localhost:8000/api/user/profile/', profileData, {
+      await axios.put("http://localhost:8000/api/user/profile/", profileData, {
         headers: {
-          Authorization: `Token ${token}`
-        }
+          Authorization: `Token ${token}`,
+        },
       });
-      setSuccessMessage('پروفایل با موفقیت به‌روزرسانی شد.');
-      setErrorMessage('');
-      setActiveTab('viewProfile'); // Switch to view profile after update
+      setSuccessMessage("پروفایل با موفقیت به‌روزرسانی شد.");
+      setErrorMessage("");
+      setActiveTab("viewProfile");
     } catch (error) {
-      setErrorMessage('خطا در به‌روزرسانی پروفایل.');
+      setErrorMessage("خطا در به‌روزرسانی پروفایل.");
     }
 
     setLoading(false);
   };
 
   const handleLogout = async () => {
-    const token = JSON.parse(localStorage.getItem('user'))?.token;
+    const token = JSON.parse(localStorage.getItem("user"))?.token;
     if (!token) {
-      setErrorMessage('لطفا وارد شوید');
+      setErrorMessage("لطفا وارد شوید");
       return;
     }
 
     try {
-      await axios.post('http://localhost:8000/api/user/logout/', null, {
+      await axios.post("http://localhost:8000/api/user/logout/", null, {
         headers: {
-          Authorization: `Token ${token}`
-        }
+          Authorization: `Token ${token}`,
+        },
       });
-      localStorage.removeItem('user'); // Remove user data from localStorage
-      setSuccessMessage('خروج با موفقیت انجام شد.');
-      setErrorMessage('');
-      window.location.reload(); // Refresh the page after logout
+      localStorage.removeItem("user");
+      setSuccessMessage("خروج با موفقیت انجام شد.");
+      setErrorMessage("");
+      window.location.reload();
     } catch (error) {
-      setErrorMessage('خطا در خروج.');
+      setErrorMessage("خطا در خروج.");
     }
   };
 
   const handleDeleteAccount = async () => {
-    const token = JSON.parse(localStorage.getItem('user'))?.token;
+    const token = JSON.parse(localStorage.getItem("user"))?.token;
     if (!token) {
-      setErrorMessage('لطفا وارد شوید');
+      setErrorMessage("لطفا وارد شوید");
       return;
     }
 
     try {
-      await axios.delete('http://localhost:8000/api/user/profile/', {
+      await axios.delete("http://localhost:8000/api/user/profile/", {
         headers: {
-          Authorization: `Token ${token}`
-        }
+          Authorization: `Token ${token}`,
+        },
       });
-      localStorage.removeItem('user'); // Remove user data from localStorage
-      setSuccessMessage('حساب شما با موفقیت حذف شد.');
-      setErrorMessage('');
-      window.location.reload(); // Refresh the page after account deletion
+      localStorage.removeItem("user");
+      setSuccessMessage("حساب شما با موفقیت حذف شد.");
+      setErrorMessage("");
+      window.location.reload();
     } catch (error) {
-      setErrorMessage('خطا در حذف حساب.');
+      setErrorMessage("خطا در حذف حساب.");
     }
   };
 
   return (
-    <Container className="mt-5">
-      <h2 className="text-center mb-4">پروفایل</h2>
+    <Container className="mt-5" style={{ direction: "rtl", maxWidth: "700px" }}>
+      <h2 className="text-center mb-4" style={{ fontWeight: "bold" }}>پروفایل</h2>
       {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
       {successMessage && <Alert variant="success">{successMessage}</Alert>}
 
-      {/* Tabs for switching between profile view and edit */}
       <Tab.Container activeKey={activeTab} onSelect={(k) => setActiveTab(k)}>
-        <Nav variant="pills">
+        <Nav variant="pills" className="justify-content-center mb-3">
           <Nav.Item>
-            <Nav.Link eventKey="viewProfile">مشاهده پروفایل</Nav.Link>
+            <Nav.Link eventKey="viewProfile" style={{ textAlign: "center" }}>
+              مشاهده پروفایل
+            </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="editProfile">ویرایش پروفایل</Nav.Link>
+            <Nav.Link eventKey="editProfile" style={{ textAlign: "center" }}>
+              ویرایش پروفایل
+            </Nav.Link>
           </Nav.Item>
         </Nav>
 
         <Tab.Content>
-          {/* View Profile Tab */}
           <Tab.Pane eventKey="viewProfile">
-            {profileData.first_name && (
+            {profileData.first_name ? (
               <>
-                <h4>نام: {profileData.first_name}</h4>
-                <h4>نام خانوادگی: {profileData.last_name}</h4>
-                <h4>ایمیل: {profileData.email}</h4>
-                <h4>شماره موبایل: {profileData.mobile_number}</h4>
-                <h4>کد ملی: {profileData.national_id}</h4>
-                <h4>تاریخ تولد: {profileData.date_of_birth}</h4>
-                <h4>نقش: {profileData.role}</h4> {/* Display the role */}
-                <Button variant="warning" onClick={() => setActiveTab('editProfile')}>
-                  ویرایش پروفایل
-                </Button>
+                <div className="mb-3">
+                  <strong>نام:</strong> {profileData.first_name}
+                </div>
+                <div className="mb-3">
+                  <strong>نام خانوادگی:</strong> {profileData.last_name}
+                </div>
+                <div className="mb-3">
+                  <strong>ایمیل:</strong> {profileData.email}
+                </div>
+                <div className="mb-3">
+                  <strong>شماره موبایل:</strong> {profileData.mobile_number}
+                </div>
+                <div className="mb-3">
+                  <strong>کد ملی:</strong> {profileData.national_id}
+                </div>
+                <div className="mb-3">
+                  <strong>تاریخ تولد:</strong> {profileData.date_of_birth}
+                </div>
+                <div className="mb-3">
+                  <strong>نقش:</strong> {profileData.role}
+                </div>
                 <Button variant="danger" onClick={handleDeleteAccount} className="mt-3">
                   حذف حساب کاربری
                 </Button>
               </>
-            )}
-            {!profileData.first_name && (
+            ) : (
               <Alert variant="info">لطفا وارد شوید تا پروفایل خود را مشاهده کنید.</Alert>
             )}
           </Tab.Pane>
 
-          {/* Edit Profile Tab */}
           <Tab.Pane eventKey="editProfile">
             <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3">
-                <Form.Label>نام</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="first_name"
-                  value={profileData.first_name}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>نام خانوادگی</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="last_name"
-                  value={profileData.last_name}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>ایمیل</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  value={profileData.email}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>شماره موبایل</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="mobile_number"
-                  value={profileData.mobile_number}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>کد ملی</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="national_id"
-                  value={profileData.national_id}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>تاریخ تولد</Form.Label>
-                <Form.Control
-                  type="date"
-                  name="date_of_birth"
-                  value={profileData.date_of_birth}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-
-              <Button variant="primary" type="submit" disabled={loading}>
-                {loading ? 'در حال به‌روزرسانی...' : 'به‌روزرسانی پروفایل'}
+              {["first_name", "last_name", "email", "mobile_number", "national_id", "date_of_birth"].map(
+                (field, index) => (
+                  <Form.Group className="mb-3" key={index}>
+                    <Form.Label>{field}</Form.Label>
+                    <Form.Control
+                      type={field === "date_of_birth" ? "date" : "text"}
+                      name={field}
+                      value={profileData[field]}
+                      onChange={handleChange}
+                      required
+                    />
+                  </Form.Group>
+                )
+              )}
+              <Button variant="primary" type="submit" disabled={loading} className="w-100">
+                {loading ? "در حال به‌روزرسانی..." : "به‌روزرسانی پروفایل"}
               </Button>
             </Form>
           </Tab.Pane>
         </Tab.Content>
       </Tab.Container>
 
-      {/* Logout button */}
-      <Button variant="danger" onClick={handleLogout} className="mt-3">
+      <Button variant="danger" onClick={handleLogout} className="mt-3 w-100">
         خروج
       </Button>
     </Container>

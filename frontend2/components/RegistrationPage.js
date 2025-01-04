@@ -12,7 +12,7 @@ const RegistrationPage = () => {
     email: "",
     username: "",
     password: "",
-    role: "customer",  // Default role is "customer"
+    role: "customer", // Default role is "customer"
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -63,7 +63,7 @@ const RegistrationPage = () => {
         email: "",
         username: "",
         password: "",
-        role: "customer",  // Reset to default role after registration
+        role: "customer", // Reset to default role after registration
       });
     } catch (error) {
       if (error.response && error.response.data) {
@@ -72,7 +72,7 @@ const RegistrationPage = () => {
           .join(" ");
         backendErrors = backendErrors
           .replaceAll("user with this", "کاربری با این")
-          .replaceAll("already exists.", "وجود دارد. </br>");
+          .replaceAll("already exists.", "وجود دارد.");
         setErrorMessage(backendErrors);
       } else {
         setErrorMessage("خطا در ثبت‌نام، لطفاً دوباره تلاش کنید.");
@@ -82,13 +82,9 @@ const RegistrationPage = () => {
   };
 
   return (
-    <Container className="mt-5">
-      <h2 className="text-center mb-4">ثبت‌نام</h2>
-      {errorMessage && (
-        <Alert variant="danger">
-          <div dangerouslySetInnerHTML={{ __html: errorMessage }}></div>
-        </Alert>
-      )}
+    <Container className="mt-5" style={{ maxWidth: "600px", direction: "rtl" }}>
+      <h2 className="text-center mb-4" style={{ fontWeight: "bold" }}>ثبت‌نام</h2>
+      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
       {successMessage && <Alert variant="success">{successMessage}</Alert>}
       <Form onSubmit={handleRegister}>
         <Form.Group className="mb-3">
@@ -100,6 +96,7 @@ const RegistrationPage = () => {
             value={formData.first_name}
             onChange={handleChange}
             required
+            style={{ textAlign: "right" }}
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -111,6 +108,7 @@ const RegistrationPage = () => {
             value={formData.last_name}
             onChange={handleChange}
             required
+            style={{ textAlign: "right" }}
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -121,6 +119,7 @@ const RegistrationPage = () => {
             value={formData.date_of_birth}
             onChange={handleChange}
             required
+            style={{ textAlign: "right" }}
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -132,6 +131,7 @@ const RegistrationPage = () => {
             value={formData.mobile_number}
             onChange={handleChange}
             required
+            style={{ textAlign: "right" }}
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -143,6 +143,7 @@ const RegistrationPage = () => {
             value={formData.national_id}
             onChange={handleChange}
             required
+            style={{ textAlign: "right" }}
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -154,6 +155,7 @@ const RegistrationPage = () => {
             value={formData.email}
             onChange={handleChange}
             required
+            style={{ textAlign: "right" }}
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -165,6 +167,7 @@ const RegistrationPage = () => {
             value={formData.username}
             onChange={handleChange}
             required
+            style={{ textAlign: "right" }}
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -176,9 +179,9 @@ const RegistrationPage = () => {
             value={formData.password}
             onChange={handleChange}
             required
+            style={{ textAlign: "right" }}
           />
         </Form.Group>
-        {/* Role Selector */}
         <Form.Group className="mb-3">
           <Form.Label>نقش</Form.Label>
           <Form.Control
@@ -187,12 +190,13 @@ const RegistrationPage = () => {
             value={formData.role}
             onChange={handleChange}
             required
+            style={{ textAlign: "right" }}
           >
             <option value="customer">مشتری</option>
             <option value="supplier">تامین کننده</option>
           </Form.Control>
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" style={{ width: "100%" }}>
           ثبت‌نام
         </Button>
       </Form>

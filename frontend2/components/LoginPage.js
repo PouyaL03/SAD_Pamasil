@@ -7,10 +7,12 @@ const LoginPage = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
+    national_id: "",
+    new_password: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [isForgotPassword, setIsForgotPassword] = useState(false); // Toggle for forgot password form
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -27,7 +29,6 @@ const LoginPage = () => {
       setErrorMessage("");
       router.push("/");
     } catch (error) {
-      // Handle email not verified error
       if (error.response && error.response.data.error === "لطفا ایمیل خود را تایید کنید.") {
         setErrorMessage("لطفا ایمیل خود را تایید کنید.");
       } else {
@@ -43,7 +44,7 @@ const LoginPage = () => {
       const response = await axios.post("http://localhost:8000/api/user/forgot-password/", formData);
       setSuccessMessage(response.data.message);
       setErrorMessage("");
-      setIsForgotPassword(false); // Hide the forgot password form after success
+      setIsForgotPassword(false);
     } catch (error) {
       setErrorMessage("خطا در تغییر رمز عبور.");
       setSuccessMessage("");
@@ -51,12 +52,11 @@ const LoginPage = () => {
   };
 
   return (
-    <Container className="mt-5">
-      <h2 className="text-center mb-4">ورود</h2>
+    <Container className="mt-5" style={{ maxWidth: "500px", direction: "rtl" }}>
+      <h2 className="text-center mb-4" style={{ fontWeight: "bold" }}>ورود</h2>
       {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
       {successMessage && <Alert variant="success">{successMessage}</Alert>}
 
-      {/* Login Form */}
       {!isForgotPassword ? (
         <Form onSubmit={handleLogin}>
           <Form.Group className="mb-3">
@@ -67,6 +67,7 @@ const LoginPage = () => {
               placeholder="نام کاربری"
               value={formData.username}
               onChange={handleChange}
+              style={{ textAlign: "right" }}
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -77,21 +78,23 @@ const LoginPage = () => {
               placeholder="رمز عبور"
               value={formData.password}
               onChange={handleChange}
+              style={{ textAlign: "right" }}
             />
           </Form.Group>
-          <Button variant="primary" type="submit">
-            ورود
-          </Button>
-          <Button
-            variant="link"
-            onClick={() => setIsForgotPassword(true)}
-            className="mt-2"
-          >
-            فراموشی رمز عبور؟
-          </Button>
+          <div className="d-flex justify-content-between align-items-center">
+            <Button variant="primary" type="submit" style={{ width: "100px" }}>
+              ورود
+            </Button>
+            <Button
+              variant="link"
+              onClick={() => setIsForgotPassword(true)}
+              style={{ textDecoration: "none", fontSize: "0.9rem" }}
+            >
+              فراموشی رمز عبور؟
+            </Button>
+          </div>
         </Form>
       ) : (
-        // Forgot Password Form
         <Form onSubmit={handleForgotPassword}>
           <Form.Group className="mb-3">
             <Form.Label>کد ملی</Form.Label>
@@ -101,6 +104,7 @@ const LoginPage = () => {
               placeholder="کد ملی"
               value={formData.national_id}
               onChange={handleChange}
+              style={{ textAlign: "right" }}
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -111,18 +115,21 @@ const LoginPage = () => {
               placeholder="رمز عبور جدید"
               value={formData.new_password}
               onChange={handleChange}
+              style={{ textAlign: "right" }}
             />
           </Form.Group>
-          <Button variant="primary" type="submit">
-            تغییر رمز عبور
-          </Button>
-          <Button
-            variant="link"
-            onClick={() => setIsForgotPassword(false)}
-            className="mt-2"
-          >
-            بازگشت به ورود
-          </Button>
+          <div className="d-flex justify-content-between align-items-center">
+            <Button variant="primary" type="submit" style={{ width: "150px" }}>
+              تغییر رمز عبور
+            </Button>
+            <Button
+              variant="link"
+              onClick={() => setIsForgotPassword(false)}
+              style={{ textDecoration: "none", fontSize: "0.9rem" }}
+            >
+              بازگشت به ورود
+            </Button>
+          </div>
         </Form>
       )}
     </Container>
