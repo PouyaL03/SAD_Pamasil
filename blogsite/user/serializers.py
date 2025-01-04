@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import User
 from email.utils import parseaddr
 from rest_framework import serializers
+from datetime import date
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
@@ -27,6 +28,15 @@ class UserSerializer(serializers.ModelSerializer):
 
         if not is_valid_mobile_number(value):
             raise serializers.ValidationError("شماره موبایل نامعتبر است. </br>")
+        return value
+    
+
+    def validate_date_of_birth(self, value):
+        """
+        Ensure the date of birth is in the past.
+        """
+        if value >= date.today():
+            raise serializers.ValidationError("تاریخ تولد باید در گذشته باشد. </br>")
         return value
 
     def validate_national_id(self, value):

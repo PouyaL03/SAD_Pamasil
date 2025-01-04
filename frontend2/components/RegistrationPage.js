@@ -84,8 +84,18 @@ const RegistrationPage = () => {
   return (
     <Container className="mt-5" style={{ maxWidth: "600px", direction: "rtl" }}>
       <h2 className="text-center mb-4" style={{ fontWeight: "bold" }}>ثبت‌نام</h2>
-      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-      {successMessage && <Alert variant="success">{successMessage}</Alert>}
+      {errorMessage && (
+      <Alert variant="danger">
+        <div dangerouslySetInnerHTML={{ __html: errorMessage }} />
+      </Alert>
+      )}
+
+      {successMessage && (
+        <Alert variant="success">
+          <div dangerouslySetInnerHTML={{ __html: successMessage }} />
+        </Alert>
+      )}
+      
       <Form onSubmit={handleRegister}>
         <Form.Group className="mb-3">
           <Form.Label>نام</Form.Label>

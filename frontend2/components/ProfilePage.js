@@ -91,6 +91,11 @@ const ProfilePage = () => {
     setLoading(false);
   };
 
+  const roleMapping = {
+    customer: "مشتری",
+    supplier: "تامین کننده",
+  };
+
   const handleLogout = async () => {
     const token = JSON.parse(localStorage.getItem("user"))?.token;
     if (!token) {
@@ -178,7 +183,7 @@ const ProfilePage = () => {
                   <strong>تاریخ تولد:</strong> {profileData.date_of_birth}
                 </div>
                 <div className="mb-3">
-                  <strong>نقش:</strong> {profileData.role}
+                  <strong>نقش:</strong> {roleMapping[profileData.role] || "نامشخص"}
                 </div>
                 <Button variant="danger" onClick={handleDeleteAccount} className="mt-3">
                   حذف حساب کاربری
@@ -259,6 +264,22 @@ const ProfilePage = () => {
                   required
                 />
               </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>نقش</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="role"
+                  value={roleMapping[profileData.role] || "نامشخص"}
+                  readOnly
+                  style={{ backgroundColor: "#e9ecef", cursor: "not-allowed" }}
+                />
+                <Form.Text className="text-muted">نقش شما قابل تغییر نیست.</Form.Text>
+              </Form.Group>
+
+              {/* <div className="mb-3">
+                  <strong>نقش:</strong> {roleMapping[profileData.role] || "نامشخص"}
+                </div> */}
 
               <Button variant="primary" type="submit" disabled={loading} className="w-100">
                 {loading ? "در حال به‌روزرسانی..." : "به‌روزرسانی پروفایل"}
