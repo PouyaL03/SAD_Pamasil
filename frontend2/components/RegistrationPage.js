@@ -73,6 +73,7 @@ const RegistrationPage = () => {
         backendErrors = backendErrors
           .replaceAll("user with this", "کاربری با این")
           .replaceAll("A user with that username", "کاربری با این نام کاربری")
+          .replaceAll("Ensure this field has no more than 150 characters", "نام کاربری باید حداکثر ۱۵۰ حرف باشد. </br>")
           .replaceAll("already exists.", "وجود دارد. </br>");
         setErrorMessage(backendErrors);
       } else {

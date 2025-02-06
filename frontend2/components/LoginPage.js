@@ -27,7 +27,14 @@ const LoginPage = () => {
       localStorage.setItem("user", JSON.stringify(response.data));
       setSuccessMessage("ورود با موفقیت انجام شد.");
       setErrorMessage("");
-      router.push("/");
+
+      // Check if the user is a supplier
+      if (response.data.role === "supplier") {
+        router.push("/add-product"); // Redirect to add-product page
+      } else {
+        router.push("/"); // Redirect to homepage for non-suppliers
+      }
+
     } catch (error) {
       if (error.response && error.response.data.error === "لطفا ایمیل خود را تایید کنید.") {
         setErrorMessage("لطفا ایمیل خود را تایید کنید.");

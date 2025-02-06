@@ -3,8 +3,7 @@ import ProductList from "../../components/ProductList";
 import RegistrationPage from "../../components/RegistrationPage";
 import LoginPage from "../../components/LoginPage";
 import ProfilePage from "../../components/ProfilePage";
-
-
+import AddProduct from "../../components/Addproduct";
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState("products");
@@ -14,6 +13,8 @@ const Home = () => {
     if (activeTab === "register") return <RegistrationPage />;
     if (activeTab === "login") return <LoginPage />;
     if (activeTab === "profile") return <ProfilePage />;
+    if (activeTab === "addproduct") return <AddProduct />;
+    
   };
 
   return (
@@ -28,7 +29,7 @@ const Home = () => {
       }}
     >
       <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px", gap: "10px" }}>
-        {["products", "register", "login", "profile"].map((tab, idx) => (
+        {["products", "register", "login", "profile", "addproduct"].map((tab, idx) => (
           <button
             key={idx}
             onClick={() => setActiveTab(tab)}
@@ -49,6 +50,8 @@ const Home = () => {
               ? "ثبت‌نام"
               : tab === "login"
               ? "ورود"
+              : tab === "addproduct"
+              ? "اضافه کردن محصولات"
               : "پروفایل"}
           </button>
         ))}
