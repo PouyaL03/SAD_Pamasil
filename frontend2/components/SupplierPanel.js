@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Card, Button, Container, Row, Col,Modal, Form, Alert, Spinner, CardHeader, CardTitle} from "react-bootstrap";
 
 const SupplierPanel = () => {
   const [activeTab, setActiveTab] = useState("list");
@@ -156,6 +157,9 @@ const handleBulkStockUpdate = async () => {
   };
 
   const handleToggleActive = async (productId) => {
+    const confirmAction = window.confirm("آیا مطمئن هستید که می‌خواهید وضعیت این محصول را تغییر دهید؟");
+    if (!confirmAction) return;
+
     try {
       const response = await axios.post(`http://127.0.0.1:8000/api/toggle-active/${productId}/`, {}, axiosConfig);
       alert(response.data.message);
@@ -166,6 +170,9 @@ const handleBulkStockUpdate = async () => {
   };
 
   const handleDeleteProduct = async (productId) => {
+    const confirmAction = window.confirm("آیا مطمئن هستید که می‌خواهید این محصول را حذف کنید؟");
+    if (!confirmAction) return;
+
     try {
       await axios.delete(`http://127.0.0.1:8000/api/delete/${productId}/`, axiosConfig);
       alert("Product deleted successfully!");
@@ -193,115 +200,203 @@ const handleBulkStockUpdate = async () => {
       {activeTab === "list" && (
         <div>
           <h3>فیلتر محصولات</h3>
-          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "10px" }}>
-            <input type="text" name="name" placeholder="نام محصول" value={filters.name} onChange={handleFilterChange} />
-            <input type="text" name="category" placeholder="دسته‌بندی" value={filters.category} onChange={handleFilterChange} />
-            <input type="number" name="min_price" placeholder="حداقل قیمت" value={filters.min_price} onChange={handleFilterChange} />
-            <input type="number" name="max_price" placeholder="حداکثر قیمت" value={filters.max_price} onChange={handleFilterChange} />
-            <input type="number" name="min_stock" placeholder="حداقل موجودی" value={filters.min_stock} onChange={handleFilterChange} />
-            <input type="number" name="max_stock" placeholder="حداکثر موجودی" value={filters.max_stock} onChange={handleFilterChange} />
-            <select name="is_active" value={filters.is_active} onChange={handleFilterChange}>
-              <option value="">همه</option>
-              <option value="true">فعال</option>
-              <option value="false">غیرفعال</option>
+          <div className="grid grid-cols-3 gap-4 mb-6 bg-gray-800 p-6 rounded-lg shadow">
+            <input
+              type="text"
+              name="name"
+              placeholder="🔍 نام محصول"
+              value={filters.name}
+              onChange={handleFilterChange}
+              className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+            <input
+              type="text"
+              name="category"
+              placeholder="📁 دسته‌بندی"
+              value={filters.category}
+              onChange={handleFilterChange}
+              className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+            <input
+              type="number"
+              name="min_price"
+              placeholder="💰 حداقل قیمت"
+              value={filters.min_price}
+              onChange={handleFilterChange}
+              className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+            <input
+              type="number"
+              name="max_price"
+              placeholder="💰 حداکثر قیمت"
+              value={filters.max_price}
+              onChange={handleFilterChange}
+              className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+            <input
+              type="number"
+              name="min_stock"
+              placeholder="📦 حداقل موجودی"
+              value={filters.min_stock}
+              onChange={handleFilterChange}
+              className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+            <input
+              type="number"
+              name="max_stock"
+              placeholder="📦 حداکثر موجودی"
+              value={filters.max_stock}
+              onChange={handleFilterChange}
+              className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+            <select
+              name="is_active"
+              value={filters.is_active}
+              onChange={handleFilterChange}
+              className="p-3 bg-gray-700 rounded text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+            >
+              <option value="">🔄 همه</option>
+              <option value="true">✅ فعال</option>
+              <option value="false">❌ غیرفعال</option>
             </select>
-            <select name="sort_by_date" value={filters.sort_by_date} onChange={handleFilterChange}>
-              <option value="desc">جدیدترین</option>
-              <option value="asc">قدیمی‌ترین</option>
+            <select
+              name="sort_by_date"
+              value={filters.sort_by_date}
+              onChange={handleFilterChange}
+              className="p-3 bg-gray-700 rounded text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+            >
+              <option value="desc">📅 جدیدترین</option>
+              <option value="asc">📅 قدیمی‌ترین</option>
             </select>
-            <button onClick={fetchProducts}>اعمال فیلتر</button>
           </div>
 
           {/* Product List */}
-          <ul style={{ listStyle: "none", padding: 0 }}>
-            {products.map((product) => (
-              <li key={product.id} style={{ padding: "15px", border: "1px solid #ddd", marginBottom: "10px", borderRadius: "5px" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <Container className="mt-5" style={{ direction: "rtl", maxWidth: "1200px" }}>
+      <h1 className="text-center mb-4" style={{ fontWeight: "bold" }}>محصولات ما</h1>
+      <Row>
+        {products.map((product) => (
+          <Col key={product.id} sm={12} md={6} lg={4} className="mb-4">
+            <Card className="shadow-sm h-100">
+              <Card.Img
+                variant="top"
+                src={product.images ? `http://127.0.0.1:8000${product.images}` : "default-image.jpg"}
+                style={{ height: "200px", objectFit: "cover" }}
+              />
+              <Card.Body>
+                <div className="d-flex align-items-center mb-2">
                   <input
                     type="checkbox"
                     checked={selectedProducts[product.id] !== undefined}
                     onChange={() => handleProductSelection(product.id)}
+                    className="me-2"
                   />
-                  <h4 style={{ margin: 0 }}>{product.name}</h4>
+                  <Card.Title style={{ fontWeight: "bold" }}>{product.name}</Card.Title>
                 </div>
-                <p><strong>توضیحات کوتاه:</strong> {product.short_description}</p>
-                <p><strong>توضیحات کامل:</strong> {product.long_description}</p>
-                <p><strong>قیمت:</strong> {product.unit_price} تومان</p>
-                <p><strong>موجودی:</strong> {product.initial_stock}</p>
-                <p><strong>دسته‌بندی:</strong> {product.category}</p>
-                <p><strong>وضعیت:</strong> {product.is_active ? "فعال" : "غیرفعال"}</p>
-                {product.images && (
-                  <p>
-                    <strong>تصویر:</strong>
-                    <img src={`http://127.0.0.1:8000${product.images}`} alt={product.name} width="150" style={{ borderRadius: "8px" }} />
-                  </p>
-                )}
-                <p><strong>تاریخ ایجاد:</strong> {new Date(product.created_at).toLocaleString()}</p>
-
-                {/* Buttons */}
-                <div style={{ display: "flex", gap: "10px" }}>
-                  <button onClick={() => setEditingProduct(product)} style={actionButtonStyle("edit")}>
-                    ویرایش
-                  </button>
-                  <button onClick={() => handleToggleActive(product.id)} style={actionButtonStyle("toggle")}>
-                    {product.is_active ? "غیرفعال کردن" : "فعال کردن"}
-                  </button>
-                  <button onClick={() => handleDeleteProduct(product.id)} style={actionButtonStyle("delete")}>
-                    حذف
-                  </button>
+                <Card.Text className="text-muted">{product.short_description}</Card.Text>
+                <Card.Text><strong>📜 توضیحات:</strong> {product.long_description}</Card.Text>
+                <Card.Text style={{ fontWeight: "bold", color: "#007bff" }}>
+                  💰 قیمت: {product.unit_price.toLocaleString()} تومان
+                </Card.Text>
+                <Card.Text><strong>📦 موجودی:</strong> {product.initial_stock}</Card.Text>
+                <Card.Text><strong>🏷 دسته‌بندی:</strong> {product.category}</Card.Text>
+                <Card.Text className={product.is_active ? "text-success" : "text-danger"}>
+                  <strong>🔄 وضعیت:</strong> {product.is_active ? "فعال" : "غیرفعال"}
+                </Card.Text>
+                <Card.Text className="text-muted"><strong>📅 تاریخ ایجاد:</strong> {new Date(product.created_at).toLocaleString()}</Card.Text>
+                <div className="d-flex flex-column gap-2">
+                  <Button variant="warning" onClick={() => setEditingProduct(product)}>
+                    ✏️ ویرایش
+                  </Button>
+                  <Button variant={product.is_active ? "info" : "success"} onClick={() => handleToggleActive(product.id)}>
+                    {product.is_active ? "🚫 غیرفعال کردن" : "✅ فعال کردن"}
+                  </Button>
+                  <Button variant="danger" onClick={() => handleDeleteProduct(product.id)}>
+                    🗑 حذف
+                  </Button>
                 </div>
-              </li>
-            ))}
-          </ul>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </Container>
 
           {editingProduct && (
-            <form onSubmit={handleEditProduct} style={{ marginTop: "20px" }}>
-              <h4>ویرایش محصول: {editingProduct.name}</h4>
-              <input
-                type="text"
-                value={editingProduct.name}
-                onChange={(e) => setEditingProduct({ ...editingProduct, name: e.target.value })}
-                placeholder="نام محصول"
-              />
-              <input
-                type="text"
-                value={editingProduct.short_description}
-                onChange={(e) => setEditingProduct({ ...editingProduct, short_description: e.target.value })}
-                placeholder="توضیحات کوتاه"
-              />
-              <textarea
-                value={editingProduct.long_description}
-                onChange={(e) => setEditingProduct({ ...editingProduct, long_description: e.target.value })}
-                placeholder="توضیحات کامل"
-              />
-              <input
-                type="number"
-                value={editingProduct.unit_price}
-                onChange={(e) => setEditingProduct({ ...editingProduct, unit_price: e.target.value })}
-                placeholder="قیمت واحد"
-              />
-              <input
-                type="number"
-                value={editingProduct.initial_stock}
-                onChange={(e) => setEditingProduct({ ...editingProduct, initial_stock: e.target.value })}
-                placeholder="موجودی"
-              />
-              <input
-                type="text"
-                value={editingProduct.category}
-                onChange={(e) => setEditingProduct({ ...editingProduct, category: e.target.value })}
-                placeholder="دسته‌بندی"
-              />
-              <select
-                value={editingProduct.is_active.toString()}
-                onChange={(e) => setEditingProduct({ ...editingProduct, is_active: e.target.value === "true" })}
-              >
-                <option value="true">فعال</option>
-                <option value="false">غیرفعال</option>
-              </select>
-              <input type="file" onChange={(e) => setEditingProduct({ ...editingProduct, images: e.target.files[0] })} />
-              <button type="submit" style={actionButtonStyle("save")}>ذخیره تغییرات</button>
-              <button onClick={() => setEditingProduct(null)} style={actionButtonStyle("cancel")}>لغو</button>
+            <form onSubmit={handleEditProduct} className="grid grid-cols-2 gap-4 bg-gray-800 p-6 rounded-lg shadow">
+              <div className="flex flex-col gap-4">
+                <input
+                  type="text"
+                  placeholder="📌 نام محصول"
+                  value={editingProduct.name}
+                  onChange={(e) => setEditingProduct({ ...editingProduct, name: e.target.value })}
+                  required
+                  className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+                />
+                <input
+                  type="text"
+                  placeholder="📝 توضیحات کوتاه"
+                  value={editingProduct.short_description}
+                  onChange={(e) => setEditingProduct({ ...editingProduct, short_description: e.target.value })}
+                  required
+                  className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+                />
+                <textarea
+                  placeholder="📜 توضیحات کامل"
+                  value={editingProduct.long_description}
+                  onChange={(e) => setEditingProduct({ ...editingProduct, long_description: e.target.value })}
+                  required
+                  className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500 h-24"
+                />
+                <select
+                  value={editingProduct.category}
+                  onChange={(e) => setEditingProduct({ ...editingProduct, category: e.target.value })}
+                  required
+                  className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+                >
+                  <option value="">🏷 دسته‌بندی را انتخاب کنید</option>
+                  {categories.map((category) => (
+                    <option key={category} value={category}>{category}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex flex-col gap-4">
+                <input
+                  type="number"
+                  placeholder="💰 قیمت واحد"
+                  value={editingProduct.unit_price}
+                  onChange={(e) => setEditingProduct({ ...editingProduct, unit_price: e.target.value })}
+                  required
+                  className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+                />
+                <input
+                  type="number"
+                  placeholder="📦 موجودی"
+                  value={editingProduct.initial_stock}
+                  onChange={(e) => setEditingProduct({ ...editingProduct, initial_stock: e.target.value })}
+                  required
+                  className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+                />
+                <input
+                  type="file"
+                  onChange={(e) => setEditingProduct({ ...editingProduct, images: e.target.files[0] })}
+                  className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+                />
+                <div className="flex gap-4">
+                  <button
+                    type="submit"
+                    className="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg text-black w-full text-lg font-bold shadow-lg transition duration-300 ease-in-out flex items-center justify-center gap-2"
+                  >
+                    <span className="text-xl">💾</span> ذخیره تغییرات
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setEditingProduct(null)}
+                    className="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-lg text-black w-full text-lg font-bold shadow-lg transition duration-300 ease-in-out flex items-center justify-center gap-2"
+                  >
+                    <span className="text-xl">❌</span> لغو
+                  </button>
+                </div>
+              </div>
             </form>
           )}
         </div>
@@ -323,23 +418,82 @@ const handleBulkStockUpdate = async () => {
 
       {/* Create Product */}
       {activeTab === "create" && (
-        <div>
-          <h3>افزودن محصول جدید</h3>
-          <form onSubmit={handleCreateProduct} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            <input type="text" placeholder="نام محصول" value={newProduct.name} onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })} required />
-            <input type="text" placeholder="توضیحات کوتاه" value={newProduct.short_description} onChange={(e) => setNewProduct({ ...newProduct, short_description: e.target.value })} required />
-            <textarea placeholder="توضیحات کامل" value={newProduct.long_description} onChange={(e) => setNewProduct({ ...newProduct, long_description: e.target.value })} required />
-            <input type="number" placeholder="قیمت واحد" value={newProduct.unit_price} onChange={(e) => setNewProduct({ ...newProduct, unit_price: e.target.value })} required />
-            <input type="number" placeholder="موجودی اولیه" value={newProduct.initial_stock} onChange={(e) => setNewProduct({ ...newProduct, initial_stock: e.target.value })} required />
-            <input type="text" placeholder="دسته‌بندی" value={newProduct.category} onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })} required />
-            <input type="file" onChange={(e) => setNewProduct({ ...newProduct, images: e.target.files[0] })} />
-            <button type="submit" style={actionButtonStyle("create")}>افزودن محصول</button>
-          </form>
-        </div>
+        <div className="p-6 bg-gray-900 text-black rounded-lg shadow-lg max-w-4xl mx-auto">
+        <h3 className="text-2xl font-semibold mb-6 text-center text-orange-500">🛍️ افزودن محصول جدید</h3>
+        
+        <form onSubmit={handleCreateProduct} className="grid grid-cols-2 gap-4 bg-gray-800 p-6 rounded-lg shadow">
+          <div className="flex flex-col gap-4">
+            <input
+              type="text"
+              placeholder="📌 نام محصول"
+              value={newProduct.name}
+              onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+              required
+              className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+            <input
+              type="text"
+              placeholder="📝 توضیحات کوتاه"
+              value={newProduct.short_description}
+              onChange={(e) => setNewProduct({ ...newProduct, short_description: e.target.value })}
+              required
+              className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+            <textarea
+              placeholder="📜 توضیحات کامل"
+              value={newProduct.long_description}
+              onChange={(e) => setNewProduct({ ...newProduct, long_description: e.target.value })}
+              required
+              className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500 h-24"
+            />
+            <select
+            value={newProduct.category}
+            onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
+            required
+            className="p-3 bg-white rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+            >
+              <option value="">🏷 دسته‌بندی را انتخاب کنید</option>
+              {categories.map((category) => (
+                <option key={category} value={category}>{category}</option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-col gap-4">
+            <input
+              type="number"
+              placeholder="💰 قیمت واحد"
+              value={newProduct.unit_price}
+              onChange={(e) => setNewProduct({ ...newProduct, unit_price: e.target.value })}
+              required
+              className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+            <input
+              type="number"
+              placeholder="📦 موجودی اولیه"
+              value={newProduct.initial_stock}
+              onChange={(e) => setNewProduct({ ...newProduct, initial_stock: e.target.value })}
+              required
+              className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+            <input
+              type="file"
+              onChange={(e) => setNewProduct({ ...newProduct, images: e.target.files[0] })}
+              className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+            <button
+            type="submit"
+            className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 px-6 py-3 rounded-lg text-black w-full text-lg font-bold shadow-xl transform transition duration-300 hover:scale-105">
+            ➕ افزودن محصول
+            </button>
+          </div>
+        </form>
+      </div>
       )}
     </div>
   );
 };
+
+const categories = ["بادکنک", "کیک", "شمع", "استند", "غیره"];
 
 const tabStyle = (isActive) => ({
   padding: "10px 20px",
