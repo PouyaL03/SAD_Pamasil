@@ -4,7 +4,7 @@ from .models import Product
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['name', 'short_description', 'long_description', 'unit_price', 'initial_stock', 'category', 'images']
+        fields = ['id', 'name', 'short_description', 'long_description', 'unit_price', 'initial_stock', 'category', 'images', 'is_active', 'created_at']
 
     def validate(self, data):
         errors = {}
@@ -29,7 +29,7 @@ class ProductUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['name', 'short_description', 'long_description', 'unit_price', 'initial_stock', 'category', 'new_image']
+        fields = ['id', 'name', 'short_description', 'long_description', 'unit_price', 'initial_stock', 'category', 'new_image', 'is_active', 'created_at']
 
     def update(self, instance, validated_data):
         if 'new_image' in validated_data:
