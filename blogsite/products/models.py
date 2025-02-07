@@ -1,5 +1,6 @@
 from django.db import models
 from user.models import User
+from django.utils.timezone import now
 
 class Product(models.Model):
     supplier = models.ForeignKey(
@@ -17,6 +18,8 @@ class Product(models.Model):
     initial_stock = models.PositiveIntegerField(verbose_name="موجودی اولیه", default=0)
     category = models.CharField(max_length=255, verbose_name="دسته‌بندی", blank=True, null=True, default="دسته‌بندی نشده")
     images = models.ImageField(upload_to='product_images/', blank=True, null=True)
+    created_at = models.DateTimeField(default=now)
+    is_active = models.BooleanField(default=True, verbose_name="فعال")
 
     def __str__(self):
         return self.name

@@ -23,3 +23,21 @@ class ProductSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(errors)
 
         return data
+
+class ProductUpdateSerializer(serializers.ModelSerializer):
+    new_image = serializers.ImageField(required=False)
+
+    class Meta:
+        model = Product
+        fields = ['name', 'short_description', 'long_description', 'unit_price', 'initial_stock', 'category', 'new_image']
+
+    def update(self, instance, validated_data):
+        if 'new_image' in validated_data:
+            instance.images = validated_data.pop('new_image')
+        for field, value in validated_data.items():
+            setattr(instance, field, value)
+        instance.save()
+        return instance
+
+
+
