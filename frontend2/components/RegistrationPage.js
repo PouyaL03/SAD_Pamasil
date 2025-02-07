@@ -12,6 +12,7 @@ const RegistrationPage = () => {
     email: "",
     username: "",
     password: "",
+    password2: "", // Added field for repeat password
     role: "customer", // Default role is "customer"
   });
   const [errorMessage, setErrorMessage] = useState("");
@@ -50,6 +51,11 @@ const RegistrationPage = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    if (formData.password !== formData.password2) {
+      setErrorMessage("رمز عبور و تکرار رمز عبور باید یکسان باشند.");
+      setSuccessMessage("");
+      return;
+    }
     try {
       await axios.post("http://localhost:8000/api/user/register/", formData);
       setSuccessMessage("ثبت‌نام با موفقیت انجام شد. لطفا ایمیل خود را برای تایید حساب بررسی کنید.");
@@ -63,6 +69,7 @@ const RegistrationPage = () => {
         email: "",
         username: "",
         password: "",
+        password2: "", // Reset password fields
         role: "customer", // Reset to default role after registration
       });
     } catch (error) {
@@ -86,9 +93,9 @@ const RegistrationPage = () => {
     <Container className="mt-5" style={{ maxWidth: "600px", direction: "rtl" }}>
       <h2 className="text-center mb-4" style={{ fontWeight: "bold" }}>ثبت‌نام</h2>
       {errorMessage && (
-      <Alert variant="danger">
-        <div dangerouslySetInnerHTML={{ __html: errorMessage }} />
-      </Alert>
+        <Alert variant="danger">
+          <div dangerouslySetInnerHTML={{ __html: errorMessage }} />
+        </Alert>
       )}
 
       {successMessage && (
@@ -188,6 +195,18 @@ const RegistrationPage = () => {
             name="password"
             placeholder="رمز عبور"
             value={formData.password}
+            onChange={handleChange}
+            required
+            style={{ textAlign: "right" }}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>تکرار رمز عبور</Form.Label>
+          <Form.Control
+            type="password"
+            name="password2"
+            placeholder="تکرار رمز عبور"
+            value={formData.password2}
             onChange={handleChange}
             required
             style={{ textAlign: "right" }}
