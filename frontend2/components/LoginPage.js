@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Alert } from "react-bootstrap";
 import axios from "axios";
-import { useRouter } from "next/router";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -13,40 +12,87 @@ const LoginPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [isForgotPassword, setIsForgotPassword] = useState(false);
-  const router = useRouter();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  // Helper function to translate common English error messages into Persian.
+  const translateErrorMessage = (message) => {
+    const msg = message.toLowerCase();
+    if (msg.includes("ensure this field has at least 8 characters")) {
+      return "رمز عبور باید حداقل 8 کاراکتر باشد.";
+    }
+    if (msg.includes("this field may not be blank")) {
+      return "این فیلد نمی‌تواند خالی باشد.";
+    }
+    if (msg.includes("invalid")) {
+      return "مقدار وارد شده معتبر نیست.";
+    }
+    if (msg.includes("not found")) {
+      return "یافت نشد.";
+    }
+    // You can add more mappings here as needed.
+    return message;
   };
 
+  // Handle changes for form fields.
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Handler for normal login.
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/api/user/login/", formData);
+      const response = await axios.post("http://localhost:8000/api/user/login/", {
+        username: formData.username,
+        password: formData.password,
+      });
+      // Save the user data in localStorage.
       localStorage.setItem("user", JSON.stringify(response.data));
       setSuccessMessage("ورود با موفقیت انجام شد.");
       setErrorMessage("");
-      router.push("/");
+      // Reload the page so the Home component can pick up the logged-in user.
+      window.location.reload();
     } catch (error) {
-      if (error.response && error.response.data.error === "لطفا ایمیل خود را تایید کنید.") {
-        setErrorMessage("لطفا ایمیل خود را تایید کنید.");
+      let apiError = "";
+      if (error.response && error.response.data) {
+        if (typeof error.response.data === "string") {
+          apiError = error.response.data;
+        } else if (typeof error.response.data === "object") {
+          // Combine all error messages into a single string.
+          apiError = Object.values(error.response.data).flat().join(" ");
+        }
       } else {
-        setErrorMessage("نام کاربری یا رمز عبور اشتباه است.");
+        apiError = "خطا در برقراری ارتباط با سرور.";
       }
+      setErrorMessage(translateErrorMessage(apiError));
       setSuccessMessage("");
     }
   };
 
+  // Handler for forgot password.
   const handleForgotPassword = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/api/user/forgot-password/", formData);
-      setSuccessMessage(response.data.message);
+      const response = await axios.post("http://localhost:8000/api/user/forgot-password/", {
+        national_id: formData.national_id,
+        new_password: formData.new_password,
+      });
+      setSuccessMessage(response.data.message || "رمز عبور با موفقیت تغییر کرد.");
       setErrorMessage("");
+      // After a successful password change, revert to the login form.
       setIsForgotPassword(false);
     } catch (error) {
-      setErrorMessage("خطا در تغییر رمز عبور.");
+      let apiError = "";
+      if (error.response && error.response.data) {
+        if (typeof error.response.data === "string") {
+          apiError = error.response.data;
+        } else if (typeof error.response.data === "object") {
+          apiError = Object.values(error.response.data).flat().join(" ");
+        }
+      } else {
+        apiError = "خطا در برقراری ارتباط با سرور.";
+      }
+      setErrorMessage(translateErrorMessage(apiError));
       setSuccessMessage("");
     }
   };
@@ -56,7 +102,7 @@ const LoginPage = () => {
       <h2 className="text-center mb-4" style={{ fontWeight: "bold" }}>ورود</h2>
       {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
       {successMessage && <Alert variant="success">{successMessage}</Alert>}
-
+      
       {!isForgotPassword ? (
         <Form onSubmit={handleLogin}>
           <Form.Group className="mb-3">
@@ -68,6 +114,7 @@ const LoginPage = () => {
               value={formData.username}
               onChange={handleChange}
               style={{ textAlign: "right" }}
+              required
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -79,6 +126,7 @@ const LoginPage = () => {
               value={formData.password}
               onChange={handleChange}
               style={{ textAlign: "right" }}
+              required
             />
           </Form.Group>
           <div className="d-flex justify-content-between align-items-center">
@@ -105,6 +153,7 @@ const LoginPage = () => {
               value={formData.national_id}
               onChange={handleChange}
               style={{ textAlign: "right" }}
+              required
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -116,6 +165,7 @@ const LoginPage = () => {
               value={formData.new_password}
               onChange={handleChange}
               style={{ textAlign: "right" }}
+              required
             />
           </Form.Group>
           <div className="d-flex justify-content-between align-items-center">
