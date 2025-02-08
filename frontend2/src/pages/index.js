@@ -5,6 +5,7 @@ import RegistrationPage from "../../components/RegistrationPage";
 import LoginPage from "../../components/LoginPage";
 import ProfilePage from "../../components/ProfilePage";
 import SupplierPanel from "../../components/SupplierPanel"; // Import the SupplierPanel component
+import CustomerPanel from "../../components/CustomerPanel";
 
 const Home = () => {
   // Default to "register" when not logged in.
@@ -49,8 +50,8 @@ const Home = () => {
       return activeTab === "register" ? <RegistrationPage /> : <LoginPage />;
     }
     // When logged in: if activeTab is "products", show ProductList; if "supplierPanel", show SupplierPanel; otherwise, show ProfilePage.
-    if (activeTab === "products") {
-      return <ProductList />;
+    if (activeTab === "customerPanel") {
+      return <CustomerPanel />;
     } else if (activeTab === "supplierPanel") {
       return <SupplierPanel />;
     }
@@ -67,7 +68,7 @@ const Home = () => {
     navButtons = ["profile", "supplierPanel"];
   } else if (user.role === "customer") {
     // For customers, show only "profile" and "products" buttons.
-    navButtons = ["products", "profile"];
+    navButtons = ["profile", "customerPanel"];
   }
 
   // Helper: Map internal tab names to Persian labels.
@@ -79,7 +80,7 @@ const Home = () => {
         return "ورود";
       case "profile":
         return "پروفایل";
-      case "products":
+      case "customerPanel":
         return "محصولات";
       case "supplierPanel":
         return "پنل تامین کننده";

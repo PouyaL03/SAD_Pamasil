@@ -1,11 +1,16 @@
 from decimal import Decimal
+from django.db.models import Q
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from .models import Product
-from .serializers import ProductSerializer, ProductUpdateSerializer
+from .serializers import (
+    ProductSerializer,
+    ProductUpdateSerializer,
+    CustomerProductSerializer  # new import
+)
 
 # Public product list view (if needed)
 class ProductListView(APIView):
@@ -51,7 +56,10 @@ class ProductListSupplierView(APIView):
         sort_order = request.query_params.get('sort_by_date', 'desc')  # Default to descending
 
         if name_or_keyword:
-            products = products.filter(name__icontains=name_or_keyword) | products.filter(short_description__icontains=name_or_keyword)
+            products = products.filter(
+                Q(name__icontains=name_or_keyword) |
+                Q(short_description__icontains=name_or_keyword)
+            )
         if min_price:
             products = products.filter(unit_price__gte=min_price)
         if max_price:
@@ -231,5 +239,56 @@ class BulkStockUpdateView(APIView):
             "updated_products": updated_products,
             "errors": errors,
             "product_list": ProductSerializer(Product.objects.filter(supplier=request.user), many=True).data,
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
+
+# ============================================================================
+# NEW: Customer Panel View
+# This view is for customers (read-only) to see all active products with full details
+# (the same fields as in the supplier panel) plus the supplier's username.
+# Customers cannot add, edit, or delete products.
+# ============================================================================
+
+class CustomerPanelProductListView(APIView):
+    permission_classes = [IsAuthenticated]  # Remove or adjust if you want this to be public
+
+    def get(self, request):
+        # Only show active products
+        products = Product.objects.filter(is_active=True)
+
+        # Get query parameters for filtering and sorting (same as supplier panel)
+        name_or_keyword = request.query_params.get('name')
+        min_price = request.query_params.get('min_price')
+        max_price = request.query_params.get('max_price')
+        min_stock = request.query_params.get('min_stock')
+        max_stock = request.query_params.get('max_stock')
+        category = request.query_params.get('category')
+        sort_order = request.query_params.get('sort_by_date', 'desc')
+
+        if name_or_keyword:
+            products = products.filter(
+                Q(name__icontains=name_or_keyword) |
+                Q(short_description__icontains=name_or_keyword)
+            )
+        if min_price:
+            products = products.filter(unit_price__gte=min_price)
+        if max_price:
+            products = products.filter(unit_price__lte=max_price)
+        if min_stock:
+            products = products.filter(initial_stock__gte=min_stock)
+        if max_stock:
+            products = products.filter(initial_stock__lte=max_stock)
+        if category:
+            products = products.filter(category__icontains=category)
+        if sort_order == 'asc':
+            products = products.order_by('created_at')
+        else:
+            products = products.order_by('-created_at')
+
+        # Use the customer serializer which includes the supplier's username
+        serializer = CustomerProductSerializer(products, many=True)
+        response_data = {
+            "total_results": products.count(),
+            "products": serializer.data
         }
         return Response(response_data, status=status.HTTP_200_OK)

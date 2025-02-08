@@ -38,6 +38,17 @@ class ProductUpdateSerializer(serializers.ModelSerializer):
             setattr(instance, field, value)
         instance.save()
         return instance
+    
+    
+class CustomerProductSerializer(serializers.ModelSerializer):
+    supplier_username = serializers.CharField(source='supplier.username', read_only=True)
 
+    class Meta:
+        model = Product
+        fields = [
+            'id', 'name', 'short_description', 'long_description',
+            'unit_price', 'initial_stock', 'category', 'images',
+            'is_active', 'created_at', 'supplier_username'
+        ]
 
 
