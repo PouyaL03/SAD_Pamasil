@@ -5,6 +5,16 @@ from datetime import date
 import re  # for additional password validation if needed
 
 class UserSerializer(serializers.ModelSerializer):
+    # Explicitly declare the username field to override default error messages.
+    username = serializers.RegexField(
+        regex=r'^[\w.@+-]+$',
+        max_length=150,  # adjust if needed based on your User model
+        error_messages={
+            'invalid': 'نام کاربری نامعتبر است. این مقدار فقط می‌تواند شامل حروف، اعداد و کاراکترهای @/./+/-/_ باشد.',
+            'blank': 'این فیلد نمی‌تواند خالی باشد.'
+        }
+    )
+    
     password = serializers.CharField(
         write_only=True,
         min_length=8,
@@ -13,11 +23,18 @@ class UserSerializer(serializers.ModelSerializer):
             'blank': 'این فیلد نمی‌تواند خالی باشد.'
         }
     )
-    # Add the password confirmation field
+    # Add the password confirmation field as a normal field.
     password2 = serializers.CharField(
         write_only=True,
         label="تکرار رمز عبور",
         error_messages={
+            'blank': 'این فیلد نمی‌تواند خالی باشد.'
+        }
+    )
+    # Explicitly declare the email field to override default error messages.
+    email = serializers.EmailField(
+        error_messages={
+            'invalid': 'ایمیل نامعتبر است.',
             'blank': 'این فیلد نمی‌تواند خالی باشد.'
         }
     )
@@ -32,18 +49,26 @@ class UserSerializer(serializers.ModelSerializer):
             'username', 'first_name', 'last_name', 'date_of_birth',
             'mobile_number', 'national_id', 'email', 'password', 'password2', 'role'
         ]
+        # You can still set extra_kwargs for other fields if needed.
+        extra_kwargs = {
+            'national_id': {
+                'max_length': 10,
+                'error_messages': {
+                    'max_length': 'کد ملی نباید بیش از 10 کاراکتر باشد.',
+                    'blank': 'این فیلد نمی‌تواند خالی باشد.'
+                }
+            }
+        }
 
-    def validate(self, data):
+    def validate_password2(self, value):
         """
-        Ensure that the password and its confirmation match.
+        Field-level validation for password confirmation.
+        This ensures that the value entered in password2 matches the password field.
         """
-        password = data.get('password')
-        password2 = data.get('password2')
-        if password != password2:
-            raise serializers.ValidationError({
-                "password2": "رمز عبور و تکرار رمز عبور باید یکسان باشند."
-            })
-        return data
+        password = self.initial_data.get('password')
+        if password != value:
+            raise serializers.ValidationError("رمز عبور و تکرار رمز عبور باید یکسان باشند.")
+        return value
 
     def validate_password(self, value):
         """
@@ -69,7 +94,7 @@ class UserSerializer(serializers.ModelSerializer):
                 mobile_number.isdigit()
             )
         if not is_valid_mobile_number(value):
-            raise serializers.ValidationError("شماره موبایل نامعتبر است. </br>")
+            raise serializers.ValidationError("شماره موبایل نامعتبر است.")
         return value
 
     def validate_date_of_birth(self, value):
@@ -77,7 +102,7 @@ class UserSerializer(serializers.ModelSerializer):
         Ensure the date of birth is in the past.
         """
         if value >= date.today():
-            raise serializers.ValidationError("تاریخ تولد باید در گذشته باشد. </br>")
+            raise serializers.ValidationError("تاریخ تولد باید در گذشته باشد.")
         return value
 
     def validate_national_id(self, value):
@@ -93,15 +118,15 @@ class UserSerializer(serializers.ModelSerializer):
             check_digit = int(national_id[9])
             return (remainder < 2 and check_digit == remainder) or (remainder >= 2 and check_digit == (11 - remainder))
         if not is_valid_national_id(value):
-            raise serializers.ValidationError("کد ملی نامعتبر است. </br>")
+            raise serializers.ValidationError("کد ملی نامعتبر است.")
         return value
 
     def validate_email(self, value):
         """
-        Validate that the email is in a valid format with a guaranteed Persian error message.
+        Validate that the email is in a valid format.
         """
         if "@" not in parseaddr(value)[1]:
-            raise serializers.ValidationError("ایمیل نامعتبر است. </br>")
+            raise serializers.ValidationError("ایمیل نامعتبر است.")
         return value
 
     def create(self, validated_data):
