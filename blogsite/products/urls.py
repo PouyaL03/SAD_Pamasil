@@ -1,5 +1,12 @@
 from django.urls import path
-from .views import ProductListSupplierView, ProductCreateView, ProductUpdateView, ProductDeleteView, ProductToggleActiveView, BulkStockUpdateView
+from .views import (
+    ProductListSupplierView,
+    ProductCreateView,
+    ProductUpdateView,
+    ProductDeleteView,
+    ProductToggleActiveView,
+    BulkStockUpdateView
+)
 
 urlpatterns = [
     path('products/', ProductListSupplierView.as_view(), name='product-list'),
