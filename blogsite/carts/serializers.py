@@ -1,8 +1,8 @@
 # cart/serializers.py
 from rest_framework import serializers
 from .models import Cart, CartItem
-from product.models import Product
-from product.serializers import ProductSerializer
+from products.models import Product
+from products.serializers import ProductSerializer
 
 class CartItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer(read_only=True)

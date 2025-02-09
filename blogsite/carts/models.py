@@ -1,7 +1,7 @@
 # cart/models.py
 from django.db import models
 from django.conf import settings
-from product.models import Product
+from products.models import Product
 
 class Cart(models.Model):
     customer = models.OneToOneField(
