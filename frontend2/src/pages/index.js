@@ -4,8 +4,8 @@ import ProductList from "../../components/ProductList";
 import RegistrationPage from "../../components/RegistrationPage";
 import LoginPage from "../../components/LoginPage";
 import ProfilePage from "../../components/ProfilePage";
-import SupplierPanel from "../../components/SupplierPanel"; // Import the SupplierPanel component
-import CustomerPanel from "../../components/CustomerPanel";
+import SupplierPanel from "../../components/SupplierPanel"; // Supplier panel component
+import CustomerPanel from "../../components/CustomerPanel"; // Customer panel component
 
 const Home = () => {
   // Default to "register" when not logged in.
@@ -49,7 +49,7 @@ const Home = () => {
       // When not logged in, show Registration or Login.
       return activeTab === "register" ? <RegistrationPage /> : <LoginPage />;
     }
-    // When logged in: if activeTab is "products", show ProductList; if "supplierPanel", show SupplierPanel; otherwise, show ProfilePage.
+    // When logged in, choose the view based on the active tab.
     if (activeTab === "customerPanel") {
       return <CustomerPanel />;
     } else if (activeTab === "supplierPanel") {
@@ -67,7 +67,7 @@ const Home = () => {
     // For suppliers, show "profile" and "supplierPanel" buttons.
     navButtons = ["profile", "supplierPanel"];
   } else if (user.role === "customer") {
-    // For customers, show only "profile" and "products" buttons.
+    // For customers, show only "profile" and "customerPanel" buttons.
     navButtons = ["profile", "customerPanel"];
   }
 
@@ -83,7 +83,7 @@ const Home = () => {
       case "customerPanel":
         return "محصولات";
       case "supplierPanel":
-        return "پنل تامین کننده";
+        return "پنل تأمین‌کننده";
       default:
         return tab;
     }
@@ -130,7 +130,7 @@ const Home = () => {
         ))}
       </div>
 
-      {/* Main Content Area */}
+      {/* Main Content Area using a similar container structure as the supplier panel */}
       <div
         style={{
           maxWidth: "1200px",
