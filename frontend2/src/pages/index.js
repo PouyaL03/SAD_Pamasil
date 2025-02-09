@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ProductList from "../../components/ProductList";
 import RegistrationPage from "../../components/RegistrationPage";
 import LoginPage from "../../components/LoginPage";
 import ProfilePage from "../../components/ProfilePage";
-import SupplierPanel from "../../components/SupplierPanel"; // Supplier panel component
-import CustomerPanel from "../../components/CustomerPanel"; // Customer panel component
+import SupplierPanel from "../../components/SupplierPanel";
+import CustomerPanel from "../../components/CustomerPanel";
+import { Tabs, Tab, Container } from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const Home = () => {
   // Default to "register" when not logged in.
@@ -43,51 +45,27 @@ const Home = () => {
     fetchUserProfile();
   }, [user]);
 
-  // Render the appropriate page based on activeTab and login status.
-  const renderContent = () => {
-    if (!user) {
-      // When not logged in, show Registration or Login.
-      return activeTab === "register" ? <RegistrationPage /> : <LoginPage />;
-    }
-    // When logged in, choose the view based on the active tab.
-    if (activeTab === "customerPanel") {
-      return <CustomerPanel />;
-    } else if (activeTab === "supplierPanel") {
-      return <SupplierPanel />;
-    }
-    return <ProfilePage />;
-  };
-
-  // Determine which navigation buttons to display.
-  let navButtons = [];
+  // Build an array of tab objects based on login status and role.
+  let tabs = [];
   if (!user) {
-    // Not logged in: show a toggle button (if on "register", show "login" and vice versa).
-    navButtons = activeTab === "register" ? ["login"] : ["register"];
+    // When not logged in, show Registration and Login tabs.
+    tabs = [
+      { key: "register", label: "ثبت‌نام", component: <RegistrationPage /> },
+      { key: "login", label: "ورود", component: <LoginPage /> },
+    ];
   } else if (user.role === "supplier") {
-    // For suppliers, show "profile" and "supplierPanel" buttons.
-    navButtons = ["profile", "supplierPanel"];
+    // For suppliers, show Profile and Supplier Panel tabs.
+    tabs = [
+      { key: "profile", label: "پروفایل", component: <ProfilePage /> },
+      { key: "supplierPanel", label: "پنل تأمین‌کننده", component: <SupplierPanel /> },
+    ];
   } else if (user.role === "customer") {
-    // For customers, show only "profile" and "customerPanel" buttons.
-    navButtons = ["profile", "customerPanel"];
+    // For customers, show Profile and Customer Panel tabs.
+    tabs = [
+      { key: "profile", label: "پروفایل", component: <ProfilePage /> },
+      { key: "customerPanel", label: "محصولات", component: <CustomerPanel /> },
+    ];
   }
-
-  // Helper: Map internal tab names to Persian labels.
-  const getButtonLabel = (tab) => {
-    switch (tab) {
-      case "register":
-        return "ثبت‌نام";
-      case "login":
-        return "ورود";
-      case "profile":
-        return "پروفایل";
-      case "customerPanel":
-        return "محصولات";
-      case "supplierPanel":
-        return "پنل تأمین‌کننده";
-      default:
-        return tab;
-    }
-  };
 
   return (
     <div
@@ -101,47 +79,20 @@ const Home = () => {
         direction: "rtl",
       }}
     >
-      {/* Navigation Buttons */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginBottom: "20px",
-          gap: "10px",
-        }}
-      >
-        {navButtons.map((tab, idx) => (
-          <button
-            key={idx}
-            onClick={() => setActiveTab(tab)}
-            style={{
-              padding: "10px 20px",
-              backgroundColor: activeTab === tab ? "#007bff" : "#fff",
-              color: activeTab === tab ? "#fff" : "#007bff",
-              border: "2px solid #007bff",
-              borderRadius: "5px",
-              cursor: "pointer",
-              fontWeight: "bold",
-              boxShadow: activeTab === tab ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
-            }}
-          >
-            {getButtonLabel(tab)}
-          </button>
-        ))}
-      </div>
-
-      {/* Main Content Area using a similar container structure as the supplier panel */}
-      <div
-        style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          background: "rgba(255, 255, 255, 0.8)",
-          borderRadius: "10px",
-          padding: "20px",
-        }}
-      >
-        {renderContent()}
-      </div>
+      <Container style={{ padding: "20px" }}>
+        <Tabs
+          activeKey={activeTab}
+          onSelect={(k) => setActiveTab(k)}
+          className="mb-3"
+          variant="pills"
+        >
+          {tabs.map((tab) => (
+            <Tab eventKey={tab.key} title={tab.label} key={tab.key}>
+              {tab.component}
+            </Tab>
+          ))}
+        </Tabs>
+      </Container>
     </div>
   );
 };
