@@ -165,9 +165,16 @@ const CustomerPanel = () => {
   // Checkout the cart (simulate a purchase)
   const handleCheckout = async () => {
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/cart/checkout/", {}, axiosConfig);
+      // Send the cart items to the backend for checkout
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/cart/checkout/",
+        { items: cart.items }, // Ensure this matches the backend's expected format
+        axiosConfig
+      );
+  
+      // Show success message and reset the cart
       alert(`خرید موفق! مبلغ پرداختی: ${response.data.total_paid}`);
-      fetchCart();
+      fetchCart(); // Refresh the cart to reflect the changes
     } catch (error) {
       console.error("Error during checkout:", error);
       alert("خطا در فرایند خرید");

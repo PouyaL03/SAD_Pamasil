@@ -6,7 +6,8 @@ from .views import (
     ProductDeleteView,
     ProductToggleActiveView,
     BulkStockUpdateView,
-    CustomerPanelProductListView  # new view for customer panel
+    CustomerPanelProductListView,
+    CheckoutView
 )
 
 urlpatterns = [
@@ -18,4 +19,5 @@ urlpatterns = [
     path('toggle-active/<int:pk>/', ProductToggleActiveView.as_view(), name='product-toggle-active'),
     path('bulk-stock-update/', BulkStockUpdateView.as_view(), name='bulk-stock-update'),
     path('customer/panel/', CustomerPanelProductListView.as_view(), name='customer-panel-product-list'),
+    path("api/cart/checkout/", CheckoutView.as_view(), name="checkout"),
 ]

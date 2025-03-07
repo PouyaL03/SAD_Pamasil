@@ -202,6 +202,7 @@ const SupplierPanel = () => {
       console.error("Error deleting product:", error);
     }
   };
+  
 
   // Bulk update submission handler
   const handleBulkUpdateSubmit = async (e) => {
