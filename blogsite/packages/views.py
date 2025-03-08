@@ -97,6 +97,15 @@ class PackageCreateView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
+        product_ids = request.data.get("products", [])
+        active_products = Product.objects.filter(id__in=product_ids, is_active=True).values_list("id", flat=True)
+
+        if not active_products:
+            return Response({"error": "حداقل یک محصول فعال را انتخاب کنید."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Ensure only active products are added
+        request.data["products"] = list(active_products)
+
         serializer = PackageSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -105,3 +114,4 @@ class PackageCreateView(APIView):
                 status=status.HTTP_201_CREATED
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+

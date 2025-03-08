@@ -1,196 +1,221 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const CustomerPanel = () => {
-  const [cart, setCart] = useState(null);
-  const [packages, setPackages] = useState([]);
-  const [selectedPackage, setSelectedPackage] = useState(null);
-  const [quantity, setQuantity] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+const CartPage = () => {
+  const [packages, setPackages] = useState([]); // List of available packages
+  const [cart, setCart] = useState([]); // Cart items
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [checkoutErrors, setCheckoutErrors] = useState([]); // Error messages
+  const [loading, setLoading] = useState(false); // Loading state for checkout
 
-  // Fetch the user's cart
-  const fetchCart = async () => {
-    try {
-      const response = await axios.get("http://127.0.0.1:8000/api/cart/", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Ensure the user is authenticated
-        },
-      });
-      setCart(response.data);
-    } catch (error) {
-      console.error("⚠️ خطا در دریافت سبد خرید:", error);
-      setError("خطا در دریافت سبد خرید");
-    }
+  const token = JSON.parse(localStorage.getItem("user"))?.token; // User authentication token
+
+  const axiosConfig = {
+    headers: {
+      Authorization: `Token ${token}`,
+      "Content-Type": "application/json",
+    },
   };
 
-  // Fetch all packages (for adding to cart)
+  /** ✅ Fetch Available Packages */
   const fetchPackages = async () => {
     try {
       const response = await axios.get("http://127.0.0.1:8000/api/packages/list/");
       setPackages(response.data);
     } catch (error) {
       console.error("⚠️ خطا در دریافت پکیج‌ها:", error);
-      setError("خطا در دریافت پکیج‌ها");
     }
   };
 
-  // Add a package to the cart
-  const handleAddToCart = async () => {
-    if (!selectedPackage || quantity < 1) {
-      alert("لطفاً یک پکیج و مقدار معتبر انتخاب کنید.");
-      return;
+  /** ✅ Fetch User's Cart */
+  const fetchCart = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/cart/", axiosConfig);
+      setCart(response.data.items || []);
+      setTotalPrice(response.data.total_price || 0);
+    } catch (error) {
+      console.error("⚠️ خطا در دریافت سبد خرید:", error);
     }
+  };
 
+  /** ✅ Add a Package to Cart */
+  const addToCart = async (packageId) => {
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/api/cart/add/",
-        {
-          package_id: selectedPackage,
-          quantity: quantity,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
+        { package: packageId, quantity: 1 },
+        axiosConfig
       );
       alert(response.data.message);
-      fetchCart(); // Refresh the cart
+      fetchCart(); // Refresh cart
     } catch (error) {
       console.error("⚠️ خطا در افزودن به سبد خرید:", error);
-      alert(error.response?.data?.error || "خطا در افزودن به سبد خرید");
+      alert("خطا در افزودن به سبد خرید");
     }
   };
 
-  // Update the quantity of a cart item
-  const handleUpdateCartItem = async (itemId, newQuantity) => {
-    if (newQuantity < 1) {
-      alert("تعداد باید حداقل ۱ باشد.");
-      return;
-    }
+  /** ✅ Update Cart Item Quantity */
+  const updateCartItem = async (itemId, newQuantity) => {
+    if (newQuantity < 1) return;
 
     try {
-      const response = await axios.put(
-        `http://127.0.0.1:8000/api/cart/update/${itemId}/`,
+      await axios.put(
+        `http://127.0.0.1:8000/api/cart/item/${itemId}/`,
         { quantity: newQuantity },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
+        axiosConfig
       );
-      alert(response.data.message);
-      fetchCart(); // Refresh the cart
+      fetchCart(); // Refresh cart
     } catch (error) {
       console.error("⚠️ خطا در به‌روزرسانی سبد خرید:", error);
-      alert(error.response?.data?.error || "خطا در به‌روزرسانی سبد خرید");
+      alert("خطا در به‌روزرسانی سبد خرید");
     }
   };
 
-  // Remove a cart item
-  const handleRemoveCartItem = async (itemId) => {
+  /** ✅ Remove an Item from Cart */
+  const removeCartItem = async (itemId) => {
     try {
-      const response = await axios.delete(
-        `http://127.0.0.1:8000/api/cart/delete/${itemId}/`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      alert(response.data.message);
-      fetchCart(); // Refresh the cart
+      await axios.delete(`http://127.0.0.1:8000/api/cart/item/${itemId}/delete/`, axiosConfig);
+      fetchCart(); // Refresh cart
     } catch (error) {
-      console.error("⚠️ خطا در حذف از سبد خرید:", error);
-      alert("خطا در حذف از سبد خرید");
+      console.error("⚠️ خطا در حذف آیتم از سبد خرید:", error);
+      alert("خطا در حذف آیتم از سبد خرید");
     }
   };
 
-  // Process checkout
+  /** ✅ Checkout with Error Handling */
   const handleCheckout = async () => {
     try {
+      if (!token) {
+        alert("کاربر احراز هویت نشده است!");
+        return;
+      }
+
+      setLoading(true);
+      setCheckoutErrors([]); // Reset errors
+
+      // ✅ Ensure cart items are structured correctly
+      const formattedItems = cart.map((item) => ({
+        package: item.package.id, // ✅ Send package ID directly
+        quantity: item.quantity,
+      }));
+
       const response = await axios.post(
         "http://127.0.0.1:8000/api/cart/checkout/",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
+        { items: formattedItems }, // ✅ Correct structure
+        axiosConfig
       );
-      alert(response.data.message);
-      fetchCart(); // Refresh the cart
+
+      alert("✅ پرداخت موفق! مبلغ کل: " + response.data.total_paid + " تومان");
+      fetchCart(); // Refresh cart after checkout
     } catch (error) {
-      console.error("⚠️ خطا در پرداخت:", error);
-      alert(error.response?.data?.error || "خطا در پرداخت");
+      console.error("Checkout failed:", error.response?.data || error.message);
+
+      // ✅ Handle specific backend errors
+      if (error.response) {
+        const errorData = error.response.data;
+        const errorsArray = [];
+
+        if (errorData.details && Array.isArray(errorData.details)) {
+          errorsArray.push(...errorData.details);
+        } else if (errorData.error) {
+          errorsArray.push({ error: errorData.error });
+        } else {
+          errorsArray.push({ error: "خطای نامشخص در انجام پرداخت" });
+        }
+
+        setCheckoutErrors(errorsArray);
+      } else {
+        setCheckoutErrors([{ error: "ارتباط با سرور برقرار نشد." }]);
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Fetch cart and packages on component mount
+  // Fetch data on component mount
   useEffect(() => {
-    fetchCart();
     fetchPackages();
+    fetchCart();
   }, []);
-
-  if (loading) return <p>در حال بارگذاری...</p>;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2>سبد خرید</h2>
+      <h2>🛒 سبد خرید</h2>
 
-      {/* Add to Cart Section */}
+      {/* 📦 Available Packages */}
       <div>
-        <h3>افزودن به سبد خرید</h3>
-        <select
-          value={selectedPackage || ""}
-          onChange={(e) => setSelectedPackage(e.target.value)}
-        >
-          <option value="">انتخاب پکیج</option>
-          {packages.map((pkg) => (
-            <option key={pkg.id} value={pkg.id}>
-              {pkg.name} - {pkg.unit_price} تومان
-            </option>
-          ))}
-        </select>
-        <input
-          type="number"
-          placeholder="تعداد"
-          value={quantity}
-          onChange={(e) => setQuantity(parseInt(e.target.value))}
-          min="1"
-        />
-        <button onClick={handleAddToCart}>افزودن به سبد</button>
+        <h3>📦 لیست پکیج‌ها</h3>
+        {packages.length === 0 ? (
+          <p style={{ color: "red" }}>هیچ پکیجی یافت نشد.</p>
+        ) : (
+          <ul>
+            {packages.map((pkg) => (
+              <li key={pkg.id} style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+                {pkg.name} - شامل {pkg.products.length} محصول
+                <button onClick={() => addToCart(pkg.id)} style={buttonStyle("add")}>
+                  افزودن به سبد خرید
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
-      {/* Cart Items Section */}
-      {cart && (
-        <div>
-          <h3>محصولات در سبد خرید</h3>
-          {cart.items.length === 0 ? (
-            <p>سبد خرید شما خالی است.</p>
-          ) : (
+      {/* 🛒 User's Cart */}
+      <div>
+        <h3>🛍️ سبد خرید شما</h3>
+        {cart.length === 0 ? (
+          <p style={{ color: "red" }}>سبد خرید شما خالی است.</p>
+        ) : (
+          <ul>
+            {cart.map((item) => (
+              <li key={item.id} style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+                <span>{item.package.name} - تعداد: {item.quantity}</span>
+                <button onClick={() => updateCartItem(item.id, item.quantity + 1)} style={buttonStyle("update")}>
+                  ➕ افزایش
+                </button>
+                <button onClick={() => updateCartItem(item.id, item.quantity - 1)} style={buttonStyle("update")} disabled={item.quantity <= 1}>
+                  ➖ کاهش
+                </button>
+                <button onClick={() => removeCartItem(item.id)} style={buttonStyle("remove")}>
+                  ❌ حذف
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+        <h4>💰 مجموع: {totalPrice} تومان</h4>
+
+        {/* 🛒 Checkout Button */}
+        <button onClick={handleCheckout} style={buttonStyle("checkout")} disabled={cart.length === 0 || loading}>
+          {loading ? "در حال پردازش..." : "🛒 نهایی کردن خرید"}
+        </button>
+
+        {/* 🚨 Display Checkout Errors */}
+        {checkoutErrors.length > 0 && (
+          <div style={{ color: "red", marginTop: "10px" }}>
+            <p>⚠️ خطا در خرید:</p>
             <ul>
-              {cart.items.map((item) => (
-                <li key={item.id}>
-                  {item.package.name} - {item.quantity} عدد - {item.package.unit_price * item.quantity} تومان
-                  <input
-                    type="number"
-                    value={item.quantity}
-                    onChange={(e) => handleUpdateCartItem(item.id, parseInt(e.target.value))}
-                    min="1"
-                  />
-                  <button onClick={() => handleRemoveCartItem(item.id)}>حذف</button>
-                </li>
+              {checkoutErrors.map((err, index) => (
+                <li key={index}>{err.error}</li>
               ))}
             </ul>
-          )}
-          <button onClick={handleCheckout}>پرداخت</button>
-        </div>
-      )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
-export default CustomerPanel;
+const buttonStyle = (type) => ({
+  marginLeft: "10px",
+  padding: "5px 10px",
+  backgroundColor: { add: "#28a745", update: "#007bff", remove: "#dc3545", checkout: "#ffc107" }[type],
+  color: "#fff",
+  border: "none",
+  borderRadius: "5px",
+  cursor: "pointer",
+  fontWeight: "bold",
+});
+
+export default CartPage;

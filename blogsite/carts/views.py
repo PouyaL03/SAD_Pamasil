@@ -83,13 +83,14 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from decimal import Decimal
 from .models import Cart, CartItem
-from packages.models import Package  # Import product model
-from packages.serializers import PackageSerializer  # Correct import
+from packages.models import Package
+from products.models import Product
+from packages.serializers import PackageSerializer
 
 class CheckoutCartView(APIView):
     """
-    Process checkout: Validate stock, update product stock,
-    calculate total price, and clear cart upon success.
+    Handles checkout by validating stock, reducing stock for packages and products, 
+    calculating total price, and clearing the cart upon success.
     """
     permission_classes = [IsAuthenticated]
 
@@ -102,14 +103,15 @@ class CheckoutCartView(APIView):
 
         errors = []
         total_paid = Decimal(0)
+        successful_purchases = []
 
         try:
-            with transaction.atomic():  # Ensures atomic database updates
+            with transaction.atomic():  # Ensures all database updates happen together
                 for cart_item in cart_items:
                     package = cart_item.package
                     quantity = cart_item.quantity
 
-                    # Check stock availability
+                    # ✅ Check if package has enough stock
                     if package.initial_stock < quantity:
                         errors.append({
                             "package_id": package.id,
@@ -117,29 +119,47 @@ class CheckoutCartView(APIView):
                         })
                         continue
 
-                    # ✅ Use Serializer to Update Stock
-                    new_stock = package.initial_stock - quantity
-                    serializer = PackageSerializer(
-                        package,
-                        data={"initial_stock": new_stock},
-                        partial=True  # Allow updating only stock
-                    )
+                    # ✅ Check if each product in the package has enough stock
+                    insufficient_products = []
+                    for product in package.products.all():
+                        if product.initial_stock < quantity:
+                            insufficient_products.append({
+                                "product_id": product.id,
+                                "product_name": product.name,
+                                "error": f"محصول '{product.name}' موجودی کافی ندارد. موجودی فعلی: {product.initial_stock}"
+                            })
 
-                    if serializer.is_valid():
-                        serializer.save()  # Save updated stock
-                    else:
+                    if insufficient_products:
                         errors.append({
                             "package_id": package.id,
-                            "error": "خطا در به‌روزرسانی موجودی محصول.",
-                            "details": serializer.errors
+                            "error": "برخی محصولات این پکیج موجودی کافی ندارند.",
+                            "insufficient_products": insufficient_products
                         })
                         continue
 
-                    # Calculate total price
-                    total_paid += package.unit_price * Decimal(quantity)
+                    # ✅ Reduce stock for the package
+                    package.initial_stock -= quantity
+                    package.save()
 
-                if errors:
-                    raise Exception("خطا در پردازش برخی محصولات.")
+                    # ✅ Reduce stock for all products in the package
+                    for product in package.products.all():
+                        product.initial_stock -= quantity
+                        product.save()
+
+                    # ✅ Calculate total price
+                    total_paid += package.unit_price * Decimal(quantity)
+                    successful_purchases.append({
+                        "package_id": package.id,
+                        "package_name": package.name,
+                        "quantity_purchased": quantity,
+                        "total_price": str(package.unit_price * Decimal(quantity))
+                    })
+
+                if errors and not successful_purchases:
+                    return Response(
+                        {"error": "خطا در پردازش سفارش شما.", "details": errors},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
 
                 # ✅ Clear cart after successful checkout
                 cart.items.all().delete()
@@ -147,13 +167,16 @@ class CheckoutCartView(APIView):
                 return Response(
                     {
                         "message": "خرید با موفقیت انجام شد.",
-                        "total_paid": str(total_paid)
+                        "total_paid": str(total_paid),
+                        "purchased_items": successful_purchases,
+                        "errors": errors if errors else "بدون خطا"
                     },
                     status=status.HTTP_200_OK
                 )
 
         except Exception as e:
             return Response(
-                {"error": str(e), "details": errors},
-                status=status.HTTP_400_BAD_REQUEST
+                {"error": "خطا در پردازش خرید.", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+

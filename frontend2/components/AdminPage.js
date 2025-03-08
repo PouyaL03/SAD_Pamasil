@@ -16,15 +16,18 @@ const AdminPanel = ({ setActiveTab }) => {
   const [editUnitPrice, setEditUnitPrice] = useState(0.0); // State for unit_price during editing
 
   /** ✅ Fetch All Products */
-  const fetchProducts = async () => {
-    try {
-      const response = await axios.get("http://127.0.0.1:8000/api/packages/products/");
-      setProducts(Array.isArray(response.data) ? response.data : []);
-    } catch (error) {
-      console.error("⚠️ خطا در دریافت محصولات:", error);
-      setProducts([]);
-    }
-  };
+/** ✅ Fetch Only Active Products */
+const fetchProducts = async () => {
+  try {
+    const response = await axios.get("http://127.0.0.1:8000/api/packages/products/");
+    const activeProducts = response.data.filter((product) => product.is_active); // ✅ Show only active ones
+    setProducts(activeProducts);
+  } catch (error) {
+    console.error("⚠️ خطا در دریافت محصولات:", error);
+    setProducts([]);
+  }
+};
+
 
   /** ✅ Fetch All Packages */
   const fetchPackages = async () => {
@@ -59,10 +62,10 @@ const AdminPanel = ({ setActiveTab }) => {
   /** ✅ Create Package */
   const handleCreatePackage = async () => {
     if (!newPackageName || selectedProducts.length === 0) {
-      alert("نام پکیج و انتخاب حداقل یک محصول الزامی است.");
+      alert("⚠️ نام پکیج و انتخاب حداقل یک محصول الزامی است.");
       return;
     }
-
+  
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/packages/create/", {
         name: newPackageName,
@@ -70,18 +73,36 @@ const AdminPanel = ({ setActiveTab }) => {
         initial_stock: initialStock,
         unit_price: unitPrice, // Include unit_price in the request
       });
-
+  
       alert(response.data.message);
-      fetchPackages();
+      fetchPackages(); // Refresh package list
+  
+      // ✅ Reset form fields after successful creation
       setSelectedProducts([]);
       setNewPackageName("");
-      setInitialStock(0); // Reset initial_stock field
-      setUnitPrice(0.0); // Reset unit_price field
+      setInitialStock(0);
+      setUnitPrice(0.0);
     } catch (error) {
-      console.error("⚠️ خطا در ایجاد پکیج:", error);
-      alert(error.response?.data?.initial_stock || error.response?.data?.unit_price || "خطا در ایجاد پکیج");
+      console.error("⚠️ خطا در ایجاد پکیج:", error.response?.data || error.message);
+  
+      let errorMessage = "⚠️ خطا در ایجاد پکیج. لطفاً دوباره امتحان کنید.";
+  
+      if (error.response?.data) {
+        const errorData = error.response.data;
+        errorMessage =
+          errorData.initial_stock || 
+          errorData.unit_price || 
+          errorData.products || 
+          errorData.name || 
+          errorMessage; // Fallback error message
+      } else if (error.message) {
+        errorMessage = error.message; // Handle network errors
+      }
+  
+      alert(errorMessage);
     }
   };
+  
 
   /** ✅ Handle Edit Button Click */
   const handleEditClick = (pkg) => {
