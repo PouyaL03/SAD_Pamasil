@@ -1,321 +1,266 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Container, Tabs, Tab, Card, Button, Form, Table, Modal } from "react-bootstrap";
 
-const AdminPanel = ({ setActiveTab }) => {
-  const [activeTab, setTab] = useState("products");
+const AdminPanel = () => {
+  const [activeTab, setActiveTab] = useState("products");
   const [products, setProducts] = useState([]);
-  const [selectedProducts, setSelectedProducts] = useState([]);
-  const [selectedEditProducts, setSelectedEditProducts] = useState([]); // Separate selection for edit
   const [packages, setPackages] = useState([]);
+  const [selectedProducts, setSelectedProducts] = useState({});
+  const [packageName, setPackageName] = useState("");
+  const [packageDescription, setPackageDescription] = useState("");
+  const [initialStock, setInitialStock] = useState(1);
+  const [unitPrice, setUnitPrice] = useState("");
   const [editingPackage, setEditingPackage] = useState(null);
-  const [newPackageName, setNewPackageName] = useState("");
-  const [editPackageName, setEditPackageName] = useState("");
-  const [initialStock, setInitialStock] = useState(0); // State for initial_stock during creation
-  const [editInitialStock, setEditInitialStock] = useState(0); // State for initial_stock during editing
-  const [unitPrice, setUnitPrice] = useState(0.0); // State for unit_price during creation
-  const [editUnitPrice, setEditUnitPrice] = useState(0.0); // State for unit_price during editing
-
-  /** ✅ Fetch All Products */
-/** ✅ Fetch Only Active Products */
-const fetchProducts = async () => {
-  try {
-    const response = await axios.get("http://127.0.0.1:8000/api/packages/products/");
-    const activeProducts = response.data.filter((product) => product.is_active); // ✅ Show only active ones
-    setProducts(activeProducts);
-  } catch (error) {
-    console.error("⚠️ خطا در دریافت محصولات:", error);
-    setProducts([]);
-  }
-};
-
-
-  /** ✅ Fetch All Packages */
-  const fetchPackages = async () => {
-    try {
-      const response = await axios.get("http://127.0.0.1:8000/api/packages/list/");
-      setPackages(Array.isArray(response.data) ? response.data : []);
-    } catch (error) {
-      console.error("⚠️ خطا در دریافت پکیج‌ها:", error);
-      setPackages([]);
-    }
-  };
+  const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
     fetchProducts();
     fetchPackages();
   }, []);
 
-  /** ✅ Select Products for Creating Package */
-  const toggleProductSelection = (productId) => {
-    setSelectedProducts((prev) =>
-      prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId]
-    );
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/packages/products/");
+      setProducts(response.data || []);
+    } catch (error) {
+      alert("❌ خطا در دریافت محصولات: " + error.message);
+    }
   };
 
-  /** ✅ Select Products for Editing Package */
-  const toggleEditProductSelection = (productId) => {
-    setSelectedEditProducts((prev) =>
-      prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId]
-    );
+  const fetchPackages = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/packages/list/");
+      setPackages(response.data || []);
+    } catch (error) {
+      alert("❌ خطا در دریافت پکیج‌ها: " + error.message);
+    }
   };
 
-  /** ✅ Create Package */
-  const handleCreatePackage = async () => {
-    if (!newPackageName || selectedProducts.length === 0) {
-      alert("⚠️ نام پکیج و انتخاب حداقل یک محصول الزامی است.");
+  const handleProductSelection = (productId, quantity) => {
+    setSelectedProducts((prev) => ({
+      ...prev,
+      [productId]: quantity > 0 ? quantity : undefined,
+    }));
+  };
+
+  const createPackage = async () => {
+    const packageProducts = Object.entries(selectedProducts)
+      .filter(([_, qty]) => qty > 0)
+      .map(([product, quantity]) => ({ product: parseInt(product), quantity }));
+
+    if (packageProducts.length === 0) {
+      alert("❌ حداقل یک محصول را با تعداد مشخص انتخاب کنید.");
       return;
     }
-  
-    try {
-      const response = await axios.post("http://127.0.0.1:8000/api/packages/create/", {
-        name: newPackageName,
-        products: selectedProducts,
-        initial_stock: initialStock,
-        unit_price: unitPrice, // Include unit_price in the request
-      });
-  
-      alert(response.data.message);
-      fetchPackages(); // Refresh package list
-  
-      // ✅ Reset form fields after successful creation
-      setSelectedProducts([]);
-      setNewPackageName("");
-      setInitialStock(0);
-      setUnitPrice(0.0);
-    } catch (error) {
-      console.error("⚠️ خطا در ایجاد پکیج:", error.response?.data || error.message);
-  
-      let errorMessage = "⚠️ خطا در ایجاد پکیج. لطفاً دوباره امتحان کنید.";
-  
-      if (error.response?.data) {
-        const errorData = error.response.data;
-        errorMessage =
-          errorData.initial_stock || 
-          errorData.unit_price || 
-          errorData.products || 
-          errorData.name || 
-          errorMessage; // Fallback error message
-      } else if (error.message) {
-        errorMessage = error.message; // Handle network errors
-      }
-  
-      alert(errorMessage);
-    }
-  };
-  
 
-  /** ✅ Handle Edit Button Click */
-  const handleEditClick = (pkg) => {
-    setEditingPackage(pkg);
-    setEditPackageName(pkg.name);
-    setSelectedEditProducts(pkg.products.map((p) => p.id));
-    setEditInitialStock(pkg.initial_stock); // Set initial_stock for editing
-    setEditUnitPrice(pkg.unit_price); // Set unit_price for editing
-    setTab("editPackage");
-  };
-
-  /** ✅ Edit Package */
-  const handleEditPackage = async () => {
-    if (!editingPackage) return;
-
-    const updatedPackage = {
-      name: editPackageName,
-      products: selectedEditProducts.filter((id) => id !== null && id !== undefined), // Ensure valid IDs
-      initial_stock: editInitialStock,
-      unit_price: editUnitPrice, // Include unit_price in the update
+    const requestData = {
+      name: packageName,
+      description: packageDescription,
+      is_active: true,
+      initial_stock: parseInt(initialStock),
+      unit_price: parseFloat(unitPrice),
+      package_products: packageProducts,
     };
 
-    if (!updatedPackage.products.length) {
-      alert("باید حداقل یک محصول انتخاب کنید.");
-      return;
-    }
+    console.log("📤 Sending Data:", requestData);
 
     try {
-      console.log("📤 Sending Edit Request:", updatedPackage); // Debugging
-      const response = await axios.put(
-        `http://127.0.0.1:8000/api/packages/update/${editingPackage.id}/`,
-        updatedPackage
-      );
-
-      alert(response.data.message);
+      await axios.post("http://localhost:8000/api/packages/create/", requestData);
+      alert("✅ پکیج با موفقیت ایجاد شد!");
+      resetForm();
       fetchPackages();
-      setEditingPackage(null);
-      setTab("packages");
     } catch (error) {
-      console.error("⚠️ خطا در ویرایش پکیج:", error.response?.data || error);
-      alert(error.response?.data?.initial_stock || error.response?.data?.unit_price || "خطا در ویرایش پکیج");
+      alert("❌ خطا در ایجاد پکیج: " + (error.response?.data?.error || "مشکلی پیش آمد."));
     }
   };
 
-  /** ✅ Admin Logout */
-  const handleAdminLogout = async () => {
+  const openEditModal = (pkg) => {
+    setEditingPackage(pkg);
+    setSelectedProducts(
+      pkg.package_products.reduce((acc, p) => {
+        acc[p.product] = p.quantity;
+        return acc;
+      }, {})
+    );
+    setShowEditModal(true);
+  };
+
+  const updatePackage = async () => {
+    if (!editingPackage) return;
+
+    const packageProducts = Object.entries(selectedProducts)
+      .filter(([_, qty]) => qty > 0)
+      .map(([product, quantity]) => ({ product: parseInt(product), quantity }));
+
+    const requestData = {
+      name: editingPackage.name,
+      description: editingPackage.description,
+      is_active: editingPackage.is_active,
+      initial_stock: parseInt(editingPackage.initial_stock),
+      unit_price: parseFloat(editingPackage.unit_price),
+      package_products: packageProducts,
+    };
+
+    console.log("📤 Updating Data:", requestData);
+
     try {
-      await axios.post("http://127.0.0.1:8000/api/packages/admin/logout/");
-      localStorage.removeItem("admin_token");
-      alert("مدیر با موفقیت خارج شد.");
-      // setActiveTab("register");
-      window.location.reload();
+      await axios.put(`http://localhost:8000/api/packages/update/${editingPackage.id}/`, requestData);
+      alert("✅ پکیج با موفقیت ویرایش شد!");
+      setShowEditModal(false);
+      fetchPackages();
     } catch (error) {
-      console.error("⚠️ خطا در خروج:", error);
-      alert("خطا در خروج.");
+      alert("❌ خطا در ویرایش پکیج: " + (error.response?.data?.error || "مشکلی پیش آمد."));
     }
+  };
+
+  const deletePackage = (id) => {
+    if (window.confirm("آیا از حذف این پکیج مطمئن هستید؟")) {
+      axios
+        .delete(`http://localhost:8000/api/packages/delete/${id}/`)
+        .then(() => {
+          alert("✅ پکیج حذف شد!");
+          fetchPackages();
+        })
+        .catch(() => alert("❌ خطا در حذف پکیج"));
+    }
+  };
+
+  const resetForm = () => {
+    setSelectedProducts({});
+    setPackageName("");
+    setPackageDescription("");
+    setInitialStock(1);
+    setUnitPrice("");
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>پنل ادمین</h2>
+    <Container style={{ padding: "20px" }}>
+      <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} className="mb-3">
+        <Tab eventKey="products" title="ایجاد پکیج جدید">
+          <Card className="p-4 shadow-sm">
+            <h3 className="text-center text-primary mb-4">📦 ایجاد پکیج جدید</h3>
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>📌 نام پکیج</Form.Label>
+                <Form.Control type="text" value={packageName} onChange={(e) => setPackageName(e.target.value)} required />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>📝 توضیحات</Form.Label>
+                <Form.Control type="text" value={packageDescription} onChange={(e) => setPackageDescription(e.target.value)} required />
+              </Form.Group>
+            </Form>
+            <h4 className="mt-4">🛒 انتخاب محصولات</h4>
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>نام محصول</th>
+                  <th>موجودی</th>
+                  <th>تعداد در پکیج</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products.map((product) => (
+                  <tr key={product.id}>
+                    <td>{product.name}</td>
+                    <td>{product.initial_stock}</td>
+                    <td>
+                      <Form.Control type="number" min="0" onChange={(e) => handleProductSelection(product.id, parseInt(e.target.value))} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+            <Button className="mt-3 w-100" onClick={createPackage} variant="success">
+              ✅ ایجاد پکیج
+            </Button>
+          </Card>
+        </Tab>
 
-      {/* Tabs */}
-      <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
-        <button onClick={() => setTab("products")} style={tabStyle(activeTab === "products")}>
-          مشاهده محصولات
-        </button>
-        <button onClick={() => setTab("createPackage")} style={tabStyle(activeTab === "createPackage")}>
-          ایجاد پکیج
-        </button>
-        <button onClick={() => setTab("packages")} style={tabStyle(activeTab === "packages")}>
-          مدیریت پکیج‌ها
-        </button>
-      </div>
+        <Tab eventKey="packages" title="مدیریت پکیج‌ها">
+          <Card className="p-4 shadow-sm">
+            <h3 className="text-center text-primary mb-4">📦 مدیریت پکیج‌ها</h3>
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>نام پکیج</th>
+                  <th>موجودی</th>
+                  <th>قیمت</th>
+                  <th>وضعیت</th>
+                  <th>عملیات</th>
+                </tr>
+              </thead>
+              <tbody>
+                {packages.map((pkg) => (
+                  <tr key={pkg.id}>
+                    <td>{pkg.name}</td>
+                    <td>{pkg.initial_stock}</td>
+                    <td>{pkg.unit_price} تومان</td>
+                    <td>{pkg.is_active ? "✅ فعال" : "❌ غیرفعال"}</td>
+                    <td>
+                      <Button className="me-2" variant="warning" onClick={() => openEditModal(pkg)}>✏️ ویرایش</Button>
+                      <Button variant="danger" onClick={() => deletePackage(pkg.id)}>🗑 حذف</Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </Card>
+        </Tab>
+      </Tabs>
 
-      {/* Product List */}
-      {activeTab === "products" && (
-        <div>
-          <h3>محصولات</h3>
-          {products.length === 0 ? (
-            <p style={{ color: "red" }}>هیچ محصولی یافت نشد.</p>
-          ) : (
-            <ul>
-              {products.map((product) => (
-                <li key={product.id}>
-                  <input
-                    type="checkbox"
-                    checked={selectedProducts.includes(product.id)}
-                    onChange={() => toggleProductSelection(product.id)}
-                  />
-                  {product.name} - {product.unit_price} تومان (موجودی: {product.initial_stock})
-                </li>
-              ))}
-            </ul>
+      {/* Edit Package Modal */}
+      <Modal show={showEditModal} onHide={() => setShowEditModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>ویرایش پکیج</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {editingPackage && (
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>📌 نام پکیج</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={editingPackage.name}
+                  onChange={(e) => setEditingPackage({ ...editingPackage, name: e.target.value })}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>📝 توضیحات</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={editingPackage.description}
+                  onChange={(e) => setEditingPackage({ ...editingPackage, description: e.target.value })}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>📦 موجودی اولیه</Form.Label>
+                <Form.Control
+                  type="number"
+                  value={editingPackage.initial_stock}
+                  onChange={(e) => setEditingPackage({ ...editingPackage, initial_stock: e.target.value })}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>🔄 وضعیت</Form.Label>
+                <Form.Select
+                  value={editingPackage.is_active ? "true" : "false"}
+                  onChange={(e) => setEditingPackage({ ...editingPackage, is_active: e.target.value === "true" })}
+                >
+                  <option value="true">فعال</option>
+                  <option value="false">غیرفعال</option>
+                </Form.Select>
+              </Form.Group>
+            </Form>
           )}
-        </div>
-      )}
-
-      {/* Create Package */}
-      {activeTab === "createPackage" && (
-        <div>
-          <h3>ایجاد پکیج</h3>
-          <input
-            type="text"
-            placeholder="نام پکیج"
-            value={newPackageName}
-            onChange={(e) => setNewPackageName(e.target.value)}
-          />
-          <input
-            type="number"
-            placeholder="موجودی اولیه"
-            value={initialStock}
-            onChange={(e) => setInitialStock(parseInt(e.target.value))}
-          />
-          <input
-            type="number"
-            step="0.01"
-            placeholder="قیمت واحد"
-            value={unitPrice}
-            onChange={(e) => setUnitPrice(parseFloat(e.target.value))}
-          />
-          <button onClick={handleCreatePackage}>ایجاد پکیج</button>
-        </div>
-      )}
-
-      {/* Edit Package */}
-      {activeTab === "editPackage" && editingPackage && (
-        <div>
-          <h3>ویرایش پکیج</h3>
-          <input
-            type="text"
-            placeholder="نام پکیج"
-            value={editPackageName}
-            onChange={(e) => setEditPackageName(e.target.value)}
-          />
-          <input
-            type="number"
-            placeholder="موجودی اولیه"
-            value={editInitialStock}
-            onChange={(e) => setEditInitialStock(parseInt(e.target.value))}
-          />
-          <input
-            type="number"
-            step="0.01"
-            placeholder="قیمت واحد"
-            value={editUnitPrice}
-            onChange={(e) => setEditUnitPrice(parseFloat(e.target.value))}
-          />
-          <h4>انتخاب محصولات:</h4>
-          {products.length === 0 ? (
-            <p style={{ color: "red" }}>هیچ محصولی یافت نشد.</p>
-          ) : (
-            <ul>
-              {products.map((product) => (
-                <li key={product.id}>
-                  <input
-                    type="checkbox"
-                    checked={selectedEditProducts.includes(product.id)}
-                    onChange={() => toggleEditProductSelection(product.id)}
-                  />
-                  {product.name} (موجودی: {product.initial_stock})
-                </li>
-              ))}
-            </ul>
-          )}
-          <button onClick={handleEditPackage}>ذخیره تغییرات</button>
-        </div>
-      )}
-
-      {/* Package List */}
-      {activeTab === "packages" && (
-        <div>
-          <h3>لیست پکیج‌ها</h3>
-          {packages.length === 0 ? (
-            <p style={{ color: "red" }}>هیچ پکیجی ایجاد نشده است.</p>
-          ) : (
-            <ul>
-              {packages.map((pkg) => (
-                <li key={pkg.id}>
-                  {pkg.name} ({pkg.products.length} محصول) - موجودی: {pkg.initial_stock} - قیمت: {pkg.unit_price} تومان
-                  <button onClick={() => handleEditClick(pkg)}>ویرایش</button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
-
-      <button onClick={handleAdminLogout} style={logoutButtonStyle}>
-        خروج از مدیریت
-      </button>
-    </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowEditModal(false)}>لغو</Button>
+          <Button variant="primary" onClick={updatePackage}>ذخیره تغییرات</Button>
+        </Modal.Footer>
+      </Modal>
+    </Container>
   );
 };
-
-const tabStyle = (isActive) => ({
-  padding: "10px 20px",
-  backgroundColor: isActive ? "#007bff" : "#fff",
-  color: isActive ? "#fff" : "#007bff",
-  border: "2px solid #007bff",
-  borderRadius: "5px",
-  cursor: "pointer",
-});
-
-const logoutButtonStyle = {
-  marginTop: "20px",
-  padding: "10px 20px",
-  backgroundColor: "#dc3545",
-  color: "#fff",
-  border: "none",
-  borderRadius: "5px",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
-
 export default AdminPanel;
+

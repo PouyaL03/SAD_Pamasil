@@ -9,7 +9,7 @@ const AdminLogin = ({ setIsAdminLoggedIn, setActiveTab }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/api/packages/admin-login/", { pin });
+      const response = await axios.post("http://localhost:8000/api/packages/admin/login/", { pin });
 
       if (response.data.token) {
         setIsAdminLoggedIn(true);

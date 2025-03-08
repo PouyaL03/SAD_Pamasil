@@ -1153,3 +1153,496 @@ INFO 2025-03-08 06:10:55,577 basehttp "GET /api/packages/list/ HTTP/1.1" 200 538
 INFO 2025-03-08 06:11:06,319 basehttp "POST /api/packages/create/ HTTP/1.1" 201 246
 INFO 2025-03-08 06:11:07,380 basehttp "GET /api/packages/list/ HTTP/1.1" 200 717
 INFO 2025-03-08 06:11:12,173 basehttp "POST /api/packages/admin/logout/ HTTP/1.1" 200 55
+INFO 2025-03-08 14:48:23,527 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 14:53:13,002 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/models.py changed, reloading.
+INFO 2025-03-08 14:53:13,889 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 15:01:14,227 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-08 15:01:20,503 log Not Found: /packages/create/
+WARNING 2025-03-08 15:01:20,503 basehttp "POST /packages/create/ HTTP/1.1" 404 3104
+WARNING 2025-03-08 15:07:19,359 log Not Found: /api/packages/create/
+WARNING 2025-03-08 15:07:19,360 basehttp "POST /api/packages/create/ HTTP/1.1" 404 6738
+WARNING 2025-03-08 15:09:05,735 log Not Found: /api/packages/create/
+WARNING 2025-03-08 15:09:05,736 basehttp "POST /api/packages/create/ HTTP/1.1" 404 6738
+WARNING 2025-03-08 15:09:20,946 log Not Found: /api/packages/create/
+WARNING 2025-03-08 15:09:20,946 basehttp "POST /api/packages/create/ HTTP/1.1" 404 6738
+WARNING 2025-03-08 15:12:40,085 log Not Found: /api/packages/create/
+WARNING 2025-03-08 15:12:40,087 basehttp "POST /api/packages/create/ HTTP/1.1" 404 6738
+INFO 2025-03-08 15:13:24,736 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+WARNING 2025-03-08 15:14:13,887 log Not Found: /api/packages/create/
+WARNING 2025-03-08 15:14:13,887 basehttp "POST /api/packages/create/ HTTP/1.1" 404 6738
+WARNING 2025-03-08 15:15:59,544 log Not Found: /api/packages/create/
+WARNING 2025-03-08 15:15:59,545 basehttp "POST /api/packages/create/ HTTP/1.1" 404 6738
+WARNING 2025-03-08 15:17:16,286 log Not Found: /api/packages/create/
+WARNING 2025-03-08 15:17:16,287 basehttp "POST /api/packages/create/ HTTP/1.1" 404 6738
+INFO 2025-03-08 15:20:12,593 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/products/urls.py changed, reloading.
+INFO 2025-03-08 15:20:13,565 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-08 15:20:58,947 log Bad Request: /api/packages/packages/create/
+WARNING 2025-03-08 15:20:58,947 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 400 68
+WARNING 2025-03-08 15:21:12,625 log Not Found: /api/packages/create/
+WARNING 2025-03-08 15:21:12,625 basehttp "POST /api/packages/create/ HTTP/1.1" 404 6738
+WARNING 2025-03-08 15:22:44,144 log Bad Request: /api/packages/packages/create/
+WARNING 2025-03-08 15:22:44,144 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 400 68
+WARNING 2025-03-08 15:22:58,341 log Bad Request: /api/packages/packages/create/
+WARNING 2025-03-08 15:22:58,342 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 400 68
+WARNING 2025-03-08 15:23:08,869 log Not Found: /api/packages/create/
+WARNING 2025-03-08 15:23:08,869 basehttp "POST /api/packages/create/ HTTP/1.1" 404 6738
+INFO 2025-03-08 15:23:28,329 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 201 359
+INFO 2025-03-08 15:30:28,155 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/serializers.py changed, reloading.
+INFO 2025-03-08 15:30:28,867 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 15:30:52,033 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/serializers.py changed, reloading.
+INFO 2025-03-08 15:30:52,497 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 15:32:16,118 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/serializers.py changed, reloading.
+INFO 2025-03-08 15:32:16,925 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 15:32:38,226 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/serializers.py changed, reloading.
+INFO 2025-03-08 15:32:38,901 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 15:32:42,386 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/serializers.py changed, reloading.
+INFO 2025-03-08 15:32:42,827 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 15:33:25,565 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/serializers.py changed, reloading.
+INFO 2025-03-08 15:33:26,157 autoreload Watching for file changes with StatReloader
+ERROR 2025-03-08 15:33:39,126 log Internal Server Error: /api/packages/packages/create/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/fields/__init__.py", line 2123, in get_prep_value
+    return int(value)
+           ^^^^^^^^^^
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'Product'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py", line 58, in post
+    if serializer.is_valid():
+       ^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/rest_framework/serializers.py", line 223, in is_valid
+    self._validated_data = self.run_validation(self.initial_data)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/rest_framework/serializers.py", line 445, in run_validation
+    value = self.validate(value)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/serializers.py", line 41, in validate
+    min_product_stock = min(Product.objects.filter(id__in=selected_products).values_list("initial_stock", flat=True))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/query.py", line 1476, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/query.py", line 1494, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/query.py", line 1501, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1609, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1641, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1555, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1385, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/lookups.py", line 30, in __init__
+    self.rhs = self.get_prep_lookup()
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/lookups.py", line 497, in get_prep_lookup
+    return super().get_prep_lookup()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/lookups.py", line 304, in get_prep_lookup
+    rhs_value = self.lhs.output_field.get_prep_value(rhs_value)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/fields/__init__.py", line 2125, in get_prep_value
+    raise e.__class__(
+TypeError: Field 'id' expected a number but got <Product: aval>.
+ERROR 2025-03-08 15:33:39,132 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 500 175243
+ERROR 2025-03-08 15:34:21,060 log Internal Server Error: /api/packages/packages/create/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/fields/__init__.py", line 2123, in get_prep_value
+    return int(value)
+           ^^^^^^^^^^
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'Product'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py", line 58, in post
+    if serializer.is_valid():
+       ^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/rest_framework/serializers.py", line 223, in is_valid
+    self._validated_data = self.run_validation(self.initial_data)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/rest_framework/serializers.py", line 445, in run_validation
+    value = self.validate(value)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/serializers.py", line 41, in validate
+    min_product_stock = min(Product.objects.filter(id__in=selected_products).values_list("initial_stock", flat=True))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/query.py", line 1476, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/query.py", line 1494, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/query.py", line 1501, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1609, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1641, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1555, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1385, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/lookups.py", line 30, in __init__
+    self.rhs = self.get_prep_lookup()
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/lookups.py", line 497, in get_prep_lookup
+    return super().get_prep_lookup()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/lookups.py", line 304, in get_prep_lookup
+    rhs_value = self.lhs.output_field.get_prep_value(rhs_value)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/db/models/fields/__init__.py", line 2125, in get_prep_value
+    raise e.__class__(
+TypeError: Field 'id' expected a number but got <Product: aval>.
+ERROR 2025-03-08 15:34:21,063 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 500 175227
+INFO 2025-03-08 15:34:28,597 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/serializers.py changed, reloading.
+INFO 2025-03-08 15:34:29,490 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 15:34:32,189 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 201 359
+INFO 2025-03-08 15:35:49,674 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/serializers.py changed, reloading.
+INFO 2025-03-08 15:35:50,372 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 15:35:56,605 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 201 359
+INFO 2025-03-08 15:36:01,495 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 201 361
+INFO 2025-03-08 15:36:09,887 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 201 363
+INFO 2025-03-08 15:38:42,266 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/serializers.py changed, reloading.
+INFO 2025-03-08 15:38:43,123 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 15:38:48,635 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 201 363
+WARNING 2025-03-08 15:41:12,018 log Not Found: /api/packages/list/
+WARNING 2025-03-08 15:41:12,018 basehttp "GET /api/packages/list/ HTTP/1.1" 404 6731
+WARNING 2025-03-08 15:41:29,622 log Not Found: /api/packages/list/
+WARNING 2025-03-08 15:41:29,622 basehttp "GET /api/packages/list/ HTTP/1.1" 404 6731
+INFO 2025-03-08 15:42:11,026 basehttp "GET /api/packages/packages/list/ HTTP/1.1" 200 1999
+WARNING 2025-03-08 15:43:16,325 log Not Found: /api/packages/packages/products/
+WARNING 2025-03-08 15:43:16,325 basehttp "GET /api/packages/packages/products/ HTTP/1.1" 404 6770
+INFO 2025-03-08 15:43:27,531 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+WARNING 2025-03-08 15:43:56,934 log Bad Request: /api/packages/packages/create/
+WARNING 2025-03-08 15:43:56,934 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 400 88
+INFO 2025-03-08 15:48:49,734 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/serializers.py changed, reloading.
+INFO 2025-03-08 15:48:50,516 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 15:48:55,307 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/serializers.py changed, reloading.
+INFO 2025-03-08 15:48:55,724 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-08 15:49:09,360 log Bad Request: /api/packages/packages/create/
+WARNING 2025-03-08 15:49:09,360 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 400 118
+INFO 2025-03-08 15:53:00,692 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 15:53:01,593 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 15:53:03,310 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 15:53:03,779 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 15:53:10,513 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 15:53:11,015 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 15:53:13,526 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 15:53:14,028 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 15:53:16,541 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 15:53:16,991 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 15:53:33,913 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 15:53:34,419 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-08 15:53:45,644 log Bad Request: /api/packages/packages/create/
+WARNING 2025-03-08 15:53:45,645 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 400 118
+WARNING 2025-03-08 15:53:55,853 log Bad Request: /api/packages/packages/create/
+WARNING 2025-03-08 15:53:55,853 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 400 118
+INFO 2025-03-08 15:54:01,683 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 201 359
+INFO 2025-03-08 16:01:17,583 basehttp "POST /api/packages/admin/logout/ HTTP/1.1" 200 55
+INFO 2025-03-08 16:02:59,780 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+WARNING 2025-03-08 16:05:02,040 log Not Found: /api/packages/list/
+WARNING 2025-03-08 16:05:02,041 basehttp "GET /api/packages/list/ HTTP/1.1" 404 6731
+INFO 2025-03-08 16:05:08,926 basehttp "GET /api/packages/packages/list/ HTTP/1.1" 200 2291
+INFO 2025-03-08 16:07:28,934 basehttp "OPTIONS /api/packages/admin/login/ HTTP/1.1" 200 0
+INFO 2025-03-08 16:07:28,942 basehttp "POST /api/packages/admin/login/ HTTP/1.1" 200 27
+INFO 2025-03-08 16:07:53,311 basehttp "POST /api/packages/admin/login/ HTTP/1.1" 200 27
+INFO 2025-03-08 16:08:31,469 basehttp "POST /api/packages/admin/login/ HTTP/1.1" 200 27
+WARNING 2025-03-08 16:08:32,718 log Not Found: /api/packages/packages/products/
+WARNING 2025-03-08 16:08:32,719 basehttp "GET /api/packages/packages/products/ HTTP/1.1" 404 6770
+WARNING 2025-03-08 16:08:32,724 log Not Found: /api/packages/
+WARNING 2025-03-08 16:08:32,724 basehttp "GET /api/packages/ HTTP/1.1" 404 6716
+INFO 2025-03-08 16:08:47,468 basehttp "POST /api/packages/admin/login/ HTTP/1.1" 200 27
+WARNING 2025-03-08 16:08:48,548 log Not Found: /api/packages/
+WARNING 2025-03-08 16:08:48,548 basehttp "GET /api/packages/ HTTP/1.1" 404 6716
+INFO 2025-03-08 16:08:48,550 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+INFO 2025-03-08 16:09:48,278 basehttp "POST /api/packages/admin/login/ HTTP/1.1" 200 27
+INFO 2025-03-08 16:09:49,186 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+INFO 2025-03-08 16:09:49,192 basehttp "GET /api/packages/packages/list/ HTTP/1.1" 200 2291
+INFO 2025-03-08 16:10:13,111 basehttp "OPTIONS /api/packages/create/ HTTP/1.1" 200 0
+WARNING 2025-03-08 16:10:13,122 log Not Found: /api/packages/create/
+WARNING 2025-03-08 16:10:13,122 basehttp "POST /api/packages/create/ HTTP/1.1" 404 6738
+WARNING 2025-03-08 16:10:18,397 log Not Found: /api/packages/create/
+WARNING 2025-03-08 16:10:18,398 basehttp "POST /api/packages/create/ HTTP/1.1" 404 6738
+WARNING 2025-03-08 16:10:36,689 log Not Found: /api/packages/create/
+WARNING 2025-03-08 16:10:36,690 basehttp "POST /api/packages/create/ HTTP/1.1" 404 6738
+INFO 2025-03-08 16:11:16,586 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/urls.py changed, reloading.
+INFO 2025-03-08 16:11:17,376 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-08 16:11:39,755 log Bad Request: /api/packages/create/
+WARNING 2025-03-08 16:11:39,756 basehttp "POST /api/packages/create/ HTTP/1.1" 400 88
+WARNING 2025-03-08 16:11:48,291 log Bad Request: /api/packages/create/
+WARNING 2025-03-08 16:11:48,292 basehttp "POST /api/packages/create/ HTTP/1.1" 400 88
+INFO 2025-03-08 16:12:22,311 basehttp "OPTIONS /api/packages/packages/create/ HTTP/1.1" 200 0
+WARNING 2025-03-08 16:12:22,323 log Not Found: /api/packages/packages/create/
+WARNING 2025-03-08 16:12:22,323 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 404 6738
+INFO 2025-03-08 16:12:28,370 basehttp "POST /api/packages/admin/login/ HTTP/1.1" 200 27
+WARNING 2025-03-08 16:12:29,562 log Not Found: /api/packages/packages/list/
+WARNING 2025-03-08 16:12:29,563 basehttp "GET /api/packages/packages/list/ HTTP/1.1" 404 6731
+INFO 2025-03-08 16:12:29,568 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+INFO 2025-03-08 16:12:54,474 basehttp "POST /api/packages/admin/login/ HTTP/1.1" 200 27
+WARNING 2025-03-08 16:12:55,488 log Not Found: /api/packages/packages/list/
+WARNING 2025-03-08 16:12:55,488 basehttp "GET /api/packages/packages/list/ HTTP/1.1" 404 6731
+INFO 2025-03-08 16:12:55,490 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+INFO 2025-03-08 16:13:12,848 basehttp "POST /api/packages/admin/login/ HTTP/1.1" 200 27
+INFO 2025-03-08 16:13:13,814 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+INFO 2025-03-08 16:13:13,822 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2291
+INFO 2025-03-08 16:13:32,313 basehttp "POST /api/packages/admin/login/ HTTP/1.1" 200 27
+INFO 2025-03-08 16:13:33,308 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+INFO 2025-03-08 16:13:33,315 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2291
+WARNING 2025-03-08 16:13:55,039 log Not Found: /api/packages/packages/create/
+WARNING 2025-03-08 16:13:55,039 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 404 6738
+WARNING 2025-03-08 16:14:41,583 log Bad Request: /api/packages/create/
+WARNING 2025-03-08 16:14:41,584 basehttp "POST /api/packages/create/ HTTP/1.1" 400 88
+DEBUG 2025-03-08 16:17:06,461 views <rest_framework.request.Request: PUT '/api/packages/update/1/'>
+INFO 2025-03-08 16:17:06,493 basehttp "PUT /api/packages/update/1/ HTTP/1.1" 200 374
+DEBUG 2025-03-08 16:17:15,994 views <rest_framework.request.Request: PUT '/api/packages/update/15/'>
+WARNING 2025-03-08 16:17:15,996 log Not Found: /api/packages/update/15/
+WARNING 2025-03-08 16:17:15,997 basehttp "PUT /api/packages/update/15/ HTTP/1.1" 404 37
+WARNING 2025-03-08 16:18:07,861 log Bad Request: /api/packages/create/
+WARNING 2025-03-08 16:18:07,861 basehttp "POST /api/packages/create/ HTTP/1.1" 400 88
+DEBUG 2025-03-08 16:18:33,211 views <rest_framework.request.Request: PUT '/api/packages/update/1/'>
+INFO 2025-03-08 16:18:33,223 basehttp "PUT /api/packages/update/1/ HTTP/1.1" 200 374
+WARNING 2025-03-08 16:18:49,511 log Not Found: /api/packages/delete/1/
+WARNING 2025-03-08 16:18:49,511 basehttp "PUT /api/packages/delete/1/ HTTP/1.1" 404 6716
+INFO 2025-03-08 16:19:48,202 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/urls.py changed, reloading.
+INFO 2025-03-08 16:19:49,283 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:19:51,001 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/urls.py changed, reloading.
+INFO 2025-03-08 16:19:51,501 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:19:56,075 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/urls.py changed, reloading.
+INFO 2025-03-08 16:19:56,545 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:22:18,390 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 16:22:19,312 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:22:47,782 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/urls.py changed, reloading.
+INFO 2025-03-08 16:22:48,549 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:23:00,487 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/urls.py changed, reloading.
+INFO 2025-03-08 16:23:01,215 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-08 16:23:15,457 log Method Not Allowed: /api/packages/delete/1/
+WARNING 2025-03-08 16:23:15,457 basehttp "PUT /api/packages/delete/1/ HTTP/1.1" 405 40
+INFO 2025-03-08 16:24:54,691 basehttp "DELETE /api/packages/delete/1/ HTTP/1.1" 200 53
+INFO 2025-03-08 16:25:29,153 basehttp "OPTIONS /api/packages/delete/1/ HTTP/1.1" 200 0
+WARNING 2025-03-08 16:25:29,161 log Not Found: /api/packages/delete/1/
+WARNING 2025-03-08 16:25:29,162 basehttp "DELETE /api/packages/delete/1/ HTTP/1.1" 404 37
+WARNING 2025-03-08 16:25:52,909 log Not Found: /api/packages/packages/list/
+WARNING 2025-03-08 16:25:52,910 basehttp "GET /api/packages/packages/list/ HTTP/1.1" 404 7022
+INFO 2025-03-08 16:26:00,865 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2055
+INFO 2025-03-08 16:27:07,923 basehttp "OPTIONS /api/packages/create/ HTTP/1.1" 200 0
+WARNING 2025-03-08 16:27:07,932 log Bad Request: /api/packages/create/
+WARNING 2025-03-08 16:27:07,933 basehttp "POST /api/packages/create/ HTTP/1.1" 400 88
+INFO 2025-03-08 16:29:21,492 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 16:29:22,517 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:29:52,023 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:30:00,835 basehttp "OPTIONS /api/packages/admin/login/ HTTP/1.1" 200 0
+INFO 2025-03-08 16:30:00,849 basehttp "POST /api/packages/admin/login/ HTTP/1.1" 200 27
+INFO 2025-03-08 16:30:01,943 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+INFO 2025-03-08 16:30:01,951 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2055
+INFO 2025-03-08 16:30:15,523 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 16:30:16,358 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:30:30,386 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 16:30:31,237 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-08 16:30:47,396 log Bad Request: /api/packages/create/
+WARNING 2025-03-08 16:30:47,397 basehttp "POST /api/packages/create/ HTTP/1.1" 400 88
+INFO 2025-03-08 16:31:11,140 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 16:31:11,974 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:31:19,874 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 16:31:20,330 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:31:23,949 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 16:31:24,407 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:31:28,995 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 16:31:29,571 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-08 16:31:31,191 log Bad Request: /api/packages/create/
+WARNING 2025-03-08 16:31:31,192 basehttp "POST /api/packages/create/ HTTP/1.1" 400 88
+INFO 2025-03-08 16:31:51,780 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:31:58,861 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 16:31:59,309 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:32:02,926 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 16:32:03,445 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:32:10,058 basehttp "POST /api/packages/admin/login/ HTTP/1.1" 200 27
+INFO 2025-03-08 16:32:11,178 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+INFO 2025-03-08 16:32:11,187 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2055
+WARNING 2025-03-08 16:32:29,612 log Bad Request: /api/packages/create/
+WARNING 2025-03-08 16:32:29,613 basehttp "POST /api/packages/create/ HTTP/1.1" 400 88
+INFO 2025-03-08 16:32:53,478 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 16:32:54,554 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:32:56,303 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 16:32:56,882 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:33:01,518 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 16:33:02,006 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:33:07,599 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:33:14,591 basehttp "POST /api/packages/admin/login/ HTTP/1.1" 200 27
+INFO 2025-03-08 16:33:15,870 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+INFO 2025-03-08 16:33:15,877 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2055
+WARNING 2025-03-08 16:33:30,443 log Bad Request: /api/packages/create/
+WARNING 2025-03-08 16:33:30,444 basehttp "POST /api/packages/create/ HTTP/1.1" 400 88
+WARNING 2025-03-08 16:33:49,699 log Not Found: /api/packages/packages/create/
+WARNING 2025-03-08 16:33:49,700 basehttp "POST /api/packages/packages/create/ HTTP/1.1" 404 7029
+WARNING 2025-03-08 16:33:58,060 log Bad Request: /api/packages/create/
+WARNING 2025-03-08 16:33:58,060 basehttp "POST /api/packages/create/ HTTP/1.1" 400 88
+WARNING 2025-03-08 16:34:09,094 log Bad Request: /api/packages/create/
+WARNING 2025-03-08 16:34:09,095 basehttp "POST /api/packages/create/ HTTP/1.1" 400 88
+INFO 2025-03-08 16:34:19,572 basehttp "POST /api/packages/create/ HTTP/1.1" 201 359
+INFO 2025-03-08 16:35:53,319 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 16:35:54,278 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:35:55,973 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 16:35:56,445 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 16:40:51,273 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+INFO 2025-03-08 16:40:51,280 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2347
+INFO 2025-03-08 16:41:10,361 basehttp "OPTIONS /api/packages/create/ HTTP/1.1" 200 0
+INFO 2025-03-08 16:41:10,410 basehttp "POST /api/packages/create/ HTTP/1.1" 201 315
+INFO 2025-03-08 16:41:11,755 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2595
+INFO 2025-03-08 16:41:22,988 basehttp "OPTIONS /api/packages/delete/10/ HTTP/1.1" 200 0
+INFO 2025-03-08 16:41:23,006 basehttp "DELETE /api/packages/delete/10/ HTTP/1.1" 200 53
+INFO 2025-03-08 16:41:24,464 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2347
+INFO 2025-03-08 16:41:35,815 basehttp "OPTIONS /api/packages/delete/9/ HTTP/1.1" 200 0
+INFO 2025-03-08 16:41:35,829 basehttp "DELETE /api/packages/delete/9/ HTTP/1.1" 200 53
+INFO 2025-03-08 16:41:37,029 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2055
+INFO 2025-03-08 16:45:15,168 basehttp "OPTIONS /api/packages/update/8/ HTTP/1.1" 200 0
+DEBUG 2025-03-08 16:45:15,174 views <rest_framework.request.Request: PUT '/api/packages/update/8/'>
+WARNING 2025-03-08 16:45:15,184 log Bad Request: /api/packages/update/8/
+WARNING 2025-03-08 16:45:15,185 basehttp "PUT /api/packages/update/8/ HTTP/1.1" 400 68
+DEBUG 2025-03-08 16:45:18,433 views <rest_framework.request.Request: PUT '/api/packages/update/8/'>
+WARNING 2025-03-08 16:45:18,436 log Bad Request: /api/packages/update/8/
+WARNING 2025-03-08 16:45:18,436 basehttp "PUT /api/packages/update/8/ HTTP/1.1" 400 68
+INFO 2025-03-08 16:45:31,167 basehttp "OPTIONS /api/packages/delete/2/ HTTP/1.1" 200 0
+INFO 2025-03-08 16:45:31,181 basehttp "DELETE /api/packages/delete/2/ HTTP/1.1" 200 53
+INFO 2025-03-08 16:45:32,078 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1763
+DEBUG 2025-03-08 16:46:31,342 views <rest_framework.request.Request: PUT '/api/packages/update/8/'>
+WARNING 2025-03-08 16:46:31,346 log Bad Request: /api/packages/update/8/
+WARNING 2025-03-08 16:46:31,347 basehttp "PUT /api/packages/update/8/ HTTP/1.1" 400 68
+INFO 2025-03-08 16:47:43,494 basehttp "OPTIONS /api/packages/delete/3/ HTTP/1.1" 200 0
+INFO 2025-03-08 16:47:43,515 basehttp "DELETE /api/packages/delete/3/ HTTP/1.1" 200 53
+INFO 2025-03-08 16:47:45,054 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1471
+INFO 2025-03-08 16:48:55,543 basehttp "OPTIONS /api/packages/update/4/ HTTP/1.1" 200 0
+DEBUG 2025-03-08 16:48:55,547 views <rest_framework.request.Request: PUT '/api/packages/update/4/'>
+INFO 2025-03-08 16:48:55,588 basehttp "PUT /api/packages/update/4/ HTTP/1.1" 200 374
+INFO 2025-03-08 16:48:56,980 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1473
+INFO 2025-03-08 16:49:08,075 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+INFO 2025-03-08 16:49:08,091 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1473
+INFO 2025-03-08 16:49:14,390 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+INFO 2025-03-08 16:49:14,401 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1473
+INFO 2025-03-08 16:49:52,058 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+INFO 2025-03-08 16:49:52,065 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1473
+INFO 2025-03-08 16:49:58,298 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+INFO 2025-03-08 16:49:58,311 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1473
+INFO 2025-03-08 16:51:05,058 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+INFO 2025-03-08 16:51:05,085 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1473
+DEBUG 2025-03-08 16:51:24,432 views <rest_framework.request.Request: PUT '/api/packages/update/4/'>
+INFO 2025-03-08 16:51:24,452 basehttp "PUT /api/packages/update/4/ HTTP/1.1" 200 375
+INFO 2025-03-08 16:51:26,504 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1474
+INFO 2025-03-08 16:52:48,603 basehttp "GET /api/packages/products/ HTTP/1.1" 200 843
+INFO 2025-03-08 16:52:48,609 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1474
+INFO 2025-03-08 16:53:44,261 basehttp "OPTIONS /api/user/login/ HTTP/1.1" 200 0
+INFO 2025-03-08 16:53:44,902 basehttp "POST /api/user/login/ HTTP/1.1" 200 108
+INFO 2025-03-08 16:53:45,538 basehttp "OPTIONS /api/user/profile/ HTTP/1.1" 200 0
+INFO 2025-03-08 16:53:45,547 basehttp "GET /api/user/profile/ HTTP/1.1" 200 180
+INFO 2025-03-08 16:53:45,583 basehttp "GET /api/user/profile/ HTTP/1.1" 200 180
+INFO 2025-03-08 16:53:47,196 basehttp "OPTIONS /api/list/?sort_by_date=desc HTTP/1.1" 200 0
+INFO 2025-03-08 16:53:47,208 basehttp "GET /api/list/?sort_by_date=desc HTTP/1.1" 200 874
+INFO 2025-03-08 16:53:47,387 basehttp "GET /media/product_images/Screenshot_2025-02-07_at_6_EXTK1UD.54.54PM.png HTTP/1.1" 304 0
+INFO 2025-03-08 16:53:47,400 basehttp "GET /media/product_images/Screenshot_2025-03-08_at_3_DocgCl8.58.19PM.png HTTP/1.1" 304 0
+INFO 2025-03-08 16:53:47,400 basehttp "GET /media/product_images/Screenshot_2025-03-08_at_3.58.19PM.png HTTP/1.1" 304 0
+INFO 2025-03-08 16:53:54,323 basehttp "OPTIONS /api/toggle-active/2/ HTTP/1.1" 200 0
+INFO 2025-03-08 16:53:54,337 basehttp "POST /api/toggle-active/2/ HTTP/1.1" 200 63
+INFO 2025-03-08 16:53:55,519 basehttp "GET /api/list/?sort_by_date=desc HTTP/1.1" 200 875
+INFO 2025-03-08 16:53:59,705 basehttp "GET /api/user/profile/ HTTP/1.1" 200 180
+INFO 2025-03-08 16:54:00,896 basehttp "OPTIONS /api/user/logout/ HTTP/1.1" 200 0
+INFO 2025-03-08 16:54:00,902 basehttp "POST /api/user/logout/ HTTP/1.1" 200 57
+INFO 2025-03-08 16:54:04,177 basehttp "OPTIONS /api/packages/admin/login/ HTTP/1.1" 200 0
+INFO 2025-03-08 16:54:04,184 basehttp "POST /api/packages/admin/login/ HTTP/1.1" 200 27
+INFO 2025-03-08 16:54:09,531 basehttp "GET /api/packages/products/ HTTP/1.1" 200 844
+INFO 2025-03-08 16:54:09,540 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1474
+INFO 2025-03-08 16:54:28,453 basehttp "GET /api/packages/products/ HTTP/1.1" 200 844
+INFO 2025-03-08 16:54:28,458 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1474
+INFO 2025-03-08 16:54:40,205 basehttp "GET /api/packages/products/ HTTP/1.1" 200 844
+INFO 2025-03-08 16:54:40,209 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1474
+INFO 2025-03-08 16:55:00,026 basehttp "GET /api/packages/products/ HTTP/1.1" 200 844
+INFO 2025-03-08 16:55:00,034 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1474
+INFO 2025-03-08 16:55:52,059 basehttp "GET /api/packages/products/ HTTP/1.1" 200 844
+INFO 2025-03-08 16:55:52,063 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1474
+INFO 2025-03-08 16:56:01,489 basehttp "GET /api/packages/products/ HTTP/1.1" 200 844
+INFO 2025-03-08 16:56:01,497 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1474
+INFO 2025-03-08 16:56:10,522 basehttp "GET /api/packages/products/ HTTP/1.1" 200 844
+INFO 2025-03-08 16:56:10,529 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1474
+INFO 2025-03-08 16:59:54,681 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 16:59:55,646 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 17:00:02,436 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 17:00:02,884 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 17:00:04,420 autoreload /Users/aylinrasteh/Desktop/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-08 17:00:04,880 autoreload Watching for file changes with StatReloader
+INFO 2025-03-08 17:00:18,858 basehttp "POST /api/packages/admin/login/ HTTP/1.1" 200 27
+INFO 2025-03-08 17:00:20,455 basehttp "GET /api/packages/products/ HTTP/1.1" 200 844
+INFO 2025-03-08 17:00:20,459 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1474
+INFO 2025-03-08 17:00:39,619 basehttp "POST /api/user/login/ HTTP/1.1" 200 108
+INFO 2025-03-08 17:00:40,231 basehttp "GET /api/user/profile/ HTTP/1.1" 200 180
+INFO 2025-03-08 17:00:40,257 basehttp "GET /api/user/profile/ HTTP/1.1" 200 180
+INFO 2025-03-08 17:00:42,937 basehttp "GET /api/list/?sort_by_date=desc HTTP/1.1" 200 875
+INFO 2025-03-08 17:00:46,342 basehttp "POST /api/toggle-active/2/ HTTP/1.1" 200 56
+INFO 2025-03-08 17:00:47,853 basehttp "GET /api/list/?sort_by_date=desc HTTP/1.1" 200 874
+INFO 2025-03-08 17:00:50,227 basehttp "POST /api/toggle-active/2/ HTTP/1.1" 200 63
+INFO 2025-03-08 17:00:51,256 basehttp "GET /api/list/?sort_by_date=desc HTTP/1.1" 200 875
+INFO 2025-03-08 17:00:53,142 basehttp "GET /api/user/profile/ HTTP/1.1" 200 180
+INFO 2025-03-08 17:00:54,193 basehttp "POST /api/user/logout/ HTTP/1.1" 200 57
+INFO 2025-03-08 17:00:57,557 basehttp "POST /api/packages/admin/login/ HTTP/1.1" 200 27
+INFO 2025-03-08 17:00:58,636 basehttp "GET /api/packages/products/ HTTP/1.1" 200 844
+INFO 2025-03-08 17:00:58,642 basehttp "GET /api/packages/list/ HTTP/1.1" 200 1474
