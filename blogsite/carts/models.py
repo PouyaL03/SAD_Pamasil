@@ -1,7 +1,7 @@
 # cart/models.py
 from django.db import models
 from django.conf import settings
-from products.models import Product
+from packages.models import Package
 
 class Cart(models.Model):
     customer = models.OneToOneField(
@@ -15,7 +15,7 @@ class Cart(models.Model):
     def total_price(self):
         total = 0
         for item in self.items.all():
-            total += item.quantity * item.product.unit_price
+            total += item.quantity * item.package.unit_price
         return total
 
     def __str__(self):
@@ -23,12 +23,12 @@ class Cart(models.Model):
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    package = models.ForeignKey(Package, on_delete=models.CASCADE, null = True, blank = True)
     quantity = models.PositiveIntegerField(default=1)
     added_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('cart', 'product')
+        unique_together = ('cart', 'package')
 
     def __str__(self):
-        return f"{self.quantity} of {self.product.name}"
+        return f"{self.quantity} of {self.package.name}"

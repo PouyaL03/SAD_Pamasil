@@ -1,0 +1,787 @@
+INFO 2025-03-07 23:00:31,216 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:00:55,328 basehttp "POST /api/packages/admin-login/ HTTP/1.1" 200 27
+INFO 2025-03-07 23:00:56,323 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+INFO 2025-03-07 23:00:56,325 basehttp "GET /api/packages/list/ HTTP/1.1" 200 178
+INFO 2025-03-07 23:00:56,329 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+INFO 2025-03-07 23:00:56,330 basehttp "GET /api/packages/list/ HTTP/1.1" 200 178
+DEBUG 2025-03-07 23:01:02,304 views <rest_framework.request.Request: PUT '/api/packages/update/1/'>
+WARNING 2025-03-07 23:01:02,309 log Bad Request: /api/packages/update/1/
+WARNING 2025-03-07 23:01:02,309 basehttp "PUT /api/packages/update/1/ HTTP/1.1" 400 61
+INFO 2025-03-07 23:01:14,955 basehttp "POST /api/packages/admin-login/ HTTP/1.1" 200 27
+INFO 2025-03-07 23:01:15,702 basehttp "GET /api/packages/list/ HTTP/1.1" 200 178
+INFO 2025-03-07 23:01:15,704 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+INFO 2025-03-07 23:01:15,706 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+INFO 2025-03-07 23:01:15,710 basehttp "GET /api/packages/list/ HTTP/1.1" 200 178
+DEBUG 2025-03-07 23:01:20,130 views <rest_framework.request.Request: PUT '/api/packages/update/1/'>
+WARNING 2025-03-07 23:01:20,133 log Bad Request: /api/packages/update/1/
+WARNING 2025-03-07 23:01:20,133 basehttp "PUT /api/packages/update/1/ HTTP/1.1" 400 61
+DEBUG 2025-03-07 23:03:38,909 views <rest_framework.request.Request: PUT '/api/packages/update/1/'>
+WARNING 2025-03-07 23:03:38,913 log Bad Request: /api/packages/update/1/
+WARNING 2025-03-07 23:03:38,913 basehttp "PUT /api/packages/update/1/ HTTP/1.1" 400 61
+INFO 2025-03-07 23:05:02,067 basehttp "POST /api/packages/admin-login/ HTTP/1.1" 200 27
+INFO 2025-03-07 23:05:08,394 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+INFO 2025-03-07 23:05:08,395 basehttp "GET /api/packages/list/ HTTP/1.1" 200 178
+INFO 2025-03-07 23:05:08,398 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+INFO 2025-03-07 23:05:08,399 basehttp "GET /api/packages/list/ HTTP/1.1" 200 178
+DEBUG 2025-03-07 23:05:13,237 views <rest_framework.request.Request: PUT '/api/packages/update/1/'>
+WARNING 2025-03-07 23:05:13,241 log Bad Request: /api/packages/update/1/
+WARNING 2025-03-07 23:05:13,241 basehttp "PUT /api/packages/update/1/ HTTP/1.1" 400 61
+DEBUG 2025-03-07 23:05:20,478 views <rest_framework.request.Request: PUT '/api/packages/update/1/'>
+WARNING 2025-03-07 23:05:20,480 log Bad Request: /api/packages/update/1/
+WARNING 2025-03-07 23:05:20,480 basehttp "PUT /api/packages/update/1/ HTTP/1.1" 400 61
+DEBUG 2025-03-07 23:06:51,605 views <rest_framework.request.Request: PUT '/api/packages/update/1/'>
+WARNING 2025-03-07 23:06:51,608 log Bad Request: /api/packages/update/1/
+WARNING 2025-03-07 23:06:51,609 basehttp "PUT /api/packages/update/1/ HTTP/1.1" 400 61
+DEBUG 2025-03-07 23:06:56,526 views <rest_framework.request.Request: PUT '/api/packages/update/1/'>
+WARNING 2025-03-07 23:06:56,528 log Bad Request: /api/packages/update/1/
+WARNING 2025-03-07 23:06:56,529 basehttp "PUT /api/packages/update/1/ HTTP/1.1" 400 61
+INFO 2025-03-07 23:08:12,553 basehttp "POST /api/packages/admin-login/ HTTP/1.1" 200 27
+INFO 2025-03-07 23:09:10,334 basehttp "POST /api/packages/admin-login/ HTTP/1.1" 200 27
+INFO 2025-03-07 23:09:11,347 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+INFO 2025-03-07 23:09:11,354 basehttp "GET /api/packages/list/ HTTP/1.1" 200 178
+INFO 2025-03-07 23:09:11,357 basehttp "GET /api/packages/list/ HTTP/1.1" 200 178
+INFO 2025-03-07 23:09:11,358 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+DEBUG 2025-03-07 23:09:17,549 views <rest_framework.request.Request: PUT '/api/packages/update/1/'>
+WARNING 2025-03-07 23:09:17,553 log Bad Request: /api/packages/update/1/
+WARNING 2025-03-07 23:09:17,553 basehttp "PUT /api/packages/update/1/ HTTP/1.1" 400 61
+INFO 2025-03-07 23:11:17,492 basehttp "POST /api/packages/admin-login/ HTTP/1.1" 200 27
+INFO 2025-03-07 23:11:18,884 basehttp "GET /api/packages/list/ HTTP/1.1" 200 178
+INFO 2025-03-07 23:11:18,887 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+INFO 2025-03-07 23:11:18,890 basehttp "GET /api/packages/list/ HTTP/1.1" 200 178
+INFO 2025-03-07 23:11:18,891 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+DEBUG 2025-03-07 23:11:28,489 views <rest_framework.request.Request: PUT '/api/packages/update/1/'>
+WARNING 2025-03-07 23:11:28,491 log Bad Request: /api/packages/update/1/
+WARNING 2025-03-07 23:11:28,491 basehttp "PUT /api/packages/update/1/ HTTP/1.1" 400 61
+INFO 2025-03-07 23:13:43,883 basehttp "POST /api/packages/admin-login/ HTTP/1.1" 200 27
+INFO 2025-03-07 23:13:45,073 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+INFO 2025-03-07 23:13:45,077 basehttp "GET /api/packages/list/ HTTP/1.1" 200 178
+INFO 2025-03-07 23:13:45,077 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+INFO 2025-03-07 23:13:45,079 basehttp "GET /api/packages/list/ HTTP/1.1" 200 178
+DEBUG 2025-03-07 23:13:50,348 views <rest_framework.request.Request: PUT '/api/packages/update/1/'>
+INFO 2025-03-07 23:13:50,378 basehttp "PUT /api/packages/update/1/ HTTP/1.1" 200 255
+INFO 2025-03-07 23:13:54,637 basehttp "GET /api/packages/list/ HTTP/1.1" 200 176
+DEBUG 2025-03-07 23:14:04,720 views <rest_framework.request.Request: PUT '/api/packages/update/1/'>
+INFO 2025-03-07 23:14:04,741 basehttp "PUT /api/packages/update/1/ HTTP/1.1" 200 253
+INFO 2025-03-07 23:14:06,079 basehttp "GET /api/packages/list/ HTTP/1.1" 200 174
+INFO 2025-03-07 23:15:48,203 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/models.py changed, reloading.
+INFO 2025-03-07 23:15:48,384 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:16:10,727 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/models.py changed, reloading.
+INFO 2025-03-07 23:16:10,900 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:16:14,124 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/models.py changed, reloading.
+INFO 2025-03-07 23:16:14,319 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:16:15,506 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/models.py changed, reloading.
+INFO 2025-03-07 23:16:15,706 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:19:43,604 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/serializers.py changed, reloading.
+INFO 2025-03-07 23:19:43,776 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:19:44,938 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/serializers.py changed, reloading.
+INFO 2025-03-07 23:19:45,106 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:19:47,281 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/serializers.py changed, reloading.
+INFO 2025-03-07 23:19:47,495 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:20:18,915 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-07 23:20:19,099 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:20:22,294 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-07 23:20:22,459 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:20:24,632 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-07 23:20:24,833 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:20:58,298 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/models.py changed, reloading.
+INFO 2025-03-07 23:20:58,474 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:21:01,662 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/models.py changed, reloading.
+INFO 2025-03-07 23:21:01,830 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:21:30,191 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/models.py changed, reloading.
+INFO 2025-03-07 23:21:30,375 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:21:39,632 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/models.py changed, reloading.
+INFO 2025-03-07 23:21:39,803 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:21:44,034 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/models.py changed, reloading.
+INFO 2025-03-07 23:21:44,212 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:21:57,417 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/models.py changed, reloading.
+INFO 2025-03-07 23:21:57,602 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:22:02,804 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/models.py changed, reloading.
+INFO 2025-03-07 23:22:03,003 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:22:18,265 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:22:18,464 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:22:25,702 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:22:25,879 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:22:31,036 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:22:31,213 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:22:36,367 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:22:36,564 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:22:39,717 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:22:39,888 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:22:47,075 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:22:47,252 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:22:56,442 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:22:56,611 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:23:04,807 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:23:04,981 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:23:09,134 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:23:09,290 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:23:19,475 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:23:19,654 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:23:23,794 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:23:23,956 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:34:38,448 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:34:43,078 basehttp "POST /api/packages/admin-login/ HTTP/1.1" 200 27
+INFO 2025-03-07 23:34:44,313 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+INFO 2025-03-07 23:34:44,317 basehttp "GET /api/packages/list/ HTTP/1.1" 200 174
+INFO 2025-03-07 23:34:44,318 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+INFO 2025-03-07 23:34:44,320 basehttp "GET /api/packages/list/ HTTP/1.1" 200 174
+DEBUG 2025-03-07 23:34:49,040 views <rest_framework.request.Request: PUT '/api/packages/update/1/'>
+INFO 2025-03-07 23:34:49,084 basehttp "PUT /api/packages/update/1/ HTTP/1.1" 200 253
+INFO 2025-03-07 23:34:50,297 basehttp "GET /api/packages/list/ HTTP/1.1" 200 174
+INFO 2025-03-07 23:35:20,964 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/serializers.py changed, reloading.
+INFO 2025-03-07 23:35:21,129 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:35:23,306 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/models.py changed, reloading.
+INFO 2025-03-07 23:35:23,507 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:35:33,778 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/models.py changed, reloading.
+INFO 2025-03-07 23:35:33,949 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:35:37,192 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/models.py changed, reloading.
+INFO 2025-03-07 23:35:37,357 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:35:41,590 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/models.py changed, reloading.
+INFO 2025-03-07 23:35:41,758 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:35:45,929 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-07 23:35:46,087 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:35:47,256 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-07 23:35:47,429 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:35:49,626 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/models.py changed, reloading.
+INFO 2025-03-07 23:35:49,799 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:35:50,967 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-07 23:35:51,144 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:35:53,319 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/views.py changed, reloading.
+INFO 2025-03-07 23:35:53,496 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:36:14,878 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+INFO 2025-03-07 23:36:14,878 basehttp "GET /api/packages/list/ HTTP/1.1" 200 192
+INFO 2025-03-07 23:36:21,892 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:36:22,065 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:36:23,077 basehttp "POST /api/packages/admin-login/ HTTP/1.1" 200 27
+INFO 2025-03-07 23:36:24,024 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+INFO 2025-03-07 23:36:24,025 basehttp "GET /api/packages/list/ HTTP/1.1" 200 192
+INFO 2025-03-07 23:36:24,029 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+INFO 2025-03-07 23:36:24,031 basehttp "GET /api/packages/list/ HTTP/1.1" 200 192
+INFO 2025-03-07 23:36:25,288 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:36:25,451 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:36:28,591 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:36:28,766 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:36:32,924 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:36:33,088 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:36:37,258 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:36:37,417 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:36:42,606 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:36:42,763 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:36:44,898 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:36:45,064 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:36:49,227 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:36:49,391 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:36:52,586 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:36:52,749 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-07 23:36:55,859 log Bad Request: /api/packages/create/
+WARNING 2025-03-07 23:36:55,860 basehttp "POST /api/packages/create/ HTTP/1.1" 400 105
+INFO 2025-03-07 23:36:55,961 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:36:56,157 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:36:59,345 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:36:59,510 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:37:01,691 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:37:01,889 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:37:05,080 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:37:05,256 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:37:09,456 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:37:09,627 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-07 23:37:10,883 log Bad Request: /api/packages/create/
+WARNING 2025-03-07 23:37:10,884 basehttp "POST /api/packages/create/ HTTP/1.1" 400 105
+INFO 2025-03-07 23:37:11,823 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:37:11,990 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:37:13,122 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:37:13,292 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-07 23:37:15,481 log Bad Request: /api/packages/create/
+WARNING 2025-03-07 23:37:15,482 basehttp "POST /api/packages/create/ HTTP/1.1" 400 105
+INFO 2025-03-07 23:37:15,507 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:37:15,685 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:37:19,879 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:37:20,057 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:37:20,385 basehttp "POST /api/packages/create/ HTTP/1.1" 201 227
+INFO 2025-03-07 23:37:21,748 basehttp "GET /api/packages/list/ HTTP/1.1" 200 352
+INFO 2025-03-07 23:37:22,248 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/serializers.py changed, reloading.
+INFO 2025-03-07 23:37:22,423 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:37:47,456 basehttp "OPTIONS /api/packages/update/2/ HTTP/1.1" 200 0
+DEBUG 2025-03-07 23:37:47,459 views <rest_framework.request.Request: PUT '/api/packages/update/2/'>
+WARNING 2025-03-07 23:37:47,462 log Bad Request: /api/packages/update/2/
+WARNING 2025-03-07 23:37:47,462 basehttp "PUT /api/packages/update/2/ HTTP/1.1" 400 105
+INFO 2025-03-07 23:37:47,840 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/views.py changed, reloading.
+INFO 2025-03-07 23:37:48,015 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:37:49,146 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/views.py changed, reloading.
+INFO 2025-03-07 23:37:49,334 autoreload Watching for file changes with StatReloader
+DEBUG 2025-03-07 23:37:52,817 views <rest_framework.request.Request: PUT '/api/packages/update/2/'>
+INFO 2025-03-07 23:37:52,861 basehttp "PUT /api/packages/update/2/ HTTP/1.1" 200 245
+INFO 2025-03-07 23:37:53,560 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/views.py changed, reloading.
+INFO 2025-03-07 23:37:53,726 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:37:54,456 basehttp "GET /api/packages/list/ HTTP/1.1" 200 357
+INFO 2025-03-07 23:37:59,943 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/views.py changed, reloading.
+INFO 2025-03-07 23:38:00,125 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:38:03,324 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/views.py changed, reloading.
+INFO 2025-03-07 23:38:03,509 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:38:07,656 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/views.py changed, reloading.
+INFO 2025-03-07 23:38:07,826 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:38:14,995 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/views.py changed, reloading.
+INFO 2025-03-07 23:38:15,167 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:38:21,375 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/views.py changed, reloading.
+INFO 2025-03-07 23:38:21,575 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:38:22,759 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/views.py changed, reloading.
+INFO 2025-03-07 23:38:22,923 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:38:27,126 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/views.py changed, reloading.
+INFO 2025-03-07 23:38:27,327 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:38:30,518 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/models.py changed, reloading.
+INFO 2025-03-07 23:38:30,703 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:38:32,938 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/models.py changed, reloading.
+INFO 2025-03-07 23:38:33,136 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:38:37,356 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/views.py changed, reloading.
+INFO 2025-03-07 23:38:37,516 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:38:40,705 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/views.py changed, reloading.
+INFO 2025-03-07 23:38:40,872 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:38:44,064 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/views.py changed, reloading.
+INFO 2025-03-07 23:38:44,230 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:38:48,413 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/views.py changed, reloading.
+INFO 2025-03-07 23:38:48,584 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:38:52,779 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/views.py changed, reloading.
+INFO 2025-03-07 23:38:52,958 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:38:58,168 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/views.py changed, reloading.
+INFO 2025-03-07 23:38:58,339 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:39:01,538 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/carts/views.py changed, reloading.
+INFO 2025-03-07 23:39:01,720 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:40:27,489 autoreload /home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/serializers.py changed, reloading.
+INFO 2025-03-07 23:40:27,671 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:40:47,275 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+ERROR 2025-03-07 23:40:47,294 log Internal Server Error: /api/packages/list/
+Traceback (most recent call last):
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.OperationalError: no such column: packages_package.unit_price
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/views.py", line 63, in get
+    return Response(serializer.data, status=status.HTTP_200_OK)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 795, in data
+    ret = super().data
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 713, in to_representation
+    return [
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 398, in __iter__
+    self._fetch_all()
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.OperationalError: no such column: packages_package.unit_price
+ERROR 2025-03-07 23:40:47,295 basehttp "GET /api/packages/list/ HTTP/1.1" 500 168195
+INFO 2025-03-07 23:40:53,812 basehttp "POST /api/packages/admin-login/ HTTP/1.1" 200 27
+INFO 2025-03-07 23:40:54,776 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+INFO 2025-03-07 23:40:54,781 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+ERROR 2025-03-07 23:40:54,795 log Internal Server Error: /api/packages/list/
+Traceback (most recent call last):
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.OperationalError: no such column: packages_package.unit_price
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/views.py", line 63, in get
+    return Response(serializer.data, status=status.HTTP_200_OK)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 795, in data
+    ret = super().data
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 713, in to_representation
+    return [
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 398, in __iter__
+    self._fetch_all()
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.OperationalError: no such column: packages_package.unit_price
+ERROR 2025-03-07 23:40:54,795 basehttp "GET /api/packages/list/ HTTP/1.1" 500 168195
+ERROR 2025-03-07 23:40:54,818 log Internal Server Error: /api/packages/list/
+Traceback (most recent call last):
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.OperationalError: no such column: packages_package.unit_price
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/views.py", line 63, in get
+    return Response(serializer.data, status=status.HTTP_200_OK)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 795, in data
+    ret = super().data
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 713, in to_representation
+    return [
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 398, in __iter__
+    self._fetch_all()
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.OperationalError: no such column: packages_package.unit_price
+ERROR 2025-03-07 23:40:54,819 basehttp "GET /api/packages/list/ HTTP/1.1" 500 168195
+INFO 2025-03-07 23:41:10,968 basehttp "POST /api/packages/admin-login/ HTTP/1.1" 200 27
+INFO 2025-03-07 23:41:11,782 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+INFO 2025-03-07 23:41:11,788 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+ERROR 2025-03-07 23:41:11,798 log Internal Server Error: /api/packages/list/
+Traceback (most recent call last):
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.OperationalError: no such column: packages_package.unit_price
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/views.py", line 63, in get
+    return Response(serializer.data, status=status.HTTP_200_OK)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 795, in data
+    ret = super().data
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 713, in to_representation
+    return [
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 398, in __iter__
+    self._fetch_all()
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.OperationalError: no such column: packages_package.unit_price
+ERROR 2025-03-07 23:41:11,799 basehttp "GET /api/packages/list/ HTTP/1.1" 500 168195
+ERROR 2025-03-07 23:41:11,838 log Internal Server Error: /api/packages/list/
+Traceback (most recent call last):
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.OperationalError: no such column: packages_package.unit_price
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/views.py", line 63, in get
+    return Response(serializer.data, status=status.HTTP_200_OK)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 795, in data
+    ret = super().data
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 713, in to_representation
+    return [
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 398, in __iter__
+    self._fetch_all()
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.OperationalError: no such column: packages_package.unit_price
+ERROR 2025-03-07 23:41:11,838 basehttp "GET /api/packages/list/ HTTP/1.1" 500 168195
+INFO 2025-03-07 23:42:03,346 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:42:41,079 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:42:50,347 basehttp "POST /api/packages/admin-login/ HTTP/1.1" 200 27
+INFO 2025-03-07 23:42:51,328 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+INFO 2025-03-07 23:42:51,334 basehttp "GET /api/packages/products/ HTTP/1.1" 200 786
+ERROR 2025-03-07 23:42:51,353 log Internal Server Error: /api/packages/list/
+Traceback (most recent call last):
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.OperationalError: no such column: packages_package.unit_price
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/views.py", line 63, in get
+    return Response(serializer.data, status=status.HTTP_200_OK)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 795, in data
+    ret = super().data
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 713, in to_representation
+    return [
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 398, in __iter__
+    self._fetch_all()
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.OperationalError: no such column: packages_package.unit_price
+ERROR 2025-03-07 23:42:51,355 basehttp "GET /api/packages/list/ HTTP/1.1" 500 168195
+ERROR 2025-03-07 23:42:51,378 log Internal Server Error: /api/packages/list/
+Traceback (most recent call last):
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.OperationalError: no such column: packages_package.unit_price
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ilya/University/SAD/SAD_Pamasil/blogsite/packages/views.py", line 63, in get
+    return Response(serializer.data, status=status.HTTP_200_OK)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 795, in data
+    ret = super().data
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ilya/.local/lib/python3.8/site-packages/rest_framework/serializers.py", line 713, in to_representation
+    return [
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 398, in __iter__
+    self._fetch_all()
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ilya/.local/lib/python3.8/site-packages/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.OperationalError: no such column: packages_package.unit_price
+ERROR 2025-03-07 23:42:51,379 basehttp "GET /api/packages/list/ HTTP/1.1" 500 168195
+INFO 2025-03-07 23:49:04,860 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:49:16,682 autoreload Watching for file changes with StatReloader
+INFO 2025-03-07 23:49:25,152 basehttp "OPTIONS /api/packages/admin-login/ HTTP/1.1" 200 0
+INFO 2025-03-07 23:49:25,156 basehttp "POST /api/packages/admin-login/ HTTP/1.1" 200 27
+INFO 2025-03-07 23:49:25,980 basehttp "GET /api/packages/products/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:49:25,983 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:49:25,984 basehttp "GET /api/packages/products/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:49:25,985 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:49:30,484 basehttp "POST /api/packages/admin/logout/ HTTP/1.1" 200 55
+INFO 2025-03-07 23:49:32,503 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:49:32,504 basehttp "GET /api/packages/products/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:49:32,511 basehttp "GET /api/packages/products/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:49:32,511 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:49:33,508 basehttp "POST /api/packages/admin/logout/ HTTP/1.1" 200 55
+INFO 2025-03-07 23:50:12,662 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:50:12,663 basehttp "GET /api/packages/products/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:50:12,666 basehttp "GET /api/packages/products/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:50:12,667 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:50:13,628 basehttp "POST /api/packages/admin/logout/ HTTP/1.1" 200 55
+INFO 2025-03-07 23:50:58,220 basehttp "POST /api/packages/admin-login/ HTTP/1.1" 200 27
+INFO 2025-03-07 23:50:59,616 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:50:59,617 basehttp "GET /api/packages/products/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:50:59,619 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:50:59,621 basehttp "GET /api/packages/products/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:51:00,619 basehttp "POST /api/packages/admin/logout/ HTTP/1.1" 200 55
+INFO 2025-03-07 23:51:28,584 basehttp "POST /api/user/register/ HTTP/1.1" 201 146
+INFO 2025-03-07 23:51:31,482 basehttp "GET /api/user/verify-email/MQ/cmbjls-c7490e7c021ccc04fb60661cc2aaadbe/ HTTP/1.1" 200 59
+INFO 2025-03-07 23:51:41,997 basehttp "POST /api/user/login/ HTTP/1.1" 200 108
+INFO 2025-03-07 23:51:42,124 basehttp "GET /api/user/profile/ HTTP/1.1" 200 182
+INFO 2025-03-07 23:51:42,139 basehttp "GET /api/user/profile/ HTTP/1.1" 200 182
+INFO 2025-03-07 23:51:42,192 basehttp "GET /api/user/profile/ HTTP/1.1" 200 182
+INFO 2025-03-07 23:51:43,811 basehttp "GET /api/list/?sort_by_date=desc HTTP/1.1" 200 33
+INFO 2025-03-07 23:51:43,815 basehttp "GET /api/list/?sort_by_date=desc HTTP/1.1" 200 33
+INFO 2025-03-07 23:51:57,982 basehttp "POST /api/add/ HTTP/1.1" 201 328
+INFO 2025-03-07 23:51:59,374 basehttp "GET /api/list/?sort_by_date=desc HTTP/1.1" 200 291
+INFO 2025-03-07 23:51:59,387 basehttp "GET /media/product_images/screen_shot.png HTTP/1.1" 200 143795
+INFO 2025-03-07 23:52:13,102 basehttp "POST /api/add/ HTTP/1.1" 201 354
+INFO 2025-03-07 23:52:14,157 basehttp "GET /api/list/?sort_by_date=desc HTTP/1.1" 200 576
+INFO 2025-03-07 23:52:14,165 basehttp "GET /media/product_images/Screenshot_from_2024-12-31_14-54-21_T3YWpxK.png HTTP/1.1" 200 649953
+INFO 2025-03-07 23:52:19,306 basehttp "GET /api/user/profile/ HTTP/1.1" 200 182
+INFO 2025-03-07 23:52:19,310 basehttp "GET /api/user/profile/ HTTP/1.1" 200 182
+INFO 2025-03-07 23:52:20,494 basehttp "POST /api/user/logout/ HTTP/1.1" 200 57
+WARNING 2025-03-07 23:52:24,010 log Bad Request: /api/packages/admin-login/
+WARNING 2025-03-07 23:52:24,010 basehttp "POST /api/packages/admin-login/ HTTP/1.1" 400 37
+INFO 2025-03-07 23:52:27,133 basehttp "POST /api/packages/admin-login/ HTTP/1.1" 200 27
+INFO 2025-03-07 23:52:28,176 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:52:28,179 basehttp "GET /api/packages/products/ HTTP/1.1" 200 545
+INFO 2025-03-07 23:52:28,181 basehttp "GET /api/packages/products/ HTTP/1.1" 200 545
+INFO 2025-03-07 23:52:28,182 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2
+WARNING 2025-03-07 23:53:10,346 log Bad Request: /api/packages/create/
+WARNING 2025-03-07 23:53:10,347 basehttp "POST /api/packages/create/ HTTP/1.1" 400 101
+INFO 2025-03-07 23:53:38,127 basehttp "POST /api/packages/admin-login/ HTTP/1.1" 200 27
+INFO 2025-03-07 23:53:39,018 basehttp "GET /api/packages/products/ HTTP/1.1" 200 545
+INFO 2025-03-07 23:53:39,020 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:53:39,025 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:53:39,025 basehttp "GET /api/packages/products/ HTTP/1.1" 200 545
+WARNING 2025-03-07 23:53:50,844 log Bad Request: /api/packages/create/
+WARNING 2025-03-07 23:53:50,844 basehttp "POST /api/packages/create/ HTTP/1.1" 400 88
+INFO 2025-03-07 23:54:01,001 basehttp "POST /api/packages/admin-login/ HTTP/1.1" 200 27
+INFO 2025-03-07 23:54:01,867 basehttp "GET /api/packages/products/ HTTP/1.1" 200 545
+INFO 2025-03-07 23:54:01,868 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:54:01,873 basehttp "GET /api/packages/list/ HTTP/1.1" 200 2
+INFO 2025-03-07 23:54:01,875 basehttp "GET /api/packages/products/ HTTP/1.1" 200 545
+INFO 2025-03-07 23:54:12,380 basehttp "POST /api/packages/create/ HTTP/1.1" 201 248
+INFO 2025-03-07 23:54:13,482 basehttp "GET /api/packages/list/ HTTP/1.1" 200 182
+DEBUG 2025-03-07 23:54:27,319 views <rest_framework.request.Request: PUT '/api/packages/update/1/'>
+INFO 2025-03-07 23:54:27,332 basehttp "PUT /api/packages/update/1/ HTTP/1.1" 200 262
+INFO 2025-03-07 23:54:28,745 basehttp "GET /api/packages/list/ HTTP/1.1" 200 183
+DEBUG 2025-03-07 23:54:39,457 views <rest_framework.request.Request: PUT '/api/packages/update/1/'>
+INFO 2025-03-07 23:54:39,499 basehttp "PUT /api/packages/update/1/ HTTP/1.1" 200 263
+INFO 2025-03-07 23:54:40,659 basehttp "GET /api/packages/list/ HTTP/1.1" 200 184
+DEBUG 2025-03-07 23:54:49,656 views <rest_framework.request.Request: PUT '/api/packages/update/1/'>
+WARNING 2025-03-07 23:54:49,660 log Bad Request: /api/packages/update/1/
+WARNING 2025-03-07 23:54:49,660 basehttp "PUT /api/packages/update/1/ HTTP/1.1" 400 101
+DEBUG 2025-03-07 23:54:55,997 views <rest_framework.request.Request: PUT '/api/packages/update/1/'>
+INFO 2025-03-07 23:54:56,018 basehttp "PUT /api/packages/update/1/ HTTP/1.1" 200 262
+INFO 2025-03-07 23:54:57,053 basehttp "GET /api/packages/list/ HTTP/1.1" 200 183
+INFO 2025-03-07 23:55:13,435 basehttp "POST /api/packages/admin/logout/ HTTP/1.1" 200 55
+WARNING 2025-03-07 23:55:42,397 log Bad Request: /api/user/register/
+WARNING 2025-03-07 23:55:42,397 basehttp "POST /api/user/register/ HTTP/1.1" 400 62
+INFO 2025-03-07 23:55:55,487 basehttp "POST /api/user/register/ HTTP/1.1" 201 146
+INFO 2025-03-07 23:56:00,673 basehttp "GET /api/user/verify-email/Mg/cmbjt7-28156c33d414af6907909afc43e2410d/ HTTP/1.1" 200 59
+INFO 2025-03-07 23:56:10,271 basehttp "POST /api/user/login/ HTTP/1.1" 200 108
+INFO 2025-03-07 23:56:10,395 basehttp "GET /api/user/profile/ HTTP/1.1" 200 188
+INFO 2025-03-07 23:56:10,404 basehttp "GET /api/user/profile/ HTTP/1.1" 200 188
+INFO 2025-03-07 23:56:10,450 basehttp "GET /api/user/profile/ HTTP/1.1" 200 188
+INFO 2025-03-07 23:56:13,194 basehttp "GET /api/customer/panel/?sort_by_date=desc HTTP/1.1" 200 644
+INFO 2025-03-07 23:56:13,199 basehttp "GET /api/customer/panel/?sort_by_date=desc HTTP/1.1" 200 644
+INFO 2025-03-07 23:56:13,207 basehttp "GET /media/product_images/screen_shot.png HTTP/1.1" 304 0
+INFO 2025-03-07 23:56:13,207 basehttp "GET /media/product_images/Screenshot_from_2024-12-31_14-54-21_T3YWpxK.png HTTP/1.1" 304 0
+INFO 2025-03-08 00:03:07,538 basehttp "OPTIONS /api/cart/ HTTP/1.1" 200 0
+INFO 2025-03-08 00:03:07,539 basehttp "OPTIONS /api/cart/ HTTP/1.1" 200 0
+INFO 2025-03-08 00:03:07,541 basehttp "GET /api/packages/list/ HTTP/1.1" 200 183
+WARNING 2025-03-08 00:03:07,542 log Unauthorized: /api/cart/
+WARNING 2025-03-08 00:03:07,544 basehttp "GET /api/cart/ HTTP/1.1" 401 58
+INFO 2025-03-08 00:03:07,547 basehttp "GET /api/packages/list/ HTTP/1.1" 200 183
+WARNING 2025-03-08 00:03:07,588 log Unauthorized: /api/cart/
+WARNING 2025-03-08 00:03:07,589 basehttp "GET /api/cart/ HTTP/1.1" 401 58
+WARNING 2025-03-08 00:03:17,089 log Unauthorized: /api/cart/
+WARNING 2025-03-08 00:03:17,091 basehttp "GET /api/cart/ HTTP/1.1" 401 58
+WARNING 2025-03-08 00:03:17,092 log Unauthorized: /api/cart/
+INFO 2025-03-08 00:03:17,094 basehttp "GET /api/packages/list/ HTTP/1.1" 200 183
+WARNING 2025-03-08 00:03:17,094 basehttp "GET /api/cart/ HTTP/1.1" 401 58
+INFO 2025-03-08 00:03:17,100 basehttp "GET /api/packages/list/ HTTP/1.1" 200 183
+INFO 2025-03-08 00:03:23,741 basehttp "GET /api/user/profile/ HTTP/1.1" 200 188
+INFO 2025-03-08 00:03:23,745 basehttp "GET /api/user/profile/ HTTP/1.1" 200 188
+WARNING 2025-03-08 00:03:35,096 log Unauthorized: /api/cart/
+WARNING 2025-03-08 00:03:35,098 basehttp "GET /api/cart/ HTTP/1.1" 401 58
+WARNING 2025-03-08 00:03:35,100 log Unauthorized: /api/cart/
+WARNING 2025-03-08 00:03:35,101 basehttp "GET /api/cart/ HTTP/1.1" 401 58
+INFO 2025-03-08 00:03:35,102 basehttp "GET /api/packages/list/ HTTP/1.1" 200 183
+INFO 2025-03-08 00:03:35,106 basehttp "GET /api/packages/list/ HTTP/1.1" 200 183

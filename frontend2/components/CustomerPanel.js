@@ -1,443 +1,195 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  Card,
-  Button,
-  Container,
-  Row,
-  Col,
-  Form,
-  Spinner,
-  Alert,
-  Tabs,
-  Tab,
-} from "react-bootstrap";
 
 const CustomerPanel = () => {
-  // Two main tabs: "products" and "cart"
-  const [activeTab, setActiveTab] = useState("products");
-
-  // States for product listing
-  const [products, setProducts] = useState([]);
-  const [filters, setFilters] = useState({
-    min_price: "",
-    max_price: "",
-    min_stock: "",
-    max_stock: "",
-    name: "",
-    category: "",
-    sort_by_date: "desc",
-  });
-  const [productQuantities, setProductQuantities] = useState({}); // store quantity for each product
-  const [productsLoading, setProductsLoading] = useState(false);
-  const [productsError, setProductsError] = useState("");
-
-  // States for the cart
   const [cart, setCart] = useState(null);
-  const [cartLoading, setCartLoading] = useState(false);
-  const [cartError, setCartError] = useState("");
+  const [packages, setPackages] = useState([]);
+  const [selectedPackage, setSelectedPackage] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Axios configuration with authentication token
-  const token = JSON.parse(localStorage.getItem("user"))?.token;
-  const axiosConfig = {
-    headers: {
-      Authorization: `Token ${token}`,
-    },
-  };
-
-  // Build query parameters from filters for product search
-  const buildQueryParams = () => {
-    const params = new URLSearchParams();
-    Object.keys(filters).forEach((key) => {
-      if (filters[key]) {
-        params.append(key, filters[key]);
-      }
-    });
-    return params.toString();
-  };
-
-  // Fetch products from the customer panel endpoint
-  const fetchProducts = async () => {
-    setProductsLoading(true);
-    try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/api/customer/panel/?${buildQueryParams()}`,
-        axiosConfig
-      );
-      setProducts(response.data.products || []);
-      setProductsError("");
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      setProductsError("خطا در دریافت محصولات");
-    } finally {
-      setProductsLoading(false);
-    }
-  };
-
-  // Fetch the cart data from the backend
+  // Fetch the user's cart
   const fetchCart = async () => {
-    setCartLoading(true);
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/cart/", axiosConfig);
+      const response = await axios.get("http://127.0.0.1:8000/api/cart/", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Ensure the user is authenticated
+        },
+      });
       setCart(response.data);
-      setCartError("");
     } catch (error) {
-      console.error("Error fetching cart:", error);
-      setCartError("خطا در دریافت سبد خرید");
-    } finally {
-      setCartLoading(false);
+      console.error("⚠️ خطا در دریافت سبد خرید:", error);
+      setError("خطا در دریافت سبد خرید");
     }
   };
 
-  // When switching tabs or when filters change, fetch appropriate data
-  useEffect(() => {
-    if (activeTab === "products") {
-      fetchProducts();
-    } else if (activeTab === "cart") {
-      fetchCart();
-    }
-  }, [activeTab, filters]);
-
-  // Handle changes in the product filters
-  const handleFilterChange = (e) => {
-    setFilters({
-      ...filters,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  // Update quantity input for a given product
-  const handleQuantityChange = (productId, value) => {
-    setProductQuantities((prev) => ({
-      ...prev,
-      [productId]: value,
-    }));
-  };
-
-  // Add a product to the cart with the specified quantity
-  const handleAddToCart = async (productId) => {
-    const quantity = productQuantities[productId] ? parseInt(productQuantities[productId]) : 1;
+  // Fetch all packages (for adding to cart)
+  const fetchPackages = async () => {
     try {
-      await axios.post(
+      const response = await axios.get("http://127.0.0.1:8000/api/packages/list/");
+      setPackages(response.data);
+    } catch (error) {
+      console.error("⚠️ خطا در دریافت پکیج‌ها:", error);
+      setError("خطا در دریافت پکیج‌ها");
+    }
+  };
+
+  // Add a package to the cart
+  const handleAddToCart = async () => {
+    if (!selectedPackage || quantity < 1) {
+      alert("لطفاً یک پکیج و مقدار معتبر انتخاب کنید.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
         "http://127.0.0.1:8000/api/cart/add/",
-        { product_id: productId, quantity },
-        axiosConfig
+        {
+          package_id: selectedPackage,
+          quantity: quantity,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
-      alert("محصول به سبد خرید اضافه شد");
-      // Optionally refresh the cart if the customer is already viewing it
-      if (activeTab === "cart") {
-        fetchCart();
-      }
+      alert(response.data.message);
+      fetchCart(); // Refresh the cart
     } catch (error) {
-      console.error("Error adding to cart:", error);
-      alert("خطا در اضافه کردن محصول به سبد خرید");
+      console.error("⚠️ خطا در افزودن به سبد خرید:", error);
+      alert(error.response?.data?.error || "خطا در افزودن به سبد خرید");
     }
   };
 
-  // Update an existing cart item's quantity
+  // Update the quantity of a cart item
   const handleUpdateCartItem = async (itemId, newQuantity) => {
+    if (newQuantity < 1) {
+      alert("تعداد باید حداقل ۱ باشد.");
+      return;
+    }
+
     try {
-      await axios.put(
-        `http://127.0.0.1:8000/api/cart/item/${itemId}/`,
+      const response = await axios.put(
+        `http://127.0.0.1:8000/api/cart/update/${itemId}/`,
         { quantity: newQuantity },
-        axiosConfig
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
-      alert("مقدار آیتم سبد خرید به‌روزرسانی شد");
-      fetchCart();
+      alert(response.data.message);
+      fetchCart(); // Refresh the cart
     } catch (error) {
-      console.error("Error updating cart item:", error);
-      alert("خطا در به‌روزرسانی آیتم سبد خرید");
+      console.error("⚠️ خطا در به‌روزرسانی سبد خرید:", error);
+      alert(error.response?.data?.error || "خطا در به‌روزرسانی سبد خرید");
     }
   };
 
-  // Delete an item from the cart
-  const handleDeleteCartItem = async (itemId) => {
+  // Remove a cart item
+  const handleRemoveCartItem = async (itemId) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/cart/item/${itemId}/delete/`, axiosConfig);
-      alert("آیتم سبد خرید حذف شد");
-      fetchCart();
+      const response = await axios.delete(
+        `http://127.0.0.1:8000/api/cart/delete/${itemId}/`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      alert(response.data.message);
+      fetchCart(); // Refresh the cart
     } catch (error) {
-      console.error("Error deleting cart item:", error);
-      alert("خطا در حذف آیتم سبد خرید");
+      console.error("⚠️ خطا در حذف از سبد خرید:", error);
+      alert("خطا در حذف از سبد خرید");
     }
   };
 
-  // Checkout the cart (simulate a purchase)
+  // Process checkout
   const handleCheckout = async () => {
     try {
-      // Send the cart items to the backend for checkout
       const response = await axios.post(
         "http://127.0.0.1:8000/api/cart/checkout/",
-        { items: cart.items }, // Ensure this matches the backend's expected format
-        axiosConfig
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
-  
-      // Show success message and reset the cart
-      alert(`خرید موفق! مبلغ پرداختی: ${response.data.total_paid}`);
-      fetchCart(); // Refresh the cart to reflect the changes
+      alert(response.data.message);
+      fetchCart(); // Refresh the cart
     } catch (error) {
-      console.error("Error during checkout:", error);
-      alert("خطا در فرایند خرید");
+      console.error("⚠️ خطا در پرداخت:", error);
+      alert(error.response?.data?.error || "خطا در پرداخت");
     }
   };
 
-  // Render the "Products" tab
-  const renderProductsTab = () => (
-    <div>
-      <h3>فیلتر محصولات</h3>
-      <div className="grid grid-cols-3 gap-4 mb-6 bg-gray-800 p-6 rounded-lg shadow">
-        <input
-          type="text"
-          name="name"
-          placeholder="🔍 نام محصول"
-          value={filters.name}
-          onChange={handleFilterChange}
-          className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
-        />
-        <input
-          type="text"
-          name="category"
-          placeholder="📁 دسته‌بندی"
-          value={filters.category}
-          onChange={handleFilterChange}
-          className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
-        />
-        <input
-          type="number"
-          name="min_price"
-          placeholder="💰 حداقل قیمت"
-          value={filters.min_price}
-          onChange={handleFilterChange}
-          className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
-          dir="ltr"
-        />
-        <input
-          type="number"
-          name="max_price"
-          placeholder="💰 حداکثر قیمت"
-          value={filters.max_price}
-          onChange={handleFilterChange}
-          className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
-          dir="ltr"
-        />
-        <input
-          type="number"
-          name="min_stock"
-          placeholder="📦 حداقل موجودی"
-          value={filters.min_stock}
-          onChange={handleFilterChange}
-          className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
-          dir="ltr"
-        />
-        <input
-          type="number"
-          name="max_stock"
-          placeholder="📦 حداکثر موجودی"
-          value={filters.max_stock}
-          onChange={handleFilterChange}
-          className="p-3 bg-gray-700 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
-          dir="ltr"
-        />
-        <select
-          name="sort_by_date"
-          value={filters.sort_by_date}
-          onChange={handleFilterChange}
-          className="p-3 bg-gray-700 rounded text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
-        >
-          <option value="desc">📅 جدیدترین</option>
-          <option value="asc">📅 قدیمی‌ترین</option>
-        </select>
-      </div>
+  // Fetch cart and packages on component mount
+  useEffect(() => {
+    fetchCart();
+    fetchPackages();
+  }, []);
 
-      {productsLoading ? (
-        <div className="d-flex justify-content-center">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">در حال بارگذاری...</span>
-          </Spinner>
-        </div>
-      ) : productsError ? (
-        <Alert variant="danger" className="text-center">
-          {productsError}
-        </Alert>
-      ) : (
-        <Row>
-          {products.map((product) => (
-            <Col key={product.id} sm={12} md={6} lg={4} className="mb-4">
-              <Card className="shadow-sm h-100">
-                <Card.Img
-                  variant="top"
-                  src={
-                    product.images
-                      ? `http://127.0.0.1:8000${product.images}`
-                      : "default-image.jpg"
-                  }
-                  style={{ height: "200px", objectFit: "cover" }}
-                />
-                <Card.Body>
-                  <Card.Title style={{ fontWeight: "bold" }}>
-                    {product.name}
-                  </Card.Title>
-                  <Card.Text className="text-muted">
-                    {product.short_description}
-                  </Card.Text>
-                  <Card.Text>
-                    <strong>📜 توضیحات:</strong> {product.long_description}
-                  </Card.Text>
-                  <Card.Text style={{ fontWeight: "bold", color: "#007bff" }}>
-                    💰 قیمت: {Number(product.unit_price).toLocaleString()} تومان
-                  </Card.Text>
-                  <Card.Text>
-                    <strong>📦 موجودی:</strong> {product.initial_stock}
-                  </Card.Text>
-                  <Card.Text>
-                    <strong>🏷 دسته‌بندی:</strong> {product.category}
-                  </Card.Text>
-                  <Card.Text
-                    className={product.is_active ? "text-success" : "text-danger"}
-                  >
-                    <strong>🔄 وضعیت:</strong>{" "}
-                    {product.is_active ? "فعال" : "غیرفعال"}
-                  </Card.Text>
-                  <Card.Text className="text-muted">
-                    <strong>📅 تاریخ ایجاد:</strong>{" "}
-                    {new Date(product.created_at).toLocaleString()}
-                  </Card.Text>
-                  <Card.Text className="text-muted">
-                    <strong>👤 تأمین‌کننده:</strong>{" "}
-                    {product.supplier_username}
-                  </Card.Text>
-                  <Form.Group className="mb-3">
-                    <Form.Label>تعداد</Form.Label>
-                    <Form.Control
-                      type="number"
-                      min="1"
-                      value={productQuantities[product.id] || 1}
-                      onChange={(e) =>
-                        handleQuantityChange(product.id, e.target.value)
-                      }
-                      style={{ width: "100px" }}
-                    />
-                  </Form.Group>
-                  <Button
-                    variant="primary"
-                    onClick={() => handleAddToCart(product.id)}
-                  >
-                    افزودن به سبد خرید
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      )}
-    </div>
-  );
-
-  // Render the "Cart" tab
-  const renderCartTab = () => (
-    <div>
-      <h3>سبد خرید</h3>
-      {cartLoading ? (
-        <div className="d-flex justify-content-center">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">در حال بارگذاری...</span>
-          </Spinner>
-        </div>
-      ) : cartError ? (
-        <Alert variant="danger" className="text-center">
-          {cartError}
-        </Alert>
-      ) : cart && cart.items && cart.items.length > 0 ? (
-        <div>
-          {cart.items.map((item) => (
-            <Card key={item.id} className="mb-3">
-              <Card.Body>
-                <Row>
-                  <Col md={4}>
-                    <img
-                      src={
-                        item.product.images
-                          ? `http://127.0.0.1:8000${item.product.images}`
-                          : "default-image.jpg"
-                      }
-                      alt={item.product.name}
-                      style={{ width: "100%", height: "auto" }}
-                    />
-                  </Col>
-                  <Col md={8}>
-                    <h5>{item.product.name}</h5>
-                    <p>{item.product.short_description}</p>
-                    <p>
-                      <strong>قیمت واحد:</strong>{" "}
-                      {Number(item.product.unit_price).toLocaleString()} تومان
-                    </p>
-                    <p>
-                      <strong>تعداد:</strong>{" "}
-                      <Form.Control
-                        type="number"
-                        min="1"
-                        value={item.quantity}
-                        onChange={(e) =>
-                          // Update the quantity locally in the cart state
-                          setCart((prevCart) => {
-                            const newItems = prevCart.items.map((ci) => {
-                              if (ci.id === item.id) {
-                                return { ...ci, quantity: parseInt(e.target.value) };
-                              }
-                              return ci;
-                            });
-                            return { ...prevCart, items: newItems };
-                          })
-                        }
-                        style={{ width: "80px", display: "inline-block" }}
-                      />
-                    </p>
-                    <Button
-                      variant="success"
-                      onClick={() => handleUpdateCartItem(item.id, item.quantity)}
-                      className="me-2"
-                    >
-                      به‌روزرسانی
-                    </Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => handleDeleteCartItem(item.id)}
-                    >
-                      حذف
-                    </Button>
-                  </Col>
-                </Row>
-              </Card.Body>
-            </Card>
-          ))}
-          <h4>
-            مجموع مبلغ: {Number(cart.total_price).toLocaleString()} تومان
-          </h4>
-          <Button variant="primary" onClick={handleCheckout}>
-            خرید نهایی
-          </Button>
-        </div>
-      ) : (
-        <Alert variant="info">سبد خرید شما خالی است.</Alert>
-      )}
-    </div>
-  );
+  if (loading) return <p>در حال بارگذاری...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
-    <Container style={{ padding: "20px" }}>
-      <Tabs
-        activeKey={activeTab}
-        onSelect={(k) => setActiveTab(k)}
-        className="mb-3"
-      >
-        <Tab eventKey="products" title="محصولات">
-          {renderProductsTab()}
-        </Tab>
-        <Tab eventKey="cart" title="سبد خرید">
-          {renderCartTab()}
-        </Tab>
-      </Tabs>
-    </Container>
+    <div style={{ padding: "20px" }}>
+      <h2>سبد خرید</h2>
+
+      {/* Add to Cart Section */}
+      <div>
+        <h3>افزودن به سبد خرید</h3>
+        <select
+          value={selectedPackage || ""}
+          onChange={(e) => setSelectedPackage(e.target.value)}
+        >
+          <option value="">انتخاب پکیج</option>
+          {packages.map((pkg) => (
+            <option key={pkg.id} value={pkg.id}>
+              {pkg.name} - {pkg.unit_price} تومان
+            </option>
+          ))}
+        </select>
+        <input
+          type="number"
+          placeholder="تعداد"
+          value={quantity}
+          onChange={(e) => setQuantity(parseInt(e.target.value))}
+          min="1"
+        />
+        <button onClick={handleAddToCart}>افزودن به سبد</button>
+      </div>
+
+      {/* Cart Items Section */}
+      {cart && (
+        <div>
+          <h3>محصولات در سبد خرید</h3>
+          {cart.items.length === 0 ? (
+            <p>سبد خرید شما خالی است.</p>
+          ) : (
+            <ul>
+              {cart.items.map((item) => (
+                <li key={item.id}>
+                  {item.package.name} - {item.quantity} عدد - {item.package.unit_price * item.quantity} تومان
+                  <input
+                    type="number"
+                    value={item.quantity}
+                    onChange={(e) => handleUpdateCartItem(item.id, parseInt(e.target.value))}
+                    min="1"
+                  />
+                  <button onClick={() => handleRemoveCartItem(item.id)}>حذف</button>
+                </li>
+              ))}
+            </ul>
+          )}
+          <button onClick={handleCheckout}>پرداخت</button>
+        </div>
+      )}
+    </div>
   );
 };
 

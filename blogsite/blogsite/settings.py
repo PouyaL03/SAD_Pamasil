@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'products',
     'user',
-    'carts'
+    'carts',
+    'packages',
 ]
 
 MIDDLEWARE = [
@@ -174,3 +175,44 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Use this for
 DEFAULT_FROM_EMAIL = 'no-reply@yourdomain.com'  # Use your domain's email
 
 
+# settings.py
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',  # Logs will be written to this file
+            'formatter': 'verbose',  # Use the 'verbose' formatter
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',  # Use the 'simple' formatter
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'myapp': {  # Replace 'myapp' with your app's name
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}

@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 from .models import Cart, CartItem
 from .serializers import CartSerializer, CartItemSerializer
 
+
 class CartDetailView(APIView):
     """
     Retrieve the current user's cart (creating one if needed).
@@ -31,7 +32,7 @@ class AddToCartView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(
-                {"message": "Product added to cart", "cart_item": serializer.data},
+                {"message": "Package added to cart", "cart_item": serializer.data},
                 status=status.HTTP_201_CREATED
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -72,18 +73,87 @@ class DeleteCartItemView(APIView):
         cart_item.delete()
         return Response({"message": "Cart item deleted"}, status=status.HTTP_200_OK)
 
+#####
+
+# cart/views.py
+from django.db import transaction
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
+from decimal import Decimal
+from .models import Cart, CartItem
+from packages.models import Package  # Import product model
+from packages.serializers import PackageSerializer  # Correct import
+
 class CheckoutCartView(APIView):
     """
-    Simulate checking out the cart (purchasing all items).
-    In a real system, you would integrate with a payment gateway
-    and create an order record. Here we simply clear the cart.
+    Process checkout: Validate stock, update product stock,
+    calculate total price, and clear cart upon success.
     """
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
         cart, _ = Cart.objects.get_or_create(customer=request.user)
-        total = cart.total_price()
-        # Here you would perform the purchase logic (payment, order creation, etc.)
-        # For now, we simulate a successful purchase by clearing the cart.
-        cart.items.all().delete()
-        return Response({"message": "Purchase successful", "total_paid": total}, status=status.HTTP_200_OK)
+        cart_items = cart.items.all()
+
+        if not cart_items:
+            return Response({"error": "سبد خرید شما خالی است."}, status=status.HTTP_400_BAD_REQUEST)
+
+        errors = []
+        total_paid = Decimal(0)
+
+        try:
+            with transaction.atomic():  # Ensures atomic database updates
+                for cart_item in cart_items:
+                    package = cart_item.package
+                    quantity = cart_item.quantity
+
+                    # Check stock availability
+                    if package.initial_stock < quantity:
+                        errors.append({
+                            "package_id": package.id,
+                            "error": f"موجودی کافی نیست. موجودی فعلی: {package.initial_stock}"
+                        })
+                        continue
+
+                    # ✅ Use Serializer to Update Stock
+                    new_stock = package.initial_stock - quantity
+                    serializer = PackageSerializer(
+                        package,
+                        data={"initial_stock": new_stock},
+                        partial=True  # Allow updating only stock
+                    )
+
+                    if serializer.is_valid():
+                        serializer.save()  # Save updated stock
+                    else:
+                        errors.append({
+                            "package_id": package.id,
+                            "error": "خطا در به‌روزرسانی موجودی محصول.",
+                            "details": serializer.errors
+                        })
+                        continue
+
+                    # Calculate total price
+                    total_paid += package.unit_price * Decimal(quantity)
+
+                if errors:
+                    raise Exception("خطا در پردازش برخی محصولات.")
+
+                # ✅ Clear cart after successful checkout
+                cart.items.all().delete()
+
+                return Response(
+                    {
+                        "message": "خرید با موفقیت انجام شد.",
+                        "total_paid": str(total_paid)
+                    },
+                    status=status.HTTP_200_OK
+                )
+
+        except Exception as e:
+            return Response(
+                {"error": str(e), "details": errors},
+                status=status.HTTP_400_BAD_REQUEST
+            )

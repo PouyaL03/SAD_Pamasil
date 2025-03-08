@@ -5,35 +5,42 @@ import LoginPage from "../../components/LoginPage";
 import ProfilePage from "../../components/ProfilePage";
 import SupplierPanel from "../../components/SupplierPanel";
 import CustomerPanel from "../../components/CustomerPanel";
-import { Tabs, Tab, Container } from "react-bootstrap";
+import AdminLogin from "../../components/AdminLogin";
+import AdminPage from "../../components/AdminPage";
+import { Container } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
 const Home = () => {
-  // Default to "register" when not logged in.
   const [activeTab, setActiveTab] = useState("register");
   const [user, setUser] = useState(null);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
-  // On mount, read user data from localStorage.
+  // ✅ Read user and admin login state from localStorage
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
-      setUser(parsedUser);
-      setActiveTab("profile");
+    if (typeof window !== "undefined") {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+        setActiveTab("profile");
+      }
+
+      const adminLoginStatus = localStorage.getItem("isAdminLoggedIn");
+      if (adminLoginStatus === "true") {
+        setIsAdminLoggedIn(true);
+        setActiveTab("adminPage");
+      }
     }
   }, []);
 
-  // If a user exists but the role is missing, call the profile API to fetch it.
+  // ✅ Fetch user role if missing
   useEffect(() => {
     async function fetchUserProfile() {
       if (user && !user.role) {
-        const token = user.token;
         try {
           const response = await axios.get("http://localhost:8000/api/user/profile/", {
-            headers: { Authorization: `Token ${token}` },
+            headers: { Authorization: `Token ${user.token}` },
           });
-          // Assume the response data includes a "role" field.
           const updatedUser = { ...user, role: response.data.role };
           setUser(updatedUser);
           localStorage.setItem("user", JSON.stringify(updatedUser));
@@ -45,22 +52,22 @@ const Home = () => {
     fetchUserProfile();
   }, [user]);
 
-  // Build an array of tab objects based on login status and role.
+  // ✅ User navigation
   let tabs = [];
-  if (!user) {
-    // When not logged in, show Registration and Login tabs.
+  if (isAdminLoggedIn) {
+    tabs = [{key: "admin", label: "پنل مدیریت", component: <AdminPage setActiveTab={setActiveTab}/>}]
+  } else if (!user) {
     tabs = [
       { key: "register", label: "ثبت‌نام", component: <RegistrationPage /> },
       { key: "login", label: "ورود", component: <LoginPage /> },
+      { key: "adminLogin", label: "ورود مدیریت", component: <AdminLogin setIsAdminLoggedIn={setIsAdminLoggedIn} setActiveTab={setActiveTab} /> },
     ];
   } else if (user.role === "supplier") {
-    // For suppliers, show Profile and Supplier Panel tabs.
     tabs = [
       { key: "profile", label: "پروفایل", component: <ProfilePage /> },
       { key: "supplierPanel", label: "پنل تأمین‌کننده", component: <SupplierPanel /> },
     ];
   } else if (user.role === "customer") {
-    // For customers, show Profile and Customer Panel tabs.
     tabs = [
       { key: "profile", label: "پروفایل", component: <ProfilePage /> },
       { key: "customerPanel", label: "محصولات", component: <CustomerPanel /> },
@@ -70,8 +77,7 @@ const Home = () => {
   return (
     <div
       style={{
-        backgroundImage:
-          "url('/images/watercolor-birthday-background-with-empty-space_52683-42227.jpg.webp')",
+        backgroundImage: "url('/images/watercolor-birthday-background-with-empty-space_52683-42227.jpg.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         minHeight: "100vh",
@@ -80,21 +86,25 @@ const Home = () => {
       }}
     >
       <Container style={{ padding: "20px" }}>
-        <Tabs
-          activeKey={activeTab}
-          onSelect={(k) => setActiveTab(k)}
-          className="mb-3"
-          variant="pills"
-        >
-          {tabs.map((tab) => (
-            <Tab eventKey={tab.key} title={tab.label} key={tab.key}>
-              {tab.component}
-            </Tab>
-          ))}
-        </Tabs>
+        {tabs.map((tab) => (
+          <button key={tab.key} onClick={() => setActiveTab(tab.key)} style={tabStyle(activeTab === tab.key)}>
+            {tab.label}
+          </button>
+        ))}
+        <div>{tabs.find((tab) => tab.key === activeTab)?.component}</div>
       </Container>
     </div>
   );
 };
+
+const tabStyle = (isActive) => ({
+  padding: "10px 20px",
+  backgroundColor: isActive ? "#007bff" : "#fff",
+  color: isActive ? "#fff" : "#007bff",
+  border: "2px solid #007bff",
+  borderRadius: "5px",
+  cursor: "pointer",
+  fontWeight: "bold",
+});
 
 export default Home;

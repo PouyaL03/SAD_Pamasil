@@ -1,25 +1,25 @@
 # cart/serializers.py
 from rest_framework import serializers
 from .models import Cart, CartItem
-from products.models import Product
-from products.serializers import ProductSerializer
+from packages.models import Package
+from packages.serializers import PackageSerializer
 
 class CartItemSerializer(serializers.ModelSerializer):
-    product = ProductSerializer(read_only=True)
-    product_id = serializers.IntegerField(write_only=True)
+    package = PackageSerializer(read_only=True)
+    package_id = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = CartItem
-        fields = ['id', 'product', 'product_id', 'quantity', 'added_at']
+        fields = ['id', 'package', 'package_id', 'quantity', 'added_at']
 
     def create(self, validated_data):
-        product_id = validated_data.pop('product_id')
+        package_id = validated_data.pop('package_id')
         cart = self.context.get('cart')
-        product = Product.objects.get(id=product_id)
+        package = Package.objects.get(id=package_id)
         # If the item already exists, update its quantity.
         cart_item, created = CartItem.objects.get_or_create(
             cart=cart,
-            product=product,
+            package=package,
             defaults={'quantity': validated_data.get('quantity', 1)}
         )
         if not created:
